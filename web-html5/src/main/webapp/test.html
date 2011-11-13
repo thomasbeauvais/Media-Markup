@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Test</title>
+
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="javaScript/soundmanager/soundmanager2-nodebug-jsmin.js"></script>
+
+    <script>
+
+        function onPause( ) {
+            soundManager.pause( "testcase" );
+        }
+
+        function onPlay( ) {
+            soundManager.play( "testcase" );
+        }
+
+//        soundManager.preferFlash = false;
+        soundManager.onready(
+                function() {
+                    var sound = soundManager.createSound({
+                        id:'testcase',
+                        url:'audio/',
+                        whileloading: function() {
+                            console.log( 'sound '+this.sID+' loading, '+this.bytesLoaded+' of '+this.bytesTotal);
+
+                            drawLoadedRegion( this );
+                        },
+                        whileplaying: function() {
+                            console.log( 'Peaks, position/bytes: '+this.position+'/'+this.bytesTotal);
+                        }
+                    });
+
+                    sound.play();
+
+                });
+        $(document).ready(function() {
+        });
+    </script>
+</head>
+
+</html>
