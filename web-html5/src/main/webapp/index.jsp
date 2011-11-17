@@ -10,38 +10,36 @@
         <script src="javaScript/waveform/selectionOverlay.js"></script>
         <script src="javaScript/soundmanager/soundmanager2-nodebug-jsmin.js"></script>
         <script>
-            function onPause( ) {
-                soundManager.pause( "testcase" );
-            }
-
-            function onPlay( ) {
-                soundManager.play( "testcase" );
-            }
-
-            soundManager.onready(
-                function() {
-                    var sound = soundManager.createSound({
-                        id:'testcase',
-                        url:'audio/',
-                        whileloading: function() {
-//                            console.log( 'sound '+this.sID+' loading, '+this.bytesLoaded+' of '+this.bytesTotal);
-
-                            var canvas = document.getElementById("bytesLoaded");
-                            drawLoadedRegion( canvas, this ) ;
-                        },
-                        whileplaying: function() {
-//                            console.log( 'Peaks, position/bytes: '+this.position+'/'+this.bytesTotal);
-
-                            var canvas = document.getElementById("bytesPlayed");
-                            drawPlayedRegion( canvas, this ) ;
-                        }
-                    });
-
-                    sound.play();
-                }
-            );
-
-
+//            function onPause( ) {
+//                soundManager.pause( "testcase" );
+//            }
+//
+//            function onPlay( ) {
+//                soundManager.play( "testcase" );
+//            }
+//
+//            soundManager.onready(
+//                function() {
+//                    var sound = soundManager.createSound({
+//                        id:'testcase',
+//                        url:'audio/',
+//                        whileloading: function() {
+////                            console.log( 'sound '+this.sID+' loading, '+this.bytesLoaded+' of '+this.bytesTotal);
+//
+//                            var canvas = document.getElementById("bytesLoaded");
+//                            drawLoadedRegion( canvas, this ) ;
+//                        },
+//                        whileplaying: function() {
+////                            console.log( 'Peaks, position/bytes: '+this.position+'/'+this.bytesTotal);
+//
+//                            var canvas = document.getElementById("bytesPlayed");
+//                            drawPlayedRegion( canvas, this ) ;
+//                        }
+//                    });
+//
+//                    sound.play();
+//                }
+//            );
 
             $(document).ready(function() {
                 var selectionOverlay = new SelectionOverlay();

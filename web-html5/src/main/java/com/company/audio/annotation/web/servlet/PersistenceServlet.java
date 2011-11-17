@@ -23,6 +23,8 @@ import java.util.logging.Logger;
  * To change this template use File | Settings | File Templates.
  */
 public class PersistenceServlet extends HttpServlet {
+    public static final String MEDIA_PROJECT_DIR = "MEDIA_PROJECT_DIR";
+
     private IPersistenceEngine persistenceEngine;
 
     @Autowired
@@ -32,13 +34,28 @@ public class PersistenceServlet extends HttpServlet {
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        if ( !System.getenv().containsKey( MEDIA_PROJECT_DIR ) ) {
+            throw new RuntimeException( "Must have environment variable " + MEDIA_PROJECT_DIR + " that points to the base " +
+                    "for this project. For instance, 'export " + MEDIA_PROJECT_DIR + "=/home/user/Media-Markup'" );
+        }
+
+        //TODO:  Pull this file from the url of the request..
         final String idIndexFile    = "test-file-large";
 //        final String idIndexFile    = "test-file-small";
 
-        final String strFilePath    = idIndexFile + ".index";
-        final String strBaseDir     = "/home/tbeauvais/Code/audio-annotation-html5";
+        final String strProjectDir  = System.getenv( MEDIA_PROJECT_DIR );
+        final String strBaseDir     = "server"
+                + File.separator
+                + "data"
+                + File.separator
+                + "index";
 
-        final File inputFile        = new File( strBaseDir, strFilePath );
+        final String strFilePath    = strBaseDir
+                + File.separator
+                + idIndexFile
+                + ".index";
+
+        final File inputFile        = new File( strProjectDir, strFilePath );
 
         System.out.println( inputFile.getAbsolutePath() );
 
@@ -51,3 +68,4 @@ public class PersistenceServlet extends HttpServlet {
         }
     }
 }
+
