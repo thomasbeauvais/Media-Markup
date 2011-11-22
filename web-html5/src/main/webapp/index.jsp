@@ -41,11 +41,21 @@
 //                }
 //            );
 
+            var waveFormObject = null;
+
+            // You know this one already, right?
+            $(window).resize(function(e){
+                // do something when the window resizes
+                if ( waveFormObject ) {
+                    drawWaveForm( waveForm, waveFormObject );
+                }
+
+            });
             $(document).ready(function() {
                 var selectionOverlay = new SelectionOverlay();
 
                 $.getJSON( "persistence/", function( indexFile ) {
-                    drawWaveForm( waveForm, indexFile );
+                    drawWaveForm( waveForm, waveFormObject = indexFile );
                 });
             });
         </script>

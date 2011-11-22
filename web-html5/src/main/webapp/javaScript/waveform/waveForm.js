@@ -1,9 +1,20 @@
-function drawPlayedRegion( canvas, sound ) {
-    var context             = canvas.getContext("2d");
-        context.clearRect ( 0 , 0, canvas.width, canvas.height );
+function resetCanvas( canvas ) {
+    clearCanvas( canvas );
+    resizeCanvas( canvas );
+}
+function clearCanvas( canvas ) {
+    canvas.getContext("2d").clearRect ( 0 , 0, canvas.width, canvas.height );
+}
 
-//        canvas.width        = canvas.clientWidth;
-//        canvas.height       = canvas.clientHeight;
+function resizeCanvas( canvas ) {
+    canvas.width        = canvas.clientWidth;
+    canvas.height       = canvas.clientHeight;
+}
+
+function drawPlayedRegion( canvas, sound ) {
+    resetCanvas( canvas );
+
+    var context             = canvas.getContext("2d");
 
     var percentPlayed       = sound.position / sound.durationEstimate;
 
@@ -25,11 +36,9 @@ function drawPlayedRegion( canvas, sound ) {
 }
 
 function drawWaveForm( canvas, indexFile ) {
-    var context             = canvas.getContext("2d");
-    context.clearRect ( 0 , 0, canvas.width, canvas.height );
+    resetCanvas( canvas );
 
-//        canvas.width        = canvas.clientWidth;
-//        canvas.height       = canvas.clientHeight;
+    var context             = canvas.getContext("2d");
 
     var height              = canvas.height;
     var width               = canvas.width;
@@ -39,7 +48,7 @@ function drawWaveForm( canvas, indexFile ) {
     gradient.addColorStop( 0.5, "#00F" );
     gradient.addColorStop( 1, "#FFF" );
 
-    context.fillStyle   = gradient;
+    context.fillStyle       = gradient;
 
     context.fillRect( 0, 0, canvas.width, canvas.height );
 
@@ -80,11 +89,9 @@ function drawWaveForm( canvas, indexFile ) {
 }
 
 function drawLoadedRegion( canvas, sound ) {
-    var context             = canvas.getContext("2d");
-        context.clearRect ( 0 , 0, canvas.width, canvas.height );
+    resetCanvas( canvas );
 
-//    canvas.width            = canvas.clientWidth;
-//    canvas.height           = canvas.clientHeight;
+    var context             = canvas.getContext("2d");
 
     var percentLoaded       = sound.bytesLoaded / sound.bytesTotal;
 
