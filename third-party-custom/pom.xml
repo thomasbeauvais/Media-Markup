@@ -3,18 +3,15 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>audio-annotation</groupId>
-    <artifactId>audio-annotation</artifactId>
+    <artifactId>third-party-custom</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <name>_aggregator-audio-annotation</name>
+    <name>_aggregator-third-party-custom</name>
 
     <modules>
-        <module>common</module>
-        <module>third-party-custom</module>
-        <module>server</module>
-        <!--<module>web-html5</module>-->
-        <module>web-flex</module>
+        <module>javazoom-custom</module>
+        <module>musicg-sound-api-custom</module>
     </modules>
 
 </project>

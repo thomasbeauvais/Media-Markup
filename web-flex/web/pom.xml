@@ -1,0 +1,114 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>audio-annotation</groupId>
+    <artifactId>web</artifactId>
+    <packaging>war</packaging>
+    <version>1.0-SNAPSHOT</version>
+    <name>web-flex Maven Webapp</name>
+    <url>http://maven.apache.org</url>
+    <dependencies>
+
+       <dependency>
+            <groupId>company</groupId>
+            <artifactId>common</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>audio-annotation</groupId>
+            <artifactId>web-flex-java</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>audio-annotation</groupId>
+            <artifactId>web-flex-flex</artifactId>
+            <version>1.0-SNAPSHOT</version>
+            <type>swf</type>
+        </dependency>
+
+        <dependency>
+            <groupId>audio-annotation</groupId>
+            <artifactId>server</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adobe.flex.messaging</groupId>
+            <artifactId>flex-messaging-common</artifactId>
+            <type>jar</type>
+            <version>4.0.1.17657</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adobe.flex.messaging</groupId>
+            <artifactId>flex-messaging-core</artifactId>
+            <type>jar</type>
+            <version>4.0.1.17657</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.adobe.flex.messaging</groupId>
+            <artifactId>flex-messaging-remoting</artifactId>
+            <type>jar</type>
+            <version>4.0.1.17657</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google.collections</groupId>
+            <artifactId>google-collections</artifactId>
+            <version>1.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.google</groupId>
+            <artifactId>gag</artifactId>
+            <version>1.0.1</version>
+            <type>jar</type>
+        </dependency>
+    </dependencies>
+    <build>
+
+        <finalName>web-flex</finalName>
+        <plugins>
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>ant-contrib</groupId>
+                        <artifactId>ant-contrib</artifactId>
+                        <version>20020829</version>
+                    </dependency>
+                </dependencies>
+                <executions>
+                    <execution>
+                        <id>default-cli</id>
+                        <!-- see http://maven.apache.org/guides/mini/guide-default-execution-ids.html -->
+                        <phase>compile</phase>
+                        <configuration>
+                            <tasks>
+                                <taskdef resource="net/sf/antcontrib/antcontrib.properties"/>
+
+                                <!-- Copy the module and implementation swfs into the web app classes dir.  Idea doesn't
+                               properly recognize the copy resources plugin invocation above and instead copies
+                               a zipped version of the swf project's classes directory into lib; this is completely
+                               worthless. -->
+                                <copy todir="${build.outputDirectory}/../web-flex" flatten="true">
+                                    <fileset dir="${basedir}/../flex" includes="**/target/*.swf"/>
+                                </copy>
+
+                            </tasks>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+
+        </plugins>
+    </build>
+</project>

@@ -3,18 +3,16 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>audio-annotation</groupId>
-    <artifactId>audio-annotation</artifactId>
+    <artifactId>web-flex</artifactId>
     <packaging>pom</packaging>
     <version>1.0-SNAPSHOT</version>
 
-    <name>_aggregator-audio-annotation</name>
+    <name>_aggregator-audio-annotation-web-flex</name>
 
     <modules>
-        <module>common</module>
-        <module>third-party-custom</module>
-        <module>server</module>
-        <!--<module>web-html5</module>-->
-        <module>web-flex</module>
+        <module>java</module>
+        <module>flex</module>
+        <module>web</module>
     </modules>
 
 </project>
