@@ -1,14 +1,6 @@
-/**
- * Created by IntelliJ IDEA.
- * User: tbeauvais
- * Date: 3/6/12
- * Time: 3:02 PM
- * To change this template use File | Settings | File Templates.
- */
 package com.company.annotation.audio.services {
 import com.company.common.blaze.BlazeResponder;
 
-import mx.rpc.AsyncResponder;
 import mx.rpc.remoting.RemoteObject;
 
 public class AudioAnnotationService {
@@ -18,11 +10,11 @@ public class AudioAnnotationService {
     private static const SVC_DESTINATION:String = "audioAnnotationService";
 
     public function AudioAnnotationService() {
-       initializeRemoteObject( SVC_DESTINATION );
+        initializeRemoteObject( SVC_DESTINATION );
     }
 
     private function initializeRemoteObject( destination:String ):void {
-        m_serviceObject = new RemoteObject(destination);
+        m_serviceObject = new RemoteObject( destination );
 
         // record source of server call
         var sourceError:Error = new Error();
@@ -38,7 +30,7 @@ public class AudioAnnotationService {
         m_serviceObject.loadAll().addResponder( responder );
     }
 
-    public function load( id:String,  successCallback:Function, failCallback:Function = null ):void {
+    public function load( id:String, successCallback:Function, failCallback:Function = null ):void {
         var responder:BlazeResponder = new BlazeResponder(
                 null,
                 successCallback,

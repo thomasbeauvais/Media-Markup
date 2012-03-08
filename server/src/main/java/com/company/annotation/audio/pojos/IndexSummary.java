@@ -15,6 +15,10 @@ public class IndexSummary {
 
     private String name;
 
+    private float time;
+
+    private String description;
+
     public IndexSummary() {
 
     }
@@ -23,20 +27,35 @@ public class IndexSummary {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName( String name ) {
         this.name = name;
     }
 
-	public void setChannels(int numChannels) {
-		this.numChannels = numChannels;
-	}
+    public void setChannels( int numChannels ) {
+        this.numChannels = numChannels;
+    }
 
+    public int getNumChannels() {
+        return numChannels;
+    }
 
-	public int getNumChannels() {
-		return numChannels;
-	}
+    public void setNumChannels( int numChannels ) {
+        this.numChannels = numChannels;
+    }
 
-	public void setNumChannels(int numChannels) {
-		this.numChannels = numChannels;
-	}
+    public float getTime() {
+        return time;
+    }
+
+    public void setTime( float time ) {
+        this.time = time;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription( String description ) {
+        this.description = description;
+    }
 }

@@ -21,13 +21,6 @@ public class IndexObject extends IndexSummary {
 
     }
 
-    public void updateBoundsForValue( Sample sample ) {
-        short value = sample.getValue();
-
-        this.max = (short) Math.max( value, this.max );
-        this.min = (short) Math.min( value, this.min );
-    }
-
     public short getMax() {
         return this.max;
     }
@@ -44,6 +37,25 @@ public class IndexObject extends IndexSummary {
         this.max = max;
     }
 
+    public Sample[] getSamples() {
+        return this.samples.toArray( new Sample[ 0 ] );
+    }
+
+    public void setSamples( Sample[] samples ) {
+        this.samples = new ArrayList<Sample>( Arrays.asList( samples ) );
+    }
+
+    public int getNumSamples() {
+        return samples.size();
+    }
+
+    public void updateBoundsForValue( Sample sample ) {
+        short value = sample.getValue();
+
+        this.max = (short) Math.max( value, this.max );
+        this.min = (short) Math.min( value, this.min );
+    }
+
     public void addSample( final Sample sample, final boolean update ) {
         this.samples.add( sample );
 
@@ -56,17 +68,5 @@ public class IndexObject extends IndexSummary {
         for( Sample sample : samples ) {
             updateBoundsForValue( sample );
         }
-    }
-
-    public Sample[] getSamples() {
-        return this.samples.toArray( new Sample[ 0 ] );
-    }
-
-    public void setSamples( Sample[] samples ) {
-        this.samples = new ArrayList<Sample>( Arrays.asList( samples ) );
-    }
-
-    public int getNumSamples() {
-        return samples.size();
     }
 }

@@ -1,5 +1,4 @@
-package com.company.annotation.audio.pojos
-{
+package com.company.annotation.audio.pojos {
 import mx.collections.ArrayCollection;
 
 [RemoteClass(alias="com.company.annotation.audio.pojos.IndexObject")]

@@ -32,10 +32,6 @@ public class DefaultIndexEngine implements IIndexEngine {
             SampleBuffer output     = null;
             short[] samples         = null;
 
-//            if ( h == null ) {
-//                throw new NullPointerException( "Something is wrong with the first header!  It's null!" );
-//            }
-
             while((h = bitstream.readFrame()) != null) {
 				pos             = bitstream.pos();
 				output          = (SampleBuffer) decoder.decodeFrame(h, bitstream);
@@ -48,6 +44,7 @@ public class DefaultIndexEngine implements IIndexEngine {
 				bitstream.closeFrame();
 			}
 
+            index.setTime( timeStamp );
             index.setName( indexName );
             index.setChannels( output.getChannelCount() );
             index.updateBounds();
