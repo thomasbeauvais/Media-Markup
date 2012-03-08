@@ -10,7 +10,6 @@
     <name>_aggregator-audio-annotation-web-flex</name>
 
     <modules>
-        <module>java</module>
         <module>flex</module>
         <module>web</module>
     </modules>

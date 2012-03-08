@@ -8,50 +8,66 @@
     <listener>
         <listener-class>flex.messaging.HttpFlexSession</listener-class>
     </listener>
+
+    <!--<servlet>-->
+    <!--<servlet-name>MessageBrokerServlet</servlet-name>-->
+    <!--<display-name>MessageBrokerServlet</display-name>-->
+    <!--<servlet-class>flex.messaging.MessageBrokerServlet</servlet-class>-->
+    <!--<init-param>-->
+    <!--<param-name>services.configuration.file</param-name>-->
+    <!--<param-value>/WEB-INF/flex/services-config.xml</param-value>-->
+    <!--</init-param>-->
+    <!--<load-on-startup>1</load-on-startup>-->
+    <!--</servlet>-->
+
+    <!-- The front controller of this Spring Web application, responsible for handling all application requests -->
+    <!-- The front controller of radon Spring Web application, responsible for handling all application requests -->
     <servlet>
-        <servlet-name>MessageBrokerServlet</servlet-name>
-        <display-name>MessageBrokerServlet</display-name>
-        <servlet-class>flex.messaging.MessageBrokerServlet</servlet-class>
-        <init-param>
-            <param-name>services.configuration.file</param-name>
-            <param-value>/WEB-INF/flex/services-config.xml</param-value>
-        </init-param>
+        <servlet-name>SpringMessageBroker</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>MessageBrokerServlet</servlet-name>
+        <servlet-name>SpringMessageBroker</servlet-name>
         <url-pattern>/messagebroker/*</url-pattern>
     </servlet-mapping>
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:applicationContext.xml</param-value>
+        <param-value>
+            classpath*:applicationContext.xml
+            classpath*:blaze-applicationContext.xml
+        </param-value>
     </context-param>
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
 
-    <servlet>
-        <servlet-name>Persistence Servlet</servlet-name>
-        <servlet-class>com.company.annotation.audio.web.servlet.PersistenceServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
 
-    <servlet-mapping>
-        <servlet-name>Persistence Servlet</servlet-name>
-        <url-pattern>/persistence/*</url-pattern>
-    </servlet-mapping>
+    <!--<servlet>-->
+    <!--<servlet-name>Persistence Servlet</servlet-name>-->
+    <!--<servlet-class>com.company.annotation.audio.web.servlet.PersistenceServlet</servlet-class>-->
+    <!--<load-on-startup>1</load-on-startup>-->
+    <!--</servlet>-->
 
-    <servlet>
-        <servlet-name>Audio Servlet</servlet-name>
-        <servlet-class>com.company.annotation.audio.web.servlet.AudioServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
+    <!--<servlet-mapping>-->
+    <!--<servlet-name>Persistence Servlet</servlet-name>-->
+    <!--<url-pattern>/persistence/*</url-pattern>-->
+    <!--</servlet-mapping>-->
 
-    <servlet-mapping>
-        <servlet-name>Audio Servlet</servlet-name>
-        <url-pattern>/audio/*</url-pattern>
-    </servlet-mapping>
+    <!--<servlet>-->
+    <!--<servlet-name>Audio Servlet</servlet-name>-->
+    <!--<servlet-class>com.company.annotation.audio.web.servlet.AudioServlet</servlet-class>-->
+    <!--<load-on-startup>1</load-on-startup>-->
+    <!--</servlet>-->
+
+    <!--<servlet-mapping>-->
+    <!--<servlet-name>Audio Servlet</servlet-name>-->
+    <!--<url-pattern>/audio/*</url-pattern>-->
+    <!--</servlet-mapping>-->
 </web-app>

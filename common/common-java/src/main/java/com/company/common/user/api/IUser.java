@@ -1,4 +1,4 @@
-package com.company.annotation.common.user.api;
+package com.company.common.user.api;
 
 /**
  * Created by IntelliJ IDEA.

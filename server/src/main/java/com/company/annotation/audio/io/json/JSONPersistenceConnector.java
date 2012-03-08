@@ -3,8 +3,10 @@ package com.company.annotation.audio.io.json;
 import com.company.annotation.audio.api.IPersistenceConnector;
 import com.company.annotation.audio.io.exceptions.PersistenceException;
 import com.company.annotation.audio.pojos.IndexObject;
+import com.company.annotation.audio.pojos.IndexSummary;
 import com.company.annotation.audio.pojos.Sample;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 
@@ -18,12 +20,25 @@ import java.io.*;
  * To change this template use File | Settings | File Templates.
  */
 public class JSONPersistenceConnector implements IPersistenceConnector {
+    private IndexSummary lcl_readIndexSummary( @NotNull final InputStream reader ) throws IOException {
+        final JSONObject jsonIndex      = (JSONObject) JSONValue.parse( new InputStreamReader( reader ) );
+
+        return lcl_readIndexCommon( jsonIndex, new IndexSummary() );
+    }
+
+    private IndexSummary lcl_readIndexCommon( @NotNull final JSONObject jsonIndex, @NotNull final IndexSummary instance ) throws IOException {
+        instance .setName((String) jsonIndex.get( "name" ));
+        instance.setNumChannels(((Long) jsonIndex.get("numChannels")).intValue());
+
+        return instance;
+    }
+
     private IndexObject lcl_readIndexObject( @NotNull final InputStream reader ) throws IOException {
         final IndexObject indexObject   = new IndexObject();
 
         final JSONObject jsonIndex      = (JSONObject) JSONValue.parse( new InputStreamReader( reader ) );
-        indexObject.setName((String) jsonIndex.get( "name" ));
-        indexObject.setNumChannels(((Long) jsonIndex.get("numChannels")).intValue());
+
+        lcl_readIndexCommon( jsonIndex, indexObject );
 
         indexObject.setMax( ((Long) jsonIndex.get( "max" )).shortValue() );
         indexObject.setMin( ((Long) jsonIndex.get( "min" )).shortValue() );
@@ -77,6 +92,8 @@ public class JSONPersistenceConnector implements IPersistenceConnector {
     public <T extends Object> T readObject( @NotNull InputStream inputStream, @NotNull Class<T> objectClazz ) throws IOException {
         if ( objectClazz.equals( IndexObject.class ) ) {
             return (T) lcl_readIndexObject( inputStream );
+        } else if ( objectClazz.equals( IndexSummary.class ) ) {
+            return (T) lcl_readIndexSummary( inputStream );
         }
 
         throw new PersistenceException( "Class, " + objectClazz.getName() + ", not supported." );
@@ -85,8 +102,12 @@ public class JSONPersistenceConnector implements IPersistenceConnector {
     public void writeObject( @NotNull Object obj, @NotNull Writer writer ) throws IOException {
         if ( obj instanceof IndexObject ) {
             lcl_writeIndexObject((IndexObject) obj, writer);
-        }
+        } else if ( obj instanceof IndexSummary ) {
+//            lcl_writeIndexObject((IndexObject) obj, writer);
 
-        throw new PersistenceException( "Class, " + obj.getClass() + ", not supported." );
+            throw new PersistenceException( "Currently, " + IndexSummary.class.getSimpleName() + " objects are readonly!" );
+        } else {
+            throw new PersistenceException( "Class, " + obj.getClass() + ", not supported." );
+        }
     }
 }

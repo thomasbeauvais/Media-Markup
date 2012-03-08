@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:flex="http://www.springframework.org/schema/flex"
+       xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+        http://www.springframework.org/schema/flex http://www.springframework.org/schema/flex/spring-flex-1.5.xsd"
+       default-lazy-init="true">
+
+    <flex:message-broker services-config-path="WEB-INF/flex/services-config.xml">
+        <!--<flex:remoting-service default-channels="my-amf" default-adapter-id="my-java-object-adapter"  />-->
+    </flex:message-broker>
+
+    <bean id="my-java-object-adapter" class="flex.messaging.services.remoting.adapters.JavaAdapter"/>
+
+    <!--<flex:remoting-destination ref="audioAnnotationService"-->
+                               <!--include-methods="load"-->
+                               <!--exclude-methods=""-->
+                               <!--channels="my-amf"/>-->
+
+    <bean id="audioAnnotationService" class="com.company.annotation.audio.services.AudioAnnotationService">
+        <flex:remoting-destination/>
+    </bean>
+
+    <!-- Maps request paths at /* to the BlazeDS MessageBroker -->
+    <!--<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">-->
+        <!--<property name="mappings">-->
+            <!--<value>-->
+                <!--/*=_messageBroker-->
+            <!--</value>-->
+        <!--</property>-->
+    <!--</bean>-->
+
+</beans>

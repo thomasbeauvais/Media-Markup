@@ -4,8 +4,11 @@ import com.company.annotation.audio.api.IPersistenceConnector;
 import com.company.annotation.audio.api.IPersistenceEngine;
 import com.company.annotation.audio.io.exceptions.PersistenceException;
 import org.apache.log4j.Logger;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
+import java.lang.reflect.Array;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,12 +22,22 @@ public class FilePersistenceEngine implements IPersistenceEngine {
 
     private String basePath;
 
+    private File baseDirectory;
+
     private IPersistenceConnector fileInputOutput;
     private static final String EXTENSION = ".index";
 
-    public FilePersistenceEngine(String basePath, IPersistenceConnector fileInputOutput) {
+    public FilePersistenceEngine( @Nullable String basePath, @NotNull IPersistenceConnector fileInputOutputConnector ) {
         this.basePath = basePath;
-        this.fileInputOutput = fileInputOutput;
+
+        this.baseDirectory = new File( basePath );
+
+        if( !baseDirectory.exists() ) {
+            throw new PersistenceException( "Couldn't create " + FilePersistenceEngine.class.getSimpleName(),
+                    new FileNotFoundException( "Couldn't find base directory: " + basePath ) );
+        }
+
+        this.fileInputOutput = fileInputOutputConnector;
     }
 
     public void save(String id, Object obj) {
@@ -32,23 +45,40 @@ public class FilePersistenceEngine implements IPersistenceEngine {
     }
 
     public <T extends Object> T load(String id, Class<T> objectClazz) {
-        return readObjectFromFile( id, objectClazz );
-    }
+        final File inputFile       = new File( basePath, id + EXTENSION );
 
-    private <T extends Object> T readObjectFromFile(String id, Class<T> objectClazz) {
-        final File outputFile       = new File( basePath, id + EXTENSION );
-
-        if ( !outputFile.exists() ) {
-            throw new PersistenceException( "Couldn't locate file for id=" + id + " @ " + outputFile.getAbsolutePath() );
+        if ( !inputFile.exists() ) {
+            throw new PersistenceException( "Couldn't locate file for id=" + id + " @ " + inputFile.getAbsolutePath() );
         }
 
-        InputStream inputStream               = null;
+        return readObjectFromFile( inputFile, objectClazz );
+    }
+
+    public <T extends Object> T[] loadAll( Class<T> objectClazz ) {
+        final File baseDirectory    = new File( basePath );
+        final File[] allFiles       = baseDirectory.listFiles( new FilenameFilter() {
+            public boolean accept( File dir, String name ) {
+                return name.endsWith( EXTENSION );
+            }
+        } );
+
+        final T[]objects            = (T[]) Array.newInstance( objectClazz, allFiles.length );
+        for( int i = 0, allFilesLength = allFiles.length; i < allFilesLength; i++ ) {
+            final File file = allFiles[ i ];
+            objects[ i ] = readObjectFromFile( file, objectClazz );
+        }
+
+        return objects;
+    }
+
+    private <T extends Object> T readObjectFromFile( File inputFile, Class<T> objectClazz) {
+        InputStream inputStream     = null;
         try {
-            inputStream                  = new FileInputStream( outputFile );
+            inputStream             = new FileInputStream( inputFile );
 
             return fileInputOutput.readObject( inputStream, objectClazz );
         } catch (Throwable e) {
-            throw new PersistenceException( "Error opening file: " + outputFile.getAbsolutePath(), e );
+            throw new PersistenceException( "Error opening file: " + inputFile.getAbsolutePath(), e );
         } finally {
             if ( inputStream != null ) {
                 try {

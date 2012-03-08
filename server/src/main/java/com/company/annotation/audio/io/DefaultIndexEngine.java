@@ -32,9 +32,9 @@ public class DefaultIndexEngine implements IIndexEngine {
             SampleBuffer output     = null;
             short[] samples         = null;
 
-            if ( h == null ) {
-                throw new NullPointerException( "Something is wrong with the first header!  It's null!" );
-            }
+//            if ( h == null ) {
+//                throw new NullPointerException( "Something is wrong with the first header!  It's null!" );
+//            }
 
             while((h = bitstream.readFrame()) != null) {
 				pos             = bitstream.pos();

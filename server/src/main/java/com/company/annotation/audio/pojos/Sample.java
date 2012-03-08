@@ -4,9 +4,13 @@ import java.util.Arrays;
 
 public class Sample implements Serializable {
 
-	private short value;
 	private long pos;
-	private float timeStamp;
+    private float timeStamp;
+    private short value;
+
+	public Sample() {
+
+    }
 
 	public Sample(float timeStamp, long pos, short shortValue) {
 		this.timeStamp = timeStamp;
@@ -14,15 +18,11 @@ public class Sample implements Serializable {
 		this.value = shortValue;
 	}
 
-	public short getValue() {
-		return this.value;
-	}
-
 	public long getPosition() {
 		return pos;
 	}
 
-	public void setPos(long pos) {
+	public void setPosition(long pos) {
 		this.pos = pos;
 	}
 
@@ -33,6 +33,10 @@ public class Sample implements Serializable {
 	public void setTimeStamp(float timeStamp) {
 		this.timeStamp = timeStamp;
 	}
+
+    public short getValue() {
+        return this.value;
+    }
 
 	public void setValue(short shortValue) {
 		this.value = shortValue;
