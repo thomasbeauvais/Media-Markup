@@ -15,7 +15,7 @@ public class IndexSummary {
 
     private String name;
 
-    private float time;
+    private double time;
 
     private String description;
 
@@ -43,11 +43,11 @@ public class IndexSummary {
         this.numChannels = numChannels;
     }
 
-    public float getTime() {
+    public double getTime() {
         return time;
     }
 
-    public void setTime( float time ) {
+    public void setTime( double time ) {
         this.time = time;
     }
 

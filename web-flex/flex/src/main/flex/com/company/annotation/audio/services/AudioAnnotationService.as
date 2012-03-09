@@ -1,4 +1,5 @@
 package com.company.annotation.audio.services {
+import com.company.annotation.audio.pojos.IndexSummary;
 import com.company.common.blaze.BlazeResponder;
 
 import mx.rpc.remoting.RemoteObject;
@@ -30,15 +31,24 @@ public class AudioAnnotationService {
         m_serviceObject.loadAll().addResponder( responder );
     }
 
-    public function load( id:String, successCallback:Function, failCallback:Function = null ):void {
+    public function loadSamples( id:String, successCallback:Function, failCallback:Function = null ):void {
         var responder:BlazeResponder = new BlazeResponder(
                 null,
                 successCallback,
                 failCallback
         );
 
-        m_serviceObject.load( id ).addResponder( responder );
+        m_serviceObject.loadSamples( id ).addResponder( responder );
     }
 
+    public function save( id:String, indexSummary:IndexSummary, successCallback:Function, failCallback:Function = null ):void {
+        var responder:BlazeResponder = new BlazeResponder(
+                null,
+                successCallback,
+                failCallback
+        );
+
+        m_serviceObject.save( id, indexSummary ).addResponder( responder );
+    }
 }
 }

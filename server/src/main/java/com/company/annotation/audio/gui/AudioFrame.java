@@ -6,8 +6,8 @@
 //import javax.swing.JFrame;
 //
 //import com.company.annotation.audio.io.FilePersistenceEngine;
-//import com.company.annotation.audio.io.json.JSONPersistenceConnector;
-//import com.company.annotation.audio.pojos.IndexObject;
+//import com.company.annotation.audio.io.json.JSONFilePersistenceConnector;
+//import com.company.annotation.audio.pojos.SampleList;
 //import com.company.annotation.audio.pojos.Sample;
 //
 //
@@ -23,12 +23,12 @@
 //        final String strIndexId = "test-file-small";
 //        //final String strFilePath = "test-file-large";
 //
-//		IndexObject indexFile = new FilePersistenceEngine( ".", new JSONPersistenceConnector() ).load( strIndexId, IndexObject.class );
+//		SampleList indexFile = new FilePersistenceEngine( ".", new JSONFilePersistenceConnector() ).load( strIndexId, SampleList.class );
 //
 ////		show( indexFile );
 //	}
 //
-////	private int[] getDurations(IndexObject indexFile) {
+////	private int[] getDurations(SampleList indexFile) {
 ////		int[] durs = new int[ indexFile.getMaxes().length ];
 ////		for ( int i = 0; i < durs.length; i++ ) {
 ////			durs[ i ] = indexFile.getMaxes()[ i ] + (indexFile. getMins()[ i ] * -1);

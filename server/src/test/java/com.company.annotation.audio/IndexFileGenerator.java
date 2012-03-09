@@ -1,10 +1,11 @@
 package com.company.annotation.audio;
 
 import com.company.annotation.audio.api.IIndexEngine;
-import com.company.annotation.audio.api.IPersistenceConnector;
+import com.company.annotation.audio.api.IFilePersistenceConnector;
 import com.company.annotation.audio.io.FilePersistenceEngine;
-import com.company.annotation.audio.io.json.JSONPersistenceConnector;
-import com.company.annotation.audio.pojos.IndexObject;
+import com.company.annotation.audio.io.json.JSONFilePersistenceConnector;
+import com.company.annotation.audio.pojos.IndexSummary;
+import com.company.annotation.audio.pojos.SampleList;
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;
@@ -35,9 +36,10 @@ public class IndexFileGenerator {
     public static void beforeClass() {
         applicationContext = new ClassPathXmlApplicationContext( "applicationContext.xml" );
 
-        final IPersistenceConnector connector = new JSONPersistenceConnector();
+        final IFilePersistenceConnector connector = new JSONFilePersistenceConnector();
 
-        filePersistenceEngine    = new FilePersistenceEngine( PATH_FILE_PERSISTENCE_BASE, connector );
+        filePersistenceEngine    = new FilePersistenceEngine( PATH_FILE_PERSISTENCE_BASE );
+        filePersistenceEngine.setFilePersistenceConnector( connector );
     }
 
     @Test
@@ -52,22 +54,23 @@ public class IndexFileGenerator {
         } );
 
         for ( File audioFile : audioFiles ) {
-            final String indexName          = audioFile.getName();
+            final String indexName          = audioFile.getName().substring( 0, audioFile.getName().length() - 4 );
 
-            LOGGER.info( "*** Attempting to load and create index file for: " + audioFile.getAbsolutePath() );
+            LOGGER.info( "*** Attempting to create index file for: " + audioFile.getAbsolutePath() );
 
             InputStream inputStream         = null;
 
             try {
                 inputStream                     = new FileInputStream( audioFile );
 
-                final IndexObject indexObject   = indexEngine.makeIndexObject( inputStream, indexName );
+                final SampleList sampleList = indexEngine.createIndexForAudioStream( inputStream, indexName );
 
-                LOGGER.info( "*** Created IndexObject: " + indexName );
+                LOGGER.info( "*** Created SampleList: " + indexName );
 
-                LOGGER.info( "*** Attempting to save IndexObject: " + indexName );
+                LOGGER.info( "*** Attempting to save SampleList: " + indexName );
 
-                filePersistenceEngine.save( indexName, indexObject );
+                filePersistenceEngine.save( indexName, sampleList );
+                filePersistenceEngine.save( indexName, sampleList.getIndexSummary() );
 
                 LOGGER.info( "*** Creation of index file complete for: " + indexName );
             } catch( FileNotFoundException e ) {
@@ -80,6 +83,26 @@ public class IndexFileGenerator {
                 }
             }
 
+        }
+    }
+
+    @Test
+    public void readAllIndexFilesForDir() {
+        final File audioDirectory                   = new File( PATH_FILE_PERSISTENCE_BASE );
+        final File[] indexFiles                     = audioDirectory.listFiles( new FilenameFilter() {
+            public boolean accept( File dir, String name ) {
+                return name.endsWith( ".index" );
+            }
+        } );
+
+        for ( File indexFile : indexFiles ) {
+            final String indexName                  = indexFile.getName().substring( 0, indexFile.getName().length() - 6 );
+
+            LOGGER.info( "*** Attempting to load index file for: " + indexFile.getAbsolutePath() );
+
+            final IndexSummary indexObject          = filePersistenceEngine.load( indexName, IndexSummary.class );
+
+            LOGGER.info( "*** Loaded indexObject: " + indexName );
         }
     }
 }

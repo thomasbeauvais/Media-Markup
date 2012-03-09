@@ -1,8 +1,9 @@
 package com.company.annotation.audio.io;
 
 import com.company.annotation.audio.api.IIndexEngine;
-import com.company.annotation.audio.pojos.IndexObject;
+import com.company.annotation.audio.pojos.IndexSummary;
 import com.company.annotation.audio.pojos.Sample;
+import com.company.annotation.audio.pojos.SampleList;
 import javazoom.jl.decoder.Bitstream;
 import javazoom.jl.decoder.Decoder;
 import javazoom.jl.decoder.Header;
@@ -17,14 +18,15 @@ import java.io.*;
 public class DefaultIndexEngine implements IIndexEngine {
     private static final Logger LOGGER = Logger.getLogger( IIndexEngine.class );
 
-    public synchronized IndexObject makeIndexObject( @NotNull InputStream input, @NotNull String indexName ) {
+    public synchronized SampleList createIndexForAudioStream( @NotNull InputStream input, @NotNull String indexName ) {
 
 		long start = System.currentTimeMillis();
 
 		try {
-			final Bitstream bitstream   = new Bitstream( input );
+            final Bitstream bitstream   = new Bitstream( input );
             final Decoder decoder       = new Decoder();
-            final IndexObject index     = new IndexObject();
+            final SampleList sampleList = new SampleList();
+            final IndexSummary index    = new IndexSummary();
 
             float timeStamp         = 0;
             long pos                = 0;
@@ -38,7 +40,7 @@ public class DefaultIndexEngine implements IIndexEngine {
 
                 samples         = getSamples( output.getBuffer(), output.getChannelCount() );
 
-                index.addSample( new Sample( timeStamp, pos, samples[0] ), false );
+                sampleList.addSample( new Sample( timeStamp, pos, samples[0] ), false );
 
 				timeStamp +=  ( (float) output.getBufferLength() ) / output.getChannelCount() / output.getSampleFrequency();
 				bitstream.closeFrame();
@@ -47,13 +49,15 @@ public class DefaultIndexEngine implements IIndexEngine {
             index.setTime( timeStamp );
             index.setName( indexName );
             index.setChannels( output.getChannelCount() );
-            index.updateBounds();
+
+            sampleList.setIndexSummary( index );
+            sampleList.updateBounds();
 
 			final long end = System.currentTimeMillis();
 
 			LOGGER.info( "Audio stream indexed in " + (end-start)/1000. + " seconds.");
 			
-			return index;
+			return sampleList;
 		} catch (Exception e) {
             LOGGER.error( e );
 

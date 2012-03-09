@@ -1,13 +1,10 @@
 package com.company.annotation.audio.services;
 
 import com.company.annotation.audio.api.IPersistenceEngine;
-import com.company.annotation.audio.pojos.IndexObject;
 import com.company.annotation.audio.pojos.IndexSummary;
+import com.company.annotation.audio.pojos.SampleList;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Lazy;
-import org.springframework.context.annotation.Scope;
 import org.springframework.flex.remoting.RemotingDestination;
-import org.springframework.flex.remoting.RemotingExclude;
 import org.springframework.flex.remoting.RemotingInclude;
 import org.springframework.stereotype.Service;
 
@@ -38,7 +35,12 @@ public class AudioAnnotationService {
     }
 
     @RemotingInclude
-    public IndexObject load( String id ) {
-        return persistenceEngine.load( id, IndexObject.class );
+    public SampleList loadSamples( String id ) {
+        return persistenceEngine.load( id, SampleList.class );
+    }
+
+    @RemotingInclude
+    public void save( String id, IndexSummary indexSummary ) {
+        persistenceEngine.save( id, indexSummary );
     }
 }

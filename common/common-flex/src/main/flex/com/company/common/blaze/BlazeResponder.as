@@ -89,7 +89,13 @@ public class BlazeResponder extends AsyncResponder {
             } if ( null != m_delegatedSuccessCallback ) {
                 trace("The BlazeResult was null, there was no error and the primary callback was null.  Calling the 'delegated callback' with the result: " + resultEvent.result);
 
-                m_delegatedSuccessCallback( resultEvent.result );
+                // If there was a return
+                if ( resultEvent.result ) {
+                    m_delegatedSuccessCallback( resultEvent.result );
+                } else {
+                    // Otherwise, it is void..
+                    m_delegatedSuccessCallback();
+                }
             } else {
                 trace("The BlazeResult was null, there was no error and the primary callback was null.  Calling the super with info: " + info);
 

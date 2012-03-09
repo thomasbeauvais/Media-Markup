@@ -16,7 +16,7 @@
     <bean class="com.company.annotation.audio.io.FilePersistenceEngine">
         <constructor-arg value="/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/index"/>
         <constructor-arg>
-            <bean class="com.company.annotation.audio.io.json.JSONPersistenceConnector"/>
+            <bean class="com.company.annotation.audio.io.json.JSONFilePersistenceConnector"/>
         </constructor-arg>
 
     </bean>

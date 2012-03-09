@@ -5,7 +5,7 @@
 //import java.util.Arrays;
 //
 //@PersistenceCapable(identityType = IdentityType.APPLICATION)
-//public class IndexObject implements Serializable {
+//public class SampleList implements Serializable {
 //
 //    @PrimaryKey
 //    @Persistent(valueStrategy = IdGeneratorStrategy.IDENTITY)
@@ -26,11 +26,11 @@
 //    @Persistent
 //    private short[] maxes;
 //
-//    public IndexObject() {
+//    public SampleList() {
 //
 //    }
 //
-//	public IndexObject(String name) {
+//	public SampleList(String name) {
 //		this.samples    = new ArrayList<Sample>();
 //	    this.name       = name;
 //    }

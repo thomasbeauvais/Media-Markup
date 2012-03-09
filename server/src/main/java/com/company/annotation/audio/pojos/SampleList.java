@@ -2,6 +2,8 @@ package com.company.annotation.audio.pojos;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,14 +12,16 @@ import java.util.Arrays;
  * Time: 10:30 PM
  * To change this template use File | Settings | File Templates.
  */
-public class IndexObject extends IndexSummary {
-    private ArrayList<Sample> samples = new ArrayList<Sample>();
+public class SampleList {
+    private List<Sample> samples = new Vector<Sample>();
 
     private short min;
 
     private short max;
 
-    public IndexObject() {
+    private IndexSummary indexSummary;
+
+    public SampleList() {
 
     }
 
@@ -68,5 +72,13 @@ public class IndexObject extends IndexSummary {
         for( Sample sample : samples ) {
             updateBoundsForValue( sample );
         }
+    }
+
+    public void setIndexSummary( IndexSummary index ) {
+        this.indexSummary = index;
+    }
+
+    public IndexSummary getIndexSummary() {
+        return this.indexSummary;
     }
 }
