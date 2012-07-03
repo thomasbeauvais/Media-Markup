@@ -3,6 +3,7 @@ package com.company.annotation.audio;
 import com.company.annotation.audio.api.IIndexEngine;
 import com.company.annotation.audio.api.IFilePersistenceConnector;
 import com.company.annotation.audio.io.FilePersistenceEngine;
+import com.company.annotation.audio.io.binary.BinaryPersistenceConnector;
 import com.company.annotation.audio.io.json.JSONFilePersistenceConnector;
 import com.company.annotation.audio.pojos.IndexSummary;
 import com.company.annotation.audio.pojos.SampleList;
@@ -29,14 +30,15 @@ public class IndexFileGenerator {
 
     private static FilePersistenceEngine filePersistenceEngine;
 
-    public static final String PATH_FILE_PERSISTENCE_BASE   = "/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/filePersistenceDir";
-    public static final String PATH_AUDIO_FILES             = "/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/songs";
+    public static final String PATH_FILE_PERSISTENCE_BASE   = "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir2";
+    public static final String PATH_AUDIO_FILES             = "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/songs";
 
     @BeforeClass
     public static void beforeClass() {
         applicationContext = new ClassPathXmlApplicationContext( "applicationContext.xml" );
 
-        final IFilePersistenceConnector connector = new JSONFilePersistenceConnector();
+//        final IFilePersistenceConnector connector = new JSONFilePersistenceConnector();
+        final IFilePersistenceConnector connector = new BinaryPersistenceConnector();
 
         filePersistenceEngine    = new FilePersistenceEngine( PATH_FILE_PERSISTENCE_BASE );
         filePersistenceEngine.setFilePersistenceConnector( connector );

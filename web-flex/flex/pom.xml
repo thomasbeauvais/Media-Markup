@@ -65,19 +65,19 @@
                     <services>../web/src/main/webapp/WEB-INF/flex/services-config.xml</services>
                 </configuration>
             </plugin>
-            <plugin>
-                <groupId>com.intellij.flex.maven</groupId>
-                <artifactId>idea-flexmojos-maven-plugin</artifactId>
-                <version>1.3.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>compile</phase>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.intellij.flex.maven</groupId>-->
+                <!--<artifactId>idea-flexmojos-maven-plugin</artifactId>-->
+                <!--<version>1.3.3</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>generate</goal>-->
+                        <!--</goals>-->
+                        <!--<phase>compile</phase>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 

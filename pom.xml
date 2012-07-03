@@ -15,6 +15,7 @@
         <module>server</module>
         <!--<module>web-html5</module>-->
         <module>web-flex</module>
+        <module>java-client</module>
     </modules>
 
 </project>

@@ -58,19 +58,19 @@
             </plugin>
 
             <!-- This plug will generate Flex configuration files for use with IDEA -->
-            <plugin>
-                <groupId>com.intellij.flex.maven</groupId>
-                <artifactId>idea-flexmojos-maven-plugin</artifactId>
-                <version>1.3.3</version>
-                <executions>
-                    <execution>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <phase>compile</phase>
-                    </execution>
-                </executions>
-            </plugin>
+            <!--<plugin>-->
+                <!--<groupId>com.intellij.flex.maven</groupId>-->
+                <!--<artifactId>idea-flexmojos-maven-plugin</artifactId>-->
+                <!--<version>1.4.1</version>-->
+                <!--<executions>-->
+                    <!--<execution>-->
+                        <!--<goals>-->
+                            <!--<goal>generate</goal>-->
+                        <!--</goals>-->
+                        <!--<phase>compile</phase>-->
+                    <!--</execution>-->
+                <!--</executions>-->
+            <!--</plugin>-->
         </plugins>
     </build>
 
@@ -101,6 +101,10 @@
             <id>flex-mojos-repository</id>
             <url>http://repository.sonatype.org/content/groups/flexgroup</url>
         </repository>
+        <!--<repository>-->
+            <!--<id>flash-mvn-repo</id>-->
+            <!--<url>http://github.com/develar/flash-mvn-repo/</url>-->
+        <!--</repository>-->
     </repositories>
 
     <pluginRepositories>
@@ -108,6 +112,10 @@
             <id>flex-mojos-plugin-repository</id>
             <url>http://repository.sonatype.org/content/groups/flexgroup</url>
         </pluginRepository>
+        <!--<pluginRepository>-->
+            <!--<id>flash-mvn-plugin-repo</id>-->
+            <!--<url>http://github.com/develar/flash-mvn-repo/</url>-->
+        <!--</pluginRepository>-->
     </pluginRepositories>
 
 </project>

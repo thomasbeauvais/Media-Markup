@@ -29,6 +29,7 @@
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>com.adobe.flex.messaging</groupId>
             <artifactId>flex-messaging-common</artifactId>
@@ -49,18 +50,12 @@
             <type>jar</type>
             <version>4.0.1.17657</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>com.google.collections</groupId>
             <artifactId>google-collections</artifactId>
             <version>1.0</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.google</groupId>
-            <artifactId>gag</artifactId>
-            <version>1.0.1</version>
-            <type>jar</type>
         </dependency>
 
         <dependency>

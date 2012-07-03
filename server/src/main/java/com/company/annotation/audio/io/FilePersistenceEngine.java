@@ -118,7 +118,7 @@ public class FilePersistenceEngine implements IPersistenceEngine {
         if ( outputFile.exists() ) {
             LOGGER.warn( "File already exists.  Attempting to overwrite file: " + outputFile.getAbsolutePath() );
         } else {
-           LOGGER.info( "File doesn't exist.  Creating output file: " + outputFile.getAbsolutePath() );
+           LOGGER.warn( "File doesn't exist.  Creating output file: " + outputFile.getAbsolutePath() );
         }
 
         try {
