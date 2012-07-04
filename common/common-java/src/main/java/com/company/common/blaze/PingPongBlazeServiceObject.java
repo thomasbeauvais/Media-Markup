@@ -17,7 +17,7 @@ public class PingPongBlazeServiceObject {
         return PONG;
     }
 
-    public String ping( @Nullable String stamp ) {
+    public String ping( String stamp ) {
         if ( stamp != null ) {
             return "pong:" +stamp;
         }

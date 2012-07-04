@@ -34,7 +34,7 @@ public class BlazeResult {
      *
      * @param result (nullable) The result from the service call.  This value must be serializable!
      */
-    public void setResult( @Nullable Object result ) {
+    public void setResult( Object result ) {
         m_result = result;
     }
 
