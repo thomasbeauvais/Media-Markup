@@ -17,28 +17,35 @@
  * 
  * =============================================================================
  */
-package com.company.annotation.audio.controller;
+package com.company.annotation.audio.web.controller;
 
+import com.company.annotation.audio.pojos.IndexSummary;
+import com.company.annotation.audio.services.AudioAnnotationService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.WebDataBinder;
-import org.springframework.web.bind.annotation.InitBinder;
+import org.springframework.web.bind.annotation.Mapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
-import thymeleafexamples.stsm.business.entities.*;
-import thymeleafexamples.stsm.business.services.SeedStarterService;
-import thymeleafexamples.stsm.business.services.VarietyService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.beans.PropertyEditorSupport;
-import java.text.SimpleDateFormat;
-import java.util.*;
-
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
 public class AudioIndexController {
+    @Autowired
+    private MessageSource messageSource;
+
+    @Autowired
+    private AudioAnnotationService audioAnnotationService;
+
+    @ModelAttribute("allIndexFiles")
+    public List<IndexSummary> allIndexFiles() {
+        return Arrays.asList(this.audioAnnotationService.loadAll());
+    }
+
+    @RequestMapping({"/"})
+    public String showkalsjdf() {
+        return "audio-annotation";
+    }
 }

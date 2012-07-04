@@ -23,7 +23,7 @@
 
   <modelVersion>4.0.0</modelVersion>
   <groupId>thymeleafexamples</groupId>
-  <artifactId>stsm</artifactId>
+  <artifactId>seed-manager</artifactId>
   <packaging>war</packaging>
   <version>20120517</version>
   <name>Thymeleaf Examples - Spring Thyme Seedstarter Manager</name>

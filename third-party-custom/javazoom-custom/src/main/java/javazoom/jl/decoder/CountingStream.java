@@ -16,13 +16,11 @@ public class CountingStream extends PushbackInputStream {
 		super(in, size);
 	}
 
-	@Override
 	public synchronized int read() throws IOException {
 		count ++;
 		return super.read();
 	}
 
-	@Override
 	public synchronized int read(byte[] b, int off, int len) throws 
 	IOException {
 
@@ -31,20 +29,16 @@ public class CountingStream extends PushbackInputStream {
 		return c;
 	}
 
-
-	@Override
 	public void unread(byte[] b, int off, int len) throws IOException {
 		count -= len;
 		super.unread(b, off, len);
 	}
 
-	@Override
 	public void unread(int b) throws IOException {
 		count--;
 		super.unread(b);
 	}
 
-	@Override
 	public synchronized long skip(long n) throws IOException {
 		count += n;
 		super.skip(n);

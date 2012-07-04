@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Welcome to AudioAnnotation</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+</head>
+
+<body>
+<div th:unless="${#lists.isEmpty(allIndexFiles)}">
+
+    <table>
+        <tbody>
+        <tr th:each="indexFile : ${allIndexFiles}">
+            <td th:text="${indexFile.name}"></td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+</body>
+</html>

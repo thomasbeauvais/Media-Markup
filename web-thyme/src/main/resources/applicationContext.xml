@@ -7,18 +7,19 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
     default-lazy-init="true">
 
-    <context:component-scan base-package="com.company"/>
-
     <context:annotation-config/>
 
-    <bean scope="session" class="com.company.annotation.audio.io.DefaultIndexEngine"/>
+    <context:component-scan base-package="com.company.annotation.audio"/>
 
-    <bean scope="session" class="com.company.annotation.audio.io.FilePersistenceEngine">
-        <constructor-arg value="."/>
-        <constructor-arg>
-            <bean class="com.company.annotation.audio.io.json.JSONFilePersistenceConnector"/>
-        </constructor-arg>
+    <bean class="com.company.annotation.audio.io.DefaultIndexEngine"/>
 
+    <!--<bean class="com.company.annotation.audio.io.json.JSONFilePersistenceConnector"/>-->
+    <bean class="com.company.annotation.audio.io.binary.BinaryPersistenceConnector"/>
+
+    <bean class="com.company.annotation.audio.io.FilePersistenceEngine">
+        <!--<constructor-arg value="/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/filePersistenceDir"/>-->
+        <!--<constructor-arg value="/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir2"/>-->
+        <constructor-arg value="/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir2"/>
     </bean>
 
 </beans>

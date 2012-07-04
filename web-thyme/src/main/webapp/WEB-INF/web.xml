@@ -1,12 +1,21 @@
-<!DOCTYPE web-app PUBLIC
-        "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
-        "http://java.sun.com/dtd/web-app_2_3.dtd" >
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="stsm" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd">
 
-<web-app>
-    <display-name>Archetype Created Web Application</display-name>
+
+    <display-name>Audio Annotation</display-name>
+
+    <session-config>
+        <session-timeout>60</session-timeout>
+    </session-config>
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
-        <param-value>classpath*:applicationContext.xml</param-value>
+        <param-value>
+            classpath*:applicationContext.xml
+            WEB-INF/spring-servlet.xml
+        </param-value>
     </context-param>
 
     <listener>
@@ -14,24 +23,20 @@
     </listener>
 
     <servlet>
-        <servlet-name>Persistence Servlet</servlet-name>
-        <servlet-class>com.company.annotation.audio.web.servlet.PersistenceServlet</servlet-class>
+        <servlet-name>spring</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
     <servlet-mapping>
-        <servlet-name>Persistence Servlet</servlet-name>
-        <url-pattern>/persistence/*</url-pattern>
+        <servlet-name>spring</servlet-name>
+        <url-pattern>/</url-pattern>
     </servlet-mapping>
 
-    <servlet>
-        <servlet-name>Audio Servlet</servlet-name>
-        <servlet-class>com.company.annotation.audio.web.servlet.AudioServlet</servlet-class>
-        <load-on-startup>1</load-on-startup>
-    </servlet>
+    <welcome-file-list>
+        <welcome-file>audio-annotation</welcome-file>
+        <!--<welcome-file>hello</welcome-file>-->
+        <!--<welcome-file>index.html</welcome-file>-->
+    </welcome-file-list>
 
-    <servlet-mapping>
-        <servlet-name>Audio Servlet</servlet-name>
-        <url-pattern>/audio/*</url-pattern>
-    </servlet-mapping>
 </web-app>
