@@ -11,7 +11,7 @@
 
     <modules>
         <module>common-java</module>
-        <module>common-flex</module>
+        <!--<module>common-flex</module>-->
     </modules>
 
 </project>

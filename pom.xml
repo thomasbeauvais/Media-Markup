@@ -13,10 +13,12 @@
         <module>common</module>
         <module>third-party-custom</module>
         <module>server</module>
-        <!--<module>web-html5</module>-->
-        <module>web-flex</module>
         <module>java-client</module>
-    </modules>
+        <!--<module>web-html5</module>-->
+        <!--<module>web-flex</module>-->
+        <module>web-thyme</module>
+        <module>thymeleaf-examples</module>
+
+  </modules>
 
 </project>
-
