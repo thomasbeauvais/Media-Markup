@@ -1,22 +1,74 @@
-<!DOCTYPE html>
-
 <html xmlns:th="http://www.thymeleaf.org">
+
+
+<link rel="stylesheet" type="text/css" href="resources/css/audio-annotation.css"/>
 
 <head>
     <title>Welcome to AudioAnnotation</title>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+
+    <script src="resources/javascript/waveForm.js"  type="text/javascript"></script>
+    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 
+<script type="text/javascript" charset="utf-8">
+    function loadWaveform() {
+        //waveform.width    = window.innerWidth - 100;
+        //waveform.height   = 400;
+
+        // TODO:  If there are previous samples, then scale before loading
+
+        $.getJSON( "visualData", { width: waveform.width, height: waveform.height }, function( data ) {
+            // data.samples are the values of the waveform starting from a center
+            console.log( "We have some shit!" );
+
+            loading( true );
+
+            drawWaveForm( waveform, data.samples );
+
+            loading( false );
+        } );
+    }
+
+    function loading( isVisible ) {
+        if ( isVisible ) {
+            loading.style = "visible : visible";
+        } else {
+            loading.style = "visible : hidden";
+        }
+    }
+
+    $( window ).resize( function( e ) {
+        loadWaveform();
+    } );
+
+    $( document ).ready( function() {
+        resetCanvas( waveform );
+
+        var context = bodycanvas.getContext( '2d' );
+            context.strokeStyle = "rgb( 0, 0, 0 )"
+            context.moveTo( 0, 0 );
+            context.lineTo( 0, 1000 );
+            context.fill();
+    } );
+</script>
+
 <body>
+
+<div class="waveform">
+    <canvas id="waveform"></canvas>
+</div>
+
 <div th:unless="${#lists.isEmpty(allIndexFiles)}">
 
     <table>
         <tbody>
-        <tr th:each="indexFile : ${allIndexFiles}">
-            <td th:text="${indexFile.name}"></td>
-        </tr>
+            <tr th:each="indexFile : ${allIndexFiles}">
+                <td th:text="${indexFile.name}"></td>
+            </tr>
         </tbody>
     </table>
+
+    <button type="button" onclick="loadWaveform();">Load!</button>
 
 </div>
 </body>

@@ -17,9 +17,9 @@ import java.util.Map;
  * Time: 3:25 PM
  * To change this template use File | Settings | File Templates.
  */
-@Service("audioAnnotationService")
+@Service
 @RemotingDestination(channels={"my-amf"})
-public class AudioAnnotationService {
+public class AudioAnnotationService implements IAnnotationService {
 
     private Map<String, SampleList> cache = new HashMap<String, SampleList>();
 

@@ -23,8 +23,11 @@
   <!--  SPRING ANNOTATION PROCESSING                                    -->
   <!-- **************************************************************** -->
   <mvc:annotation-driven />
-  <context:component-scan base-package="com.company.annotation.audio.web.controller" />
+  <mvc:resources mapping="/resources/**" location="/public-resources/"/>
 
+
+
+  <context:component-scan base-package="com.company.annotation.audio.web" />
 
   <!-- **************************************************************** -->
   <!--  MESSAGE EXTERNALIZATION/INTERNATIONALIZATION                    -->

@@ -24,11 +24,11 @@ import com.company.annotation.audio.services.AudioAnnotationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.Mapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import java.util.Arrays;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -47,5 +47,16 @@ public class AudioIndexController {
     @RequestMapping({"/"})
     public String showkalsjdf() {
         return "audio-annotation";
+    }
+
+//    @RequestMapping("/hello")
+//    public ModelAndView helloWorld() {
+//        return new ModelAndView("hello", "message", "Spring MVC Demo");
+//    }
+
+    @RequestMapping(value = "/time", method = RequestMethod.GET)
+    public @ResponseBody String getTime(@RequestParam String name) {
+        String result = "Time for " + name + " is " + new Date().toString();
+        return result;
     }
 }
