@@ -1,7 +1,7 @@
 // For now we are going to have the window create the canvas and pass it in
-function Waveform( canvas ) {
-//    this.waveformCanvas                 = document.createElement( 'canvas' );
-    this.waveformCanvas                 = canvas;
+function Waveform( parent ) {
+    this.waveformCanvas                 = document.createElement( 'canvas' );
+//    this.waveformCanvas                 = canvas;
     this.waveformCanvas.id              = "waveform";
 
     this.waveformCanvas.parent          = this;
@@ -9,43 +9,12 @@ function Waveform( canvas ) {
     this.idIndexFile                    =  null;
 
    // Add it to the container..
-//    document.body.appendChild( this.waveformCanvas );
+    parent.appendChild( this.waveformCanvas );
 
     // Need to set the width after it's been added to the screen
     // The canvas width was the coordinate system with (default is 150 X 300 )
     this.waveformCanvas.width           = this.waveformCanvas.offsetWidth;
     this.waveformCanvas.height          = this.waveformCanvas.offsetHeight;
-
-    this.onSamplesReceived = function( data ) {
-        // data.samples are the values of the waveform starting from a center
-        console.log( "data received for: " + this.idIndexFile );
-
-        this.drawWaveform( data.samples );
-    }
-
-    this.loadIndexFile = function( idIndexFile ) {
-        if( this.idIndexFile == idIndexFile ) {
-            console.log( "already loaded: " + idIndexFile );
-            return;
-        }
-
-        this.idIndexFile = idIndexFile;
-
-        console.log( "loading waveform: " + idIndexFile );
-
-        var self = this;
-
-        $.getJSON( "visualData",
-            {
-                idIndexFile: encodeURI( idIndexFile ),
-                width: waveform.width,
-                height: waveform.height
-            },
-            function( data ) {
-                self.onSamplesReceived( data );
-            }
-        );
-    }
 
     this.drawWaveform = function( samples ) {
         this.resetCanvas();
@@ -105,4 +74,6 @@ function Waveform( canvas ) {
         canvas.width        = canvas.clientWidth;
         canvas.height       = canvas.clientHeight;
     }
+
+    this.resetCanvas();
 }

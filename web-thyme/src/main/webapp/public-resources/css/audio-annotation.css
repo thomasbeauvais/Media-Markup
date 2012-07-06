@@ -1,8 +1,12 @@
+html {
+  background-color: white;
+}
+
 body {
   font-family: 'DejaVu Sans', Arial, Helvetica;
   font-size: 12px;
   background-color: #ffffff;
-  margin: 0px auto;
+  margin: auto;
   padding: 20px 20px;
   width: 850px;
 }
@@ -24,26 +28,19 @@ A:hover {
     color: red;
 }
 
-div.index-file-list-header, div.index-file-list-element {
-    border: 1px solid black;
-    margin: 2px auto;
-    padding: 10;
+div.index-file-list-element {
 }
 
 div.container {
     #width: 850px;
     height: 400px;
 
-    border: 1px;
-    border-style:solid;
-    border-color:black;
-
     background-color: white;
 }
 
-div.inner-container {
+div#innerContainer {
     height: 100%;
-
+    
     margin: auto;
 
     padding-left: 25px;
@@ -52,21 +49,41 @@ div.inner-container {
     padding-bottom: 10px;
 }
 
-div.waveform {
+.margined {
+    margin: 5px 0px 5px 0px;
+}
+
+.padded {
+    padding: 5px 10px 5px 10px;
+}
+
+div#currentIndexFile {
+}
+
+div#indexFileList {
+}
+
+.bordered {
     border: 1px;
     border-style:solid;
     border-color:black;
-
-    background-color: blue;
 }
 
-div.overlay, canvas#selectionOverlay {
+canvas#waveform {
+    background-color: blue;
+
+    border: 1px;
+    border-style:solid;
+    border-color:black;
+}
+
+canvas#selectionOverlay {
     z-index: 100;
 
     #background-color: red;
 }
 
-div.waveform, div.overlay, canvas#waveform, canvas#selectionOverlay {
+canvas#waveform, canvas#selectionOverlay {
     width: 800px;
     height: 380px;
 

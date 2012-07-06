@@ -1,8 +1,6 @@
-var idCurrentIndexFile;
-
-function SelectionOverlay( canvas ) {
-//    this.overlayCanvas                 = document.createElement( 'canvas' );
-    this.overlayCanvas                 = canvas;
+function SelectionOverlay( parent ) {
+    this.overlayCanvas                 = document.createElement( 'canvas' );
+//    this.overlayCanvas                 = canvas;
     this.overlayCanvas.id              = "selectionOverlay";
 
     this.overlayCanvas.addEventListener('mousedown', this.onMouseDown, false);
@@ -14,14 +12,24 @@ function SelectionOverlay( canvas ) {
     this.overlayCanvas.parent = this;
 
     this.startX = -1;
+    this.isDragging = false;
 
    // Add it to the container..
-//    document.body.appendChild( this.overlayCanvas );
+    parent.appendChild( this.overlayCanvas );
 
     // Need to set the width after it's been added to the screen
     // The canvas width was the coordinate system with (default is 150 X 300 )
     this.overlayCanvas.width           = this.overlayCanvas.offsetWidth;
     this.overlayCanvas.height          = this.overlayCanvas.offsetHeight;
+
+    this.clearSelection = function () {
+        this.startX = -1;
+        this.endX = -1;
+
+        this.isDragging = false;
+
+        cleanCanvas( this.overlayCanvas );
+    }
 
 }
 
