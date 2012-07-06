@@ -49,7 +49,7 @@ public class AudioAnnotationService implements IAnnotationService {
     }
 
     @RemotingInclude
-    public VisualData loadVisualData( String indexName, VisualParameters visualParameters ) {
+    public VisualData loadVisualData( String idContentFile, VisualParameters visualParameters ) {
         try {
             Thread.sleep( 100 );
         } catch (InterruptedException e) {
@@ -58,11 +58,11 @@ public class AudioAnnotationService implements IAnnotationService {
 
         final VisualData visualData = new VisualData();
 
-        if ( cache.get( indexName ) == null ) {
-            cache.put( indexName, loadSamples( indexName ) );
+        if ( cache.get( idContentFile ) == null ) {
+            cache.put( idContentFile, loadSamples( idContentFile ) );
         }
 
-        final SampleList sampleList = cache.get( indexName );
+        final SampleList sampleList = cache.get( idContentFile );
 
         final int[] visualSamples   = new int[ visualParameters.getWidth() ];
 

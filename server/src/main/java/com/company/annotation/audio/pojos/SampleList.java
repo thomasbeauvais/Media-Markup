@@ -20,6 +20,7 @@ public class SampleList {
     private short max;
 
     private IndexSummary indexSummary;
+    private String id;
 
     public SampleList() {
 
@@ -80,5 +81,13 @@ public class SampleList {
 
     public IndexSummary getIndexSummary() {
         return this.indexSummary;
+    }
+
+    public void setId(String id) {
+        this.id = id;
+    }
+
+    public String getId() {
+        return this.id;
     }
 }

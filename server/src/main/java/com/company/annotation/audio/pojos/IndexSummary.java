@@ -12,15 +12,21 @@ import java.util.Arrays;
  */
 public class IndexSummary {
     private int numChannels;
-
-    private String name;
-
     private double time;
-
+    private String name;
     private String description;
+    private String id;
 
     public IndexSummary() {
 
+    }
+
+    public String getId() {
+        return this.id;
+    }
+
+    public void setId( String id ) {
+        this.id = id;
     }
 
     public String getName() {

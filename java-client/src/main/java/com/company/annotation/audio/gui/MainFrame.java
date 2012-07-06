@@ -71,8 +71,8 @@ public class MainFrame extends JFrame {
 //                fileChooser.showOpenDialog( MainFrame.this );
 //
 //                final File indexFile = fileChooser.getSelectedFile();
-//                final File indexFile = new File( "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir/test-file-small.index" );
-                final File indexFile = new File( "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir/test-file-large.index" );
+//                final File indexFile = new File( "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir/small.index" );
+                final File indexFile = new File( "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir/large.index" );
 
                 LOGGER.info( "*** Attempting to load index file for: " + indexFile.getAbsolutePath() );
 

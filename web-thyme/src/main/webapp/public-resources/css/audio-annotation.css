@@ -7,15 +7,44 @@ body {
   width: 850px;
 }
 
-div.waveform {
+A:link {
+    text-decoration: none
+}
+
+A:visited {
+    text-decoration: none
+}
+
+A:active {
+    text-decoration: none
+}
+
+A:hover {
+    text-decoration: none;
+    color: red;
+}
+
+div.index-file-list-header, div.index-file-list-element {
+    border: 1px solid black;
+    margin: 2px auto;
+    padding: 10;
+}
+
+div.container {
     #width: 850px;
-    #height: 400px;
+    height: 400px;
 
     border: 1px;
     border-style:solid;
     border-color:black;
 
     background-color: white;
+}
+
+div.inner-container {
+    height: 100%;
+
+    margin: auto;
 
     padding-left: 25px;
     padding-right: 25px;
@@ -23,12 +52,23 @@ div.waveform {
     padding-bottom: 10px;
 }
 
-#waveform {
-    width: 800;
-    height: 380;
+div.waveform {
+    border: 1px;
+    border-style:solid;
+    border-color:black;
+
     background-color: blue;
+}
 
-    border: 1px solid black;
+div.overlay, canvas#selectionOverlay {
+    z-index: 100;
 
-    alpha: 0.5;
+    #background-color: red;
+}
+
+div.waveform, div.overlay, canvas#waveform, canvas#selectionOverlay {
+    width: 800px;
+    height: 380px;
+
+    position: absolute;
 }

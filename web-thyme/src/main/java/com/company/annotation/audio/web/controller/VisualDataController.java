@@ -28,14 +28,15 @@ public class VisualDataController {
     private IAnnotationService audioAnnotationService;
 
     @RequestMapping({"/visualData"})
-    public @ResponseBody String doGet( @RequestParam Integer width, @RequestParam Integer height ) {
+    public @ResponseBody String doGet( @RequestParam String idIndexFile, @RequestParam Integer width, @RequestParam Integer height ) {
 //        if ( !System.getenv().containsKey( MEDIA_PROJECT_DIR ) ) {
 //            throw new RuntimeException( "Must have environment variable " + MEDIA_PROJECT_DIR + " that points to the base " +
 //                    "for this project. For instance, 'export " + MEDIA_PROJECT_DIR + "=/home/user/Media-Markup'" );
 //        }
 
         //TODO:  Pull this file from the url of the request..
-        final String idIndexFile    = "test-file-large";
+//        idIndexFile    = "test-file-large";
+//        final String idIndexFile    = "test-file-large";
 //        final String idIndexFile    = "test-file-small";
 
         System.out.println( " ***** Loading visual data for: " + idIndexFile );

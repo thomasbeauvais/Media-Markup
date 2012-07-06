@@ -83,7 +83,7 @@ public class FilePersistenceEngine implements IPersistenceEngine {
         for( int i = 0, allFilesLength = allFiles.length; i < allFilesLength; i++ ) {
             final File file = allFiles[ i ];
             final String filename = file.getName();
-            final String id = filename.substring( 0, filename.length() - ext.length() );
+            final String id = filename.substring( 0, filename.length() - ext.length() - 1 );
             objects[ i ] = readObjectFromFile( id, file, objectClazz );
         }
 

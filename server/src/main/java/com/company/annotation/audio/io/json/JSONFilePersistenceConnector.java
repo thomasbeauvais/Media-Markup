@@ -38,7 +38,7 @@ public class JSONFilePersistenceConnector implements IFilePersistenceConnector {
     public static final String KEY_NAME             = "name";
     public static final String KEY_DESCRIPTION      = "description";
 
-    private IndexSummary lcl_readIndexSummary( @NotNull final InputStream reader ) throws IOException {
+    private IndexSummary lcl_readIndexSummary( @NotNull String id, @NotNull final InputStream reader) throws IOException {
         final JSONObject jsonIndex      = (JSONObject) JSONValue.parse( new InputStreamReader( reader ) );
         final IndexSummary indexSummary = new IndexSummary();
 
@@ -46,11 +46,11 @@ public class JSONFilePersistenceConnector implements IFilePersistenceConnector {
         indexSummary.setTime( (Double) jsonIndex.get( KEY_TIME ) );
         indexSummary.setDescription( (String) jsonIndex.get( KEY_DESCRIPTION ) );
         indexSummary.setNumChannels( ( (Long) jsonIndex.get( "numChannels" ) ).intValue() );
-
+        indexSummary.setId( id );
         return indexSummary;
     }
 
-    private SampleList lcl_readSampleList( @NotNull final InputStream reader ) throws IOException {
+    private SampleList lcl_readSampleList( @NotNull String id, @NotNull final InputStream reader) throws IOException {
         final SampleList sampleList = new SampleList();
 
         final JSONObject jsonIndex      = (JSONObject) JSONValue.parse( new InputStreamReader( reader ) );
@@ -70,6 +70,7 @@ public class JSONFilePersistenceConnector implements IFilePersistenceConnector {
         }
 
         sampleList.updateBounds();
+        sampleList.setId(id);
 
         return sampleList;
     }
@@ -108,9 +109,9 @@ public class JSONFilePersistenceConnector implements IFilePersistenceConnector {
 
     public <T extends Object> T readObject( @NotNull String id, @NotNull InputStream inputStream, @NotNull Class<T> objectClazz ) throws IOException {
         if ( objectClazz.equals( SampleList.class ) ) {
-            return (T) lcl_readSampleList( inputStream );
+            return (T) lcl_readSampleList( id, inputStream );
         } else if ( objectClazz.equals( IndexSummary.class ) ) {
-            return (T) lcl_readIndexSummary( inputStream );
+            return (T) lcl_readIndexSummary( id, inputStream );
         }
 
         throw new PersistenceException( "Class, " + objectClazz.getName() + ", not supported." );
