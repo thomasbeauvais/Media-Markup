@@ -1,7 +1,6 @@
 // For now we are going to have the window create the canvas and pass it in
-function Waveform( canvas ) {
-//    this.waveformCanvas                 = document.createElement( 'canvas' );
-    this.waveformCanvas                 = canvas;
+function AudioAnnotation( parent ) {
+    this.waveformCanvas                 = document.createElement( 'canvas' );
     this.waveformCanvas.id              = "waveform";
 
     this.waveformCanvas.parent          = this;
@@ -9,7 +8,7 @@ function Waveform( canvas ) {
     this.idIndexFile                    =  null;
 
    // Add it to the container..
-//    document.body.appendChild( this.waveformCanvas );
+    parent.appendChild( this.waveformCanvas );
 
     // Need to set the width after it's been added to the screen
     // The canvas width was the coordinate system with (default is 150 X 300 )

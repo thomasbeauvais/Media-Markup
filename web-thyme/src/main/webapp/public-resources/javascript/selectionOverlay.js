@@ -1,3 +1,5 @@
+var idCurrentIndexFile;
+
 function SelectionOverlay( canvas ) {
 //    this.overlayCanvas                 = document.createElement( 'canvas' );
     this.overlayCanvas                 = canvas;

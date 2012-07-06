@@ -19,49 +19,18 @@
         console.log( "creating comment" );
 
         if ( selectionOverlay.startX > -1 ) {
-            console.log( "creating region from " + selectionOverlay.startX + " to " + selectionOverlay.endX );
-        }
-    }
-
-    function loadWaveform( idIndexFile ) {
-        this.idCurrentIndexFile = idIndexFile;
-        //idCurrentIndexFile = "small";
-
-        console.log( "loading waveform: " + idIndexFile );
-
-        //waveform.width    = window.innerWidth - 100;
-        //waveform.height   = 400;
-
-        // TODO:  If there are previous samples, then scale before loading
-
-        $.getJSON( "visualData", { idIndexFile: encodeURI( idIndexFile ), width: waveform.width, height: waveform.height }, function( data ) {
-            // data.samples are the values of the waveform starting from a center
-            console.log( "We have some shit!" );
-
-            loading( true );
-
-            drawWaveForm( waveform, data.samples );
-
-            loading( false );
-        } );
-    }
-
-    function loading( isVisible ) {
-        if ( isVisible ) {
-            loading.style = "visible : visible";
-        } else {
-            loading.style = "visible : hidden";
+            console.log( waveformObj.idIndexFile + ": creating region from " + selectionOverlay.startX + " to " + selectionOverlay.endX );
         }
     }
 
     $( window ).resize( function( e ) {
-        loadWaveform();
     } );
 
     $( document ).ready( function() {
-        selectionOverlay = new SelectionOverlay( overlay );
+        selectionOverlay    = new SelectionOverlay( overlay );
+        waveformObj         = new Waveform( waveform );
 
-        resetCanvas( waveform );
+        waveformObj.resetCanvas();
     } );
 
     //]]>
@@ -84,7 +53,7 @@
 
 <div th:unless="${#lists.isEmpty(allIndexFiles)}">
     <p th:each="indexFile : ${allIndexFiles}">
-        <a href="javascript:void(0);" th:onclick="'javascript:loadWaveform( \'' + ${ indexFile.id} + '\');'">
+        <a href="javascript:void(0);" th:onclick="'javascript:window.waveformObj.loadIndexFile( \'' + ${ indexFile.id} + '\');'">
             <div class="index-file-list-element">
                 <span th:text="${indexFile.name}"/>
             </div>
