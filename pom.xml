@@ -14,10 +14,11 @@
         <module>third-party-custom</module>
         <module>server</module>
         <module>java-client</module>
+        <module>web-spring-mvc</module>
         <!--<module>web-html5</module>-->
         <!--<module>web-flex</module>-->
-        <module>web-thyme</module>
-        <module>thymeleaf-examples</module>
+        <!--<module>web-thyme</module>-->
+        <!--<module>thymeleaf-examples</module>-->
 
   </modules>
 

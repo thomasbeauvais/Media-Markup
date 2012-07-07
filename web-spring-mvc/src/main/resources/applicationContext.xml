@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
+    default-lazy-init="true">
+
+    <context:annotation-config/>
+
+    <context:component-scan base-package="com.company.annotation.audio"/>
+
+    <bean class="com.company.annotation.audio.io.DefaultIndexEngine"/>
+
+    <bean class="com.company.annotation.audio.io.json.JSONFilePersistenceConnector"/>
+    <!--<bean class="com.company.annotation.audio.io.binary.BinaryPersistenceConnector"/>-->
+
+    <!--<bean class="com.company.annotation.audio.services.AudioAnnotationService"/>-->
+
+    <bean class="com.company.annotation.audio.io.FilePersistenceEngine">
+        <!--<constructor-arg value="/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/filePersistenceDir"/>-->
+        <!--<constructor-arg value="/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir2"/>-->
+        <!--<constructor-arg value="/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir2"/>-->
+        <constructor-arg value="/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir"/>
+    </bean>
+
+</beans>

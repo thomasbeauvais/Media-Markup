@@ -1,7 +1,6 @@
 package com.company.annotation.audio.pojos;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,6 +15,7 @@ public class IndexSummary {
     private String name;
     private String description;
     private String id;
+    private List<Annotation> annotations;
 
     public IndexSummary() {
 
@@ -63,5 +63,13 @@ public class IndexSummary {
 
     public void setDescription( String description ) {
         this.description = description;
+    }
+
+    public List<Annotation> getAnnotations() {
+        return annotations;
+    }
+
+    public void setAnnotations( List<Annotation> annotations ) {
+        this.annotations = annotations;
     }
 }
