@@ -1,0 +1,5 @@
+Known Issues:
+
+o   The slideUp() and slideDown() functions cause a jitter in the layout of the page.  This is probably do to
+    incorrect styling and absolute positioning.
+

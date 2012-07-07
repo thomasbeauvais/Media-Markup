@@ -16,6 +16,20 @@ A:link, A:visited, A:active, A:hover {
     color: blue;
 }
 
+.bordered {
+    border: 1px;
+    border-style:solid;
+    border-color:black;
+}
+
+.margined {
+    margin: 5px 0px 5px 0px;
+}
+
+.padded {
+    padding: 5px 10px 5px 10px;
+}
+
 div.index-file-list-element:hover {
     background-color:red;
 }
@@ -28,11 +42,19 @@ div.annotation {
 
 }
 
+span.add-comment{
+    float: right;
+}
+
 div.container {
     #width: 850px;
     height: 400px;
 
     background-color: white;
+}
+
+div#actionsMenu {
+    text-align:center;
 }
 
 div#innerContainer {
@@ -46,28 +68,14 @@ div#innerContainer {
     padding-bottom: 10px;
 }
 
-.margined {
-    margin: 5px 0px 5px 0px;
-}
-
-.padded {
-    padding: 5px 10px 5px 10px;
-}
-
 div#newComment{
-    display:none;
+    #display:none;
 }
 
 div#currentIndexFile {
 }
 
 div#indexFileList {
-}
-
-.bordered {
-    border: 1px;
-    border-style:solid;
-    border-color:black;
 }
 
 canvas#waveform {

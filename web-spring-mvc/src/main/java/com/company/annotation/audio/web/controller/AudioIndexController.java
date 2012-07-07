@@ -24,6 +24,7 @@ import com.company.annotation.audio.pojos.IndexSummary;
 import com.company.annotation.audio.services.AudioAnnotationService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -50,7 +51,7 @@ public class AudioIndexController {
         return new Annotation();
     }
 
-    @RequestMapping( value = "/annotations", method = RequestMethod.GET )
+    @RequestMapping( value = "annotations", method = RequestMethod.GET )
     public ModelAndView getAnnotations() {
         // Sort based on how many comments are in a thread
         Collections.sort( s_annotations, new Comparator<Annotation>() {
@@ -74,13 +75,18 @@ public class AudioIndexController {
         return new ModelAndView( "main" );
     }
 
-    @RequestMapping( value = "/annotations/add", method = RequestMethod.POST )
-    public ModelAndView addAnnotation( @ModelAttribute("annotation") Annotation annotation ) {
-        System.out.println( "ID of Index File:" + annotation.getIdIndexFile() );
-        System.out.println( "Annotation Text:" + annotation.getText() );
+//    @RequestMapping( value = "/annotations/add", method = RequestMethod.POST )
+//    public ModelAndView addAnnotation( @ModelAttribute("annotation") Annotation annotation ) {
+//        System.out.println( "ID of Index File:" + annotation.getIdIndexFile() );
+//        System.out.println( "Annotation Text:" + annotation.getText() );
+//
+//        return new ModelAndView( "main" );
+//    }
+    @RequestMapping( value = "annotations/add", method = RequestMethod.POST )
+    public @ResponseStatus( value = HttpStatus.NO_CONTENT ) void addAnnotation( @RequestParam String idIndexFile, @RequestParam String text ) {
+        System.out.println( "ID of Index File:" + idIndexFile );
+        System.out.println( "Annotation Text:" + text );
 
-        s_annotations.add( annotation );
-
-        return new ModelAndView( "redirect:/annotations");
+        s_annotations.add( new Annotation( idIndexFile, text, new Date() ) );
     }
 }

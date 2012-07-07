@@ -30,8 +30,30 @@
         reloadAnnotations();
     } );
 
+    function saveAnnotation() {
+        var text = $('#include-from-outside #newAnnotationText').val();
+
+        $.post(
+            'annotations/add',
+            {
+              idIndexFile: this.audioAnnotation.idIndexFile,
+              text: text
+            }
+        );
+
+        reloadAnnotations();
+    }
+
     function reloadAnnotations() {
-        $('#include-from-outside').load('/audio/annotations');
+        $('#include-from-outside').load('/audio/annotations',
+            function() {
+                $('#include-from-outside #saveAnnotation').click(
+                    function() {
+                        saveAnnotation();
+                    }
+                );
+            }
+        );
     }
 
     function toggleList() {
@@ -51,6 +73,8 @@
 </script>
 
 <body>
+
+<div id="actionsMenu" class="bordered padded margined"><a href="">Upload</a> | <a href="">Contact</a></div>
 
 <div id="indexFileList" class="bordered padded">
     <c:if test="${!empty indexFiles}">
@@ -81,9 +105,7 @@ No file loaded..
     </div>
 </div>
 
-<div id='include-from-outside' class="asdf"></div>
+<div id='include-from-outside'></div>
 
-
-</form>
 </body>
 </html>

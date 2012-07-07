@@ -16,12 +16,17 @@
 </head>
 
 <script type="text/javascript" charset="utf-8">
+    $( document ).ready( function() {
+    } );
+
     function showComment() {
         $( '#newComment' ).slideDown();
     }
 
-    $( document ).ready( function() {
-    } );
+    function newCommentHtml() {
+
+    }
+
 </script>
 
 <body>
@@ -31,17 +36,14 @@
 </div>
 
 <div id="newComment" class="bordered margined padded">
-    <form method="post" modelAttribute="annotation" action="annotations/add">
-        Comment:<br/>
-        <input type="text" id="text" name="text" />
-        <input type="submit" value="Save"/>
-    </form>
+    <input id="newAnnotationText" type="textarea" id="text" name="text" />
+    <input id="saveAnnotation" type="button" value="Save"/>
 </div>
 
 <div id="annotationsList" class="bordered padded">
     <c:if test="${!empty annotations}">
         <c:forEach items="${annotations}" var="annotation">
-            <div class="bordered margined">${annotation.text}</div>
+            <div class="bordered margined">${annotation.text}<span class="add-comment">+</span></div>
         </c:forEach>
     </c:if>
     <c:if test="${empty annotations}">
@@ -49,6 +51,5 @@
     </c:if>
 </div>
 
-</form>
 </body>
 </html>
