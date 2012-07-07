@@ -24,6 +24,10 @@ div.index-file-list-element {
 
 }
 
+div.annotation {
+
+}
+
 div.container {
     #width: 850px;
     height: 400px;
@@ -48,6 +52,10 @@ div#innerContainer {
 
 .padded {
     padding: 5px 10px 5px 10px;
+}
+
+div#newComment{
+    display:none;
 }
 
 div#currentIndexFile {

@@ -20,22 +20,19 @@
 </head>
 
 <script type="text/javascript" charset="utf-8">
-    //<![CDATA[
-
-    function createComment() {
-        console.log( "creating comment" );
-
-        ///if ( selectionOverlay.startX > -1 ) {
-        //    console.log( waveformObj.idIndexFile + ": creating region from " + selectionOverlay.startX + " to " + selectionOverlay.endX );
-        //}
-    }
-
+//<![CDATA[
     $( window ).resize( function( e ) {
     } );
 
     $( document ).ready( function() {
         audioAnnotation = new AudioAnnotation( innerContainer );
+
+        reloadAnnotations();
     } );
+
+    function reloadAnnotations() {
+        $('#include-from-outside').load('/audio/annotations');
+    }
 
     function toggleList() {
         $('#indexFileList').slideToggle('slow', function() {
@@ -45,10 +42,12 @@
 
     function loadIndexFile( nameIndexFile, idIndexFile ) {
         $('#currentIndexFile').text( "Current file... " +  nameIndexFile );
+
         this.audioAnnotation.loadIndexFile( idIndexFile );
     }
 
-    //]]>
+//]]>
+
 </script>
 
 <body>
@@ -73,20 +72,17 @@ No file loaded..
 </div>
 
 <div class="bordered margined padded">
-    <input id="commentButton" type="button" value="Comment" onclick="window.createComment();"/>
     <input id="toggleList" type="button" value="Toggle List" onclick="window.toggleList();"/>
+    <input id="reloadAnnotations" type="button" value="Reload Annotations" onclick="window.reloadAnnotations();"/>
 </div>
 
 <div class="container bordered margined">
     <div id="innerContainer" class="inner-container">
-        <!--<div class="waveform">-->
-            <!--<canvas id="waveform"></canvas>-->
-        <!--</div>-->
-        <!--<div class="overlay">-->
-            <!--<canvas id="overlay"></canvas>-->
-        <!--</div>-->
     </div>
 </div>
+
+<div id='include-from-outside' class="asdf"></div>
+
 
 </form>
 </body>

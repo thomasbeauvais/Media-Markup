@@ -3,16 +3,20 @@ package com.company.annotation.audio.io.json;
 import com.company.annotation.audio.api.IFilePersistenceConnector;
 import com.company.annotation.audio.api.IPersistenceEngine;
 import com.company.annotation.audio.io.exceptions.PersistenceException;
+import com.company.annotation.audio.pojos.Annotation;
 import com.company.annotation.audio.pojos.IndexSummary;
 import com.company.annotation.audio.pojos.Sample;
 import com.company.annotation.audio.pojos.SampleList;
 import org.jetbrains.annotations.NotNull;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.JSONValue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Lazy;
 
 import java.io.*;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by IntelliJ IDEA.
@@ -32,11 +36,16 @@ public class JSONFilePersistenceConnector implements IFilePersistenceConnector {
         this.persistenceEngine = persistenceEngine;
     }
 
-
     public static final String KEY_NUM_CHANNELS     = "numChannels";
     public static final String KEY_TIME             = "time";
     public static final String KEY_NAME             = "name";
     public static final String KEY_DESCRIPTION      = "description";
+
+    public static final String KEY_ID_INDEX         = "idIndexFile";
+    public static final String KEY_ANNOTATIONS      = "annotations";
+    public static final String KEY_TEXT             = "text";
+    public static final String KEY_AUTHOR           = "author";
+    public static final String KEY_DATE             = "date";
 
     private IndexSummary lcl_readIndexSummary( @NotNull String id, @NotNull final InputStream reader) throws IOException {
         final JSONObject jsonIndex      = (JSONObject) JSONValue.parse( new InputStreamReader( reader ) );
@@ -47,6 +56,16 @@ public class JSONFilePersistenceConnector implements IFilePersistenceConnector {
         indexSummary.setDescription( (String) jsonIndex.get( KEY_DESCRIPTION ) );
         indexSummary.setNumChannels( ( (Long) jsonIndex.get( "numChannels" ) ).intValue() );
         indexSummary.setId( id );
+
+        final JSONArray jsonAnnotations     = (JSONArray) jsonIndex.get( KEY_ANNOTATIONS );
+        final List<Annotation> annotations  = new Vector<Annotation>();
+        for ( Object jsonObject: jsonAnnotations.toArray() ) {
+            final JSONObject jsonAnnotation = (JSONObject) jsonObject;
+            final Annotation annotation     = new Annotation();
+            annotation.setText((String) jsonAnnotation.get( KEY_TEXT ));
+            annotation.setIdIndexFile( id );
+        }
+
         return indexSummary;
     }
 
@@ -80,6 +99,17 @@ public class JSONFilePersistenceConnector implements IFilePersistenceConnector {
         jsonIndex.put( KEY_DESCRIPTION, indexObject.getDescription() );
         jsonIndex.put( KEY_TIME, (Double) indexObject.getTime() );
         jsonIndex.put( KEY_NUM_CHANNELS, (Integer) indexObject.getNumChannels() );
+
+        final JSONArray jsonAnnotations = new JSONArray();
+        for ( Annotation annotation : indexObject.getAnnotations() ) {
+            final JSONObject jsonObject = new JSONObject();
+            jsonObject.put( KEY_TEXT, annotation.getText() );
+            jsonObject.put( KEY_ID_INDEX, annotation.getIdIndexFile() );
+
+            jsonAnnotations.add( jsonObject );
+        }
+
+        jsonIndex.put( KEY_ANNOTATIONS, jsonAnnotations );
     }
 
     private void lcl_writeSampleList(final SampleList sampleList, final JSONObject jsonIndex) throws IOException {
@@ -137,8 +167,6 @@ public class JSONFilePersistenceConnector implements IFilePersistenceConnector {
 
         if ( obj instanceof SampleList ) {
             lcl_writeSampleList( (SampleList) obj, jsonObject );
-
-
         } else if ( obj instanceof IndexSummary ) {
             lcl_writeIndexSummary( (IndexSummary) obj, jsonObject );
         } else {

@@ -5,6 +5,7 @@ import com.company.annotation.audio.api.IFilePersistenceConnector;
 import com.company.annotation.audio.io.FilePersistenceEngine;
 import com.company.annotation.audio.io.binary.BinaryPersistenceConnector;
 import com.company.annotation.audio.io.json.JSONFilePersistenceConnector;
+import com.company.annotation.audio.pojos.Annotation;
 import com.company.annotation.audio.pojos.IndexSummary;
 import com.company.annotation.audio.pojos.SampleList;
 import org.apache.log4j.Logger;
@@ -14,6 +15,9 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.*;
+import java.util.Date;
+import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by IntelliJ IDEA.
@@ -30,15 +34,18 @@ public class IndexFileGenerator {
 
     private static FilePersistenceEngine filePersistenceEngine;
 
-    public static final String PATH_FILE_PERSISTENCE_BASE   = "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir2";
-    public static final String PATH_AUDIO_FILES             = "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/songs";
+//    public static final String PATH_FILE_PERSISTENCE_BASE   = "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir2";
+//    public static final String PATH_AUDIO_FILES             = "/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/songs";
+
+    public static final String PATH_FILE_PERSISTENCE_BASE   = "/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir3";
+    public static final String PATH_AUDIO_FILES             = "/home/tbeauvais/Development/personal/Media-Markup/server/data/songs";
 
     @BeforeClass
     public static void beforeClass() {
         applicationContext = new ClassPathXmlApplicationContext( "applicationContext.xml" );
 
-//        final IFilePersistenceConnector connector = new JSONFilePersistenceConnector();
-        final IFilePersistenceConnector connector = new BinaryPersistenceConnector();
+        final IFilePersistenceConnector connector = new JSONFilePersistenceConnector();
+//        final IFilePersistenceConnector connector = new BinaryPersistenceConnector();
 
         filePersistenceEngine    = new FilePersistenceEngine( PATH_FILE_PERSISTENCE_BASE );
         filePersistenceEngine.setFilePersistenceConnector( connector );
@@ -63,9 +70,16 @@ public class IndexFileGenerator {
             InputStream inputStream         = null;
 
             try {
-                inputStream                     = new FileInputStream( audioFile );
+                inputStream                 = new FileInputStream( audioFile );
+
 
                 final SampleList sampleList = indexEngine.createIndexForAudioStream( inputStream, indexName );
+
+                final List<Annotation> annotations = new Vector<Annotation>();
+                annotations.add( new Annotation( sampleList.getId(), "sample text one", new Date() ) );
+                annotations.add( new Annotation( sampleList.getId(), "sample text two", new Date() ) );
+
+                sampleList.getIndexSummary().setAnnotations(annotations);
 
                 LOGGER.info( "*** Created SampleList: " + indexName );
 

@@ -31,7 +31,6 @@ import org.springframework.web.servlet.ModelAndView;
 import java.util.*;
 
 @Controller
-@RequestMapping("/annotation")
 public class AudioIndexController {
     @Autowired
     private MessageSource messageSource;
@@ -39,34 +38,49 @@ public class AudioIndexController {
     @Autowired
     private AudioAnnotationService audioAnnotationService;
 
-    @ModelAttribute("allIndexFiles")
+    private static List<Annotation> s_annotations =  new Vector<Annotation>();
+
+    @ModelAttribute("indexFiles")
     public List<IndexSummary> allIndexFiles() {
         return Arrays.asList(this.audioAnnotationService.loadAll());
     }
 
-    @RequestMapping( method = RequestMethod.GET )
-    public ModelAndView showIndexFiles( ) {
-        final Map map = new HashMap();
-        map.put( "indexFiles" , audioAnnotationService.loadAll() );
-
-        return new ModelAndView( "audioAnnotation", map );
+    @ModelAttribute("annotation")
+    public Annotation newAnnotation() {
+        return new Annotation();
     }
 
-//    @RequestMapping(value = "/annotation", params = "addAnnotation")
-//    public ModelAndView addAnnotation( IndexSummary indexFile ) {
-//        ModelAndView modelAndView = new ModelAndView( "");
-//
-//        return "audio-annotation";
-//    }
+    @RequestMapping( value = "/annotations", method = RequestMethod.GET )
+    public ModelAndView getAnnotations() {
+        // Sort based on how many comments are in a thread
+        Collections.sort( s_annotations, new Comparator<Annotation>() {
+            public int compare(Annotation annotationGraph1, Annotation annotationGraph2 ) {
+                if ( annotationGraph1.size() == annotationGraph2.size() ) {
+                    return annotationGraph1.getDate().compareTo(annotationGraph1.getDate());
+                }
 
-//    @RequestMapping("/hello")
-//    public ModelAndView helloWorld() {
-//        return new ModelAndView("hello", "message", "Spring MVC Demo");
-//    }
+                return ((Integer) annotationGraph1.size() ).compareTo( annotationGraph2.size() );
+            }
+        });
 
-    @RequestMapping(value = "/time", method = RequestMethod.GET)
-    public @ResponseBody String getTime(@RequestParam String name) {
-        String result = "Time for " + name + " is " + new Date().toString();
-        return result;
+        Map modelMap = new HashMap();
+        modelMap.put( "annotations", s_annotations );
+
+        return new ModelAndView( "annotations", modelMap );
+    }
+
+    @RequestMapping( value = "/", method = RequestMethod.GET )
+    public ModelAndView showIndexFiles( ) {
+        return new ModelAndView( "main" );
+    }
+
+    @RequestMapping( value = "/annotations/add", method = RequestMethod.POST )
+    public ModelAndView addAnnotation( @ModelAttribute("annotation") Annotation annotation ) {
+        System.out.println( "ID of Index File:" + annotation.getIdIndexFile() );
+        System.out.println( "Annotation Text:" + annotation.getText() );
+
+        s_annotations.add( annotation );
+
+        return new ModelAndView( "redirect:/annotations");
     }
 }

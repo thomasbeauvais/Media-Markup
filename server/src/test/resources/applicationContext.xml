@@ -14,7 +14,8 @@
     <bean class="com.company.annotation.audio.io.DefaultIndexEngine"/>
 
     <bean class="com.company.annotation.audio.io.FilePersistenceEngine">
-        <constructor-arg value="/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/index"/>
+        <!--<constructor-arg value="/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/index"/>-->
+        <constructor-arg value="/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir3"/>
         <constructor-arg>
             <bean class="com.company.annotation.audio.io.json.JSONFilePersistenceConnector"/>
         </constructor-arg>

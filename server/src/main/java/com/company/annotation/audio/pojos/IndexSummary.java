@@ -1,5 +1,8 @@
 package com.company.annotation.audio.pojos;
 
+import org.jetbrains.annotations.NotNull;
+
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -12,6 +15,7 @@ import java.util.List;
 public class IndexSummary {
     private int numChannels;
     private double time;
+    private long dateUploaded;
     private String name;
     private String description;
     private String id;
@@ -57,6 +61,19 @@ public class IndexSummary {
         this.time = time;
     }
 
+    @NotNull
+    public Date getDateUploaded() {
+        return new Date( dateUploaded );
+    }
+
+    public void setDateUploaded( long dateUploaded ) {
+        this.dateUploaded = dateUploaded;
+    }
+
+    public void setDateUploaded( @NotNull Date dateUploaded ) {
+        this.dateUploaded = dateUploaded.getTime();
+    }
+
     public String getDescription() {
         return description;
     }
@@ -69,7 +86,7 @@ public class IndexSummary {
         return annotations;
     }
 
-    public void setAnnotations( List<Annotation> annotations ) {
+    public void setAnnotations(List<Annotation> annotations) {
         this.annotations = annotations;
     }
 }

@@ -22,7 +22,8 @@
         <!--<constructor-arg value="/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/filePersistenceDir"/>-->
         <!--<constructor-arg value="/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir2"/>-->
         <!--<constructor-arg value="/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir2"/>-->
-        <constructor-arg value="/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir"/>
+        <!--<constructor-arg value="/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir"/>-->
+        <constructor-arg value="/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir3"/>
     </bean>
 
 </beans>
