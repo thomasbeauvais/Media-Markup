@@ -1,6 +1,5 @@
 function SelectionOverlay( parent ) {
     this.overlayCanvas                 = document.createElement( 'canvas' );
-//    this.overlayCanvas                 = canvas;
     this.overlayCanvas.id              = "selectionOverlay";
 
     this.overlayCanvas.addEventListener('mousedown', this.onMouseDown, false);
@@ -9,18 +8,24 @@ function SelectionOverlay( parent ) {
     this.overlayCanvas.addEventListener('click', this.onMouseClick, false);
     this.overlayCanvas.addEventListener('mouseout', this.onMouseOut, false);
 
-    this.overlayCanvas.parent = this;
-
+    this.idIndexFile = null;
     this.startX = -1;
     this.isDragging = false;
+    this.isSelectionEnabled = false;
 
-   // Add it to the container..
+    // Add it to the container..
     parent.appendChild( this.overlayCanvas );
+
+    this.overlayCanvas.parent = this;
 
     // Need to set the width after it's been added to the screen
     // The canvas width was the coordinate system with (default is 150 X 300 )
     this.overlayCanvas.width           = this.overlayCanvas.offsetWidth;
     this.overlayCanvas.height          = this.overlayCanvas.offsetHeight;
+
+    this.selectionEnabled = function( isEnabled ) {
+        this.isSelectionEnabled = isEnabled;
+    }
 
     this.clearSelection = function () {
         this.startX = -1;
@@ -54,6 +59,12 @@ SelectionOverlay.prototype.onMouseUp = function (event) {
 };
 
 SelectionOverlay.prototype.onMouseDown = function (event) {
+    // TODO:  When nothing is loaded don't allow selection
+    if ( !this.parent.isSelectionEnabled ) {
+        return;
+    }
+
+    // 'this' is the HTMLCanvas 'overlayCanvas'
     this.parent.isDragging = true;
     this.parent.startX = event.layerX;
 };

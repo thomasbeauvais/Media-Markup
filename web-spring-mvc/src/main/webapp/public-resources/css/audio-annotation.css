@@ -1,14 +1,18 @@
 html {
-  background-color: white;
+      background-image:url('../images/background.jpg');
+      background-repeat:repeat-x;
 }
 
 body {
-  font-family: 'DejaVu Sans', Arial, Helvetica;
-  font-size: 12px;
-  background-color: #ffffff;
-  margin: auto;
-  padding: 20px 20px;
-  width: 850px;
+    font-family: 'DejaVu Sans', Arial, Helvetica;
+    font-size: 12px;
+    background-color: #ffffff;
+    margin: auto;
+    padding: 20px 20px;
+    width: 850px;
+
+    border-left: 1px solid green;
+    border-right: 1px solid green;
 }
 
 A:link, A:visited, A:active, A:hover {
@@ -69,7 +73,7 @@ div#innerContainer {
 }
 
 div#newComment{
-    #display:none;
+    display:none;
 }
 
 div#currentIndexFile {

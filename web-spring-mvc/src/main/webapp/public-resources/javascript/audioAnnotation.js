@@ -10,6 +10,7 @@ function AudioAnnotation( parent ) {
         console.log( "data received for: " + this.idIndexFile );
 
         this.waveformCanvas.drawWaveform( data.samples );
+        this.selectionOverlay.selectionEnabled( true );
     }
 
     this.loadIndexFile = function( idIndexFile ) {
@@ -21,7 +22,7 @@ function AudioAnnotation( parent ) {
         this.selectionOverlay.clearSelection();
         this.waveformCanvas.resetCanvas();
 
-        this.idIndexFile = idIndexFile;
+        this.idIndexFile        = idIndexFile;
 
         console.log( "loading waveform: " + idIndexFile );
 
