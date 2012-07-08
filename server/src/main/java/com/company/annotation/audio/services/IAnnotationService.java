@@ -1,5 +1,6 @@
 package com.company.annotation.audio.services;
 
+import com.company.annotation.audio.pojos.IndexSummary;
 import com.company.annotation.audio.pojos.VisualData;
 import com.company.annotation.audio.pojos.VisualParameters;
 
@@ -12,4 +13,6 @@ import com.company.annotation.audio.pojos.VisualParameters;
  */
 public interface IAnnotationService {
     VisualData loadVisualData(String idIndexFile, VisualParameters visualParameters);
+
+    IndexSummary[] loadAll();
 }

@@ -76,8 +76,8 @@ public class IndexFileGenerator {
                 final SampleList sampleList = indexEngine.createIndexForAudioStream( inputStream, indexName );
 
                 final List<Annotation> annotations = new Vector<Annotation>();
-                annotations.add( new Annotation( sampleList.getId(), "sample text one", new Date() ) );
-                annotations.add( new Annotation( sampleList.getId(), "sample text two", new Date() ) );
+                annotations.add( new Annotation( sampleList.getId(), "sample text one", 100, 1000 ) );
+                annotations.add( new Annotation( sampleList.getId(), "sample text two", 100, 1000 ) );
 
                 sampleList.getIndexSummary().setAnnotations(annotations);
 

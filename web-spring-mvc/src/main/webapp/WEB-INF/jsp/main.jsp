@@ -16,6 +16,7 @@
     <script src="resources/javascript/audioAnnotation.js"></script>
     <script src="resources/javascript/selectionOverlay.js"></script>
     <script src="resources/javascript/waveForm.js"  type="text/javascript"></script>
+    <script src="resources/javascript/jquery.timer.js"  type="text/javascript"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 
@@ -31,17 +32,31 @@
     } );
 
     function saveAnnotation() {
-        var text = $('#include-from-outside #newAnnotationText').val();
+        var text        = $('#include-from-outside #newAnnotationText').val();
+        var idIndexFile = this.audioAnnotation.idIndexFile;
+        var startX      = this.audioAnnotation.selectionOverlay.startX;
+        var endX        = this.audioAnnotation.selectionOverlay.endX;
+
+        startX          = this.audioAnnotation.transform( startX );
+        endX            = this.audioAnnotation.transform( endX );
+
+        console.log( "**** adding comment for file=" + idIndexFile + " region(" + startX + "," + endX + ") with text=" + text );
 
         $.post(
             'annotations/add',
             {
-              idIndexFile: this.audioAnnotation.idIndexFile,
-              text: text
+              idIndexFile: idIndexFile,
+              text: text,
+              startX: startX,
+              endX: endX
             }
-        );
+        ).success( function() { reloadAnnotations(); } );
 
-        reloadAnnotations();
+//        var myVar = setTimeout( function(){
+//            reloadAnnotations();
+//
+ //           clearTimeout(myVar);
+//      }, 1000);
     }
 
     function reloadAnnotations() {

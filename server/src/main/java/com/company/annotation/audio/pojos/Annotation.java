@@ -15,9 +15,9 @@ import java.util.Vector;
  */
 public class Annotation {
     private String text;
-
     private String idIndexFile;
-
+    private int start;
+    private int end;
     private Date date;
 
     private List<Annotation> childAnnotations = new Vector<Annotation>();
@@ -26,10 +26,16 @@ public class Annotation {
 
     }
 
-    public Annotation( @NotNull String idIndexFile, @NotNull String text, @NotNull Date date ) {
+    public Annotation(String idIndexFile, String text, int start, int end, Date date) {
         this.idIndexFile = idIndexFile;
         this.text = text;
+        this.start = start;
+        this.end = end;
         this.date = date;
+    }
+
+    public Annotation( @NotNull String idIndexFile, @NotNull String text, int start, int end) {
+        this( idIndexFile, text, start, end, new Date() );
     }
 
     public String getText() {

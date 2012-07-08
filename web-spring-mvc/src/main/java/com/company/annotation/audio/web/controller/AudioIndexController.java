@@ -21,7 +21,11 @@ package com.company.annotation.audio.web.controller;
 
 import com.company.annotation.audio.pojos.Annotation;
 import com.company.annotation.audio.pojos.IndexSummary;
+import com.company.annotation.audio.pojos.VisualData;
+import com.company.annotation.audio.pojos.VisualParameters;
 import com.company.annotation.audio.services.AudioAnnotationService;
+import com.company.annotation.audio.services.IAnnotationService;
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
@@ -33,12 +37,12 @@ import java.util.*;
 
 @Controller
 public class AudioIndexController {
-    @Autowired
-    private MessageSource messageSource;
+    private static Logger logger = Logger.getLogger( AudioIndexController.class );
 
     @Autowired
-    private AudioAnnotationService audioAnnotationService;
+    private IAnnotationService audioAnnotationService;
 
+    // TODO:  THIS IS JUST FOR TESTING
     private static List<Annotation> s_annotations =  new Vector<Annotation>();
 
     @ModelAttribute("indexFiles")
@@ -55,7 +59,7 @@ public class AudioIndexController {
     public ModelAndView getAnnotations() {
         // Sort based on how many comments are in a thread
         Collections.sort( s_annotations, new Comparator<Annotation>() {
-            public int compare(Annotation annotationGraph1, Annotation annotationGraph2 ) {
+            public int compare(Annotation annotationGraph2, Annotation annotationGraph1 ) {
                 if ( annotationGraph1.size() == annotationGraph2.size() ) {
                     return annotationGraph1.getDate().compareTo(annotationGraph1.getDate());
                 }
@@ -83,10 +87,14 @@ public class AudioIndexController {
 //        return new ModelAndView( "main" );
 //    }
     @RequestMapping( value = "annotations/add", method = RequestMethod.POST )
-    public @ResponseStatus( value = HttpStatus.NO_CONTENT ) void addAnnotation( @RequestParam String idIndexFile, @RequestParam String text ) {
-        System.out.println( "ID of Index File:" + idIndexFile );
-        System.out.println( "Annotation Text:" + text );
+    public @ResponseStatus( value = HttpStatus.NO_CONTENT ) void addAnnotation(
+            @RequestParam String idIndexFile,
+            @RequestParam String text,
+            @RequestParam int startX,
+            @RequestParam int endX) {
 
-        s_annotations.add( new Annotation( idIndexFile, text, new Date() ) );
+        logger.info("**** adding comment for file=" + idIndexFile + " region(" + startX + "," + endX + ") with text=" + text);
+
+        s_annotations.add( new Annotation( idIndexFile, text, startX, endX ) );
     }
 }

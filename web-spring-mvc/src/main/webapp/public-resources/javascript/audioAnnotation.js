@@ -5,9 +5,19 @@ function AudioAnnotation( parent ) {
 
     this.idIndexFile                    =  null;
 
+    this.transform = function( x ) {
+        if ( this.currentData == null ) {
+            return -1;
+        }
+
+        return this.currentData.positions[ x ];
+    }
+
     this.onSamplesReceived = function( data ) {
         // data.samples are the values of the waveform starting from a center
         console.log( "data received for: " + this.idIndexFile );
+
+        this.currentData = data;
 
         this.waveformCanvas.drawWaveform( data.samples );
         this.selectionOverlay.selectionEnabled( true );
@@ -33,10 +43,14 @@ function AudioAnnotation( parent ) {
                 idIndexFile: encodeURI( idIndexFile ),
                 width: waveform.width,
                 height: waveform.height
-            },
+            }
+        ).success(
             function( data ) {
                 self.onSamplesReceived( data );
-            }
-        );
+            })
+         .error(
+            function(data) {
+                console.log("error:" + data);
+            });
     }
 }

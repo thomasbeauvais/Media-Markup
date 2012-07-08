@@ -62,27 +62,31 @@ public class AudioAnnotationService implements IAnnotationService {
             cache.put( idContentFile, loadSamples( idContentFile ) );
         }
 
-        final SampleList sampleList = cache.get( idContentFile );
+        final SampleList sampleList     = cache.get( idContentFile );
 
-        final int[] visualSamples   = new int[ visualParameters.getWidth() ];
+        final int[] visualSamples       = new int[ visualParameters.getWidth() ];
+        final long[] samplePositions    = new long[ visualParameters.getWidth() ];
 
         visualData.setVisualSamples( visualSamples );
+        visualData.setVisualPositions( samplePositions );
 
         if ( sampleList != null && sampleList.getSamples() != null ) {
             int startX              = 0;
 
-            Sample[] dataArray      = sampleList.getSamples();
+            Sample[] sampleArray    = sampleList.getSamples();
 
-            int step                = dataArray.length / visualParameters.getWidth();
+            int step                = sampleArray.length / visualParameters.getWidth();
             double scale            = sampleList.getMax() / visualParameters.getHeight();
 
-            for ( int i = 0; i < dataArray.length; i++, startX++ ) {
+            for ( int i = 0; i < sampleArray.length; i++, startX++ ) {
                 int max = 0;
                 int min = 0;
 
-                for ( int s = 0; s < step && i < dataArray.length; s++, i++ ) {
-                    max             = Math.max( max, dataArray[i].getValue() );
-                    min             = Math.min( min, dataArray[i].getValue() );
+                samplePositions[ startX ]   = sampleArray[ i ].getPosition();
+
+                for ( int s = 0; s < step && i < sampleArray.length; s++, i++ ) {
+                    max             = Math.max( max, sampleArray[i].getValue() );
+                    min             = Math.min( min, sampleArray[i].getValue() );
                 }
 
                 int value           = (int) ((max + (min * -1) ) / scale);

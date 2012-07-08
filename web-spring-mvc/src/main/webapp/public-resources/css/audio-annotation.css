@@ -1,6 +1,8 @@
 html {
       background-image:url('../images/background.jpg');
       background-repeat:repeat-x;
+
+      height: 100%;
 }
 
 body {
@@ -10,6 +12,7 @@ body {
     margin: auto;
     padding: 20px 20px;
     width: 850px;
+    height: 100%;
 
     border-left: 1px solid green;
     border-right: 1px solid green;

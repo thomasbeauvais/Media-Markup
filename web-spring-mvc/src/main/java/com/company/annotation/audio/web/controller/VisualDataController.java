@@ -3,16 +3,17 @@ package com.company.annotation.audio.web.controller;
 import com.company.annotation.audio.pojos.VisualData;
 import com.company.annotation.audio.pojos.VisualParameters;
 import com.company.annotation.audio.services.IAnnotationService;
+import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
@@ -24,13 +25,15 @@ import java.io.IOException;
  */
 @Controller
 @RequestMapping("/visualData")
-public class VisualDataController {
+public class VisualDataController extends DefaultSpringController {
 
     @Autowired
     private IAnnotationService audioAnnotationService;
 
+    private static Logger logger = Logger.getLogger( "com.company.annotation.audio" );
+
     @RequestMapping( method = RequestMethod.GET )
-    public @ResponseBody String doGet( @RequestParam String idIndexFile, @RequestParam Integer width, @RequestParam Integer height ) {
+    public @ResponseBody String doGet( @RequestParam String idIndexFile, @RequestParam Integer width, @RequestParam Integer height ) throws Exception {
 //        if ( !System.getenv().containsKey( MEDIA_PROJECT_DIR ) ) {
 //            throw new RuntimeException( "Must have environment variable " + MEDIA_PROJECT_DIR + " that points to the base " +
 //                    "for this project. For instance, 'export " + MEDIA_PROJECT_DIR + "=/home/user/Media-Markup'" );
@@ -42,7 +45,7 @@ public class VisualDataController {
 //        final String idIndexFile    = "test-file-small";
 
         System.out.println( " ***** Loading visual data for: " + idIndexFile );
-        System.out.println( " ***** Parameters: width=" + width + ", height=" + height );
+        System.out.println( " *** Parameters: width=" + width + ", height=" + height );
 
         final VisualParameters visualParameters = new VisualParameters();
         visualParameters.setHeight( height );
@@ -55,12 +58,21 @@ public class VisualDataController {
 
         final JSONObject jsonObject = new JSONObject();
 
-        final JSONArray jsonArray   = new JSONArray();
-        for ( int i : visualData.getVisualSamples() ) {
-            jsonArray.add( i );
+        final JSONArray jsonSamples     = new JSONArray();
+        final JSONArray jsonPositions    = new JSONArray();
+
+        int[] visualSamples     = visualData.getVisualSamples();
+        long[] visualPositions  = visualData.getVisualPositions();
+        for (int i = 0, visualSamplesLength = visualSamples.length; i < visualSamplesLength; i++) {
+            int value       = visualSamples[i];
+            long position   = visualPositions[i];
+
+            jsonSamples.add(value);
+            jsonPositions.add(position);
         }
 
-        jsonObject.put( "samples", jsonArray );
+        jsonObject.put( "samples", jsonSamples );
+        jsonObject.put( "positions", jsonPositions );
 
         return jsonObject.toJSONString();
     }

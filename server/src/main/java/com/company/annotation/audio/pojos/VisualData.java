@@ -10,6 +10,7 @@ package com.company.annotation.audio.pojos;
 public class VisualData {
 
     private int[] visualSamples;
+    private long[] samplePositions;
 
     public VisualData() {
     }
@@ -22,5 +23,12 @@ public class VisualData {
         this.visualSamples = visualSamples;
     }
 
+    public void setVisualPositions(long[] samplePositions) {
+        this.samplePositions = samplePositions;
+    }
+    
+    public long[] getVisualPositions()  {
+        return this.samplePositions;
+    }
 }
 
