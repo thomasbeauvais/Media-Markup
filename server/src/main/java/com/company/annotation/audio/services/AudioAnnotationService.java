@@ -3,8 +3,6 @@ package com.company.annotation.audio.services;
 import com.company.annotation.audio.api.IPersistenceEngine;
 import com.company.annotation.audio.pojos.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.flex.remoting.RemotingDestination;
-import org.springframework.flex.remoting.RemotingInclude;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
@@ -18,7 +16,6 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 @Service
-@RemotingDestination(channels={"my-amf"})
 public class AudioAnnotationService implements IAnnotationService {
 
     private Map<String, SampleList> cache = new HashMap<String, SampleList>();
@@ -33,22 +30,19 @@ public class AudioAnnotationService implements IAnnotationService {
         this.persistenceEngine = persistenceEngine;
     }
 
-    @RemotingInclude
     public IndexSummary[] loadAll() {
         return persistenceEngine.loadAll( IndexSummary.class );
     }
 
-    @RemotingInclude
-    public SampleList loadSamples( String id ) {
-        return persistenceEngine.load( id, SampleList.class );
+    public SampleList loadSamples( String indexFileUid ) {
+        final IndexWithSamples indexSummary = persistenceEngine.load( indexFileUid , IndexWithSamples.class );
+        return indexSummary.getSampleList();
     }
 
-    @RemotingInclude
-    public void save( String id, IndexSummary indexSummary ) {
-        persistenceEngine.save( id, indexSummary );
+    public void save( IndexSummary indexSummary ) {
+        persistenceEngine.save( indexSummary );
     }
 
-    @RemotingInclude
     public VisualData loadVisualData( String idContentFile, VisualParameters visualParameters ) {
         try {
             Thread.sleep( 100 );
@@ -107,7 +101,7 @@ public class AudioAnnotationService implements IAnnotationService {
         };
     }
 
-    public IndexSummary loadIndexSummary(String indexName) {
-        return persistenceEngine.load( indexName, IndexSummary.class );
+    public IndexSummary loadIndexSummary(String uid) {
+        return persistenceEngine.load( uid, IndexSummary.class );
     }
 }

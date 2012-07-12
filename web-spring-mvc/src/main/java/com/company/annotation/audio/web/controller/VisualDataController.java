@@ -44,22 +44,19 @@ public class VisualDataController extends DefaultSpringController {
 //        final String idIndexFile    = "test-file-large";
 //        final String idIndexFile    = "test-file-small";
 
-        System.out.println( " ***** Loading visual data for: " + idIndexFile );
-        System.out.println( " *** Parameters: width=" + width + ", height=" + height );
+        System.out.println( " **** Loading visual data for: " + idIndexFile );
+        System.out.println( " **** Parameters: width=" + width + ", height=" + height );
 
         final VisualParameters visualParameters = new VisualParameters();
         visualParameters.setHeight( height );
         visualParameters.setWidth( width );
 
-        final VisualData visualData =  audioAnnotationService.loadVisualData(idIndexFile, visualParameters);
+        final VisualData visualData         =  audioAnnotationService.loadVisualData(idIndexFile, visualParameters);
 
-        System.out.println( " ***** LOADING VISUAL DATA " );
-        System.out.println( " ***** LOADING VISUAL DATA " );
+        final JSONObject jsonObject         = new JSONObject();
 
-        final JSONObject jsonObject = new JSONObject();
-
-        final JSONArray jsonSamples     = new JSONArray();
-        final JSONArray jsonPositions    = new JSONArray();
+        final JSONArray jsonSamples         = new JSONArray();
+        final JSONArray jsonPositions       = new JSONArray();
 
         int[] visualSamples     = visualData.getVisualSamples();
         long[] visualPositions  = visualData.getVisualPositions();

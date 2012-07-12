@@ -1,7 +1,11 @@
 package com.company.annotation.audio.pojos;
 
+import com.company.common.dao.Identifiable;
+import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.engine.jdbc.BlobImplementer;
 import org.jetbrains.annotations.NotNull;
 
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 
@@ -12,25 +16,34 @@ import java.util.List;
  * Time: 10:30 PM
  * To change this template use File | Settings | File Templates.
  */
-public class IndexSummary {
+@Entity
+public class IndexSummary implements Identifiable {
     private int numChannels;
-    private double time;
+    private float time;
     private long dateUploaded;
     private String name;
     private String description;
-    private String id;
-    private List<Annotation> annotations;
+    private List<Comment> comments;
+
+    private String uid;
 
     public IndexSummary() {
 
     }
 
-    public String getId() {
-        return this.id;
+    public IndexSummary( String name ) {
+        this.name = name;
     }
 
-    public void setId( String id ) {
-        this.id = id;
+    @Id
+    @GeneratedValue( generator= "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    public String getUid() {
+        return this.uid;
+    }
+
+    public void setUid( String uid ) {
+        this.uid = uid;
     }
 
     public String getName() {
@@ -53,15 +66,14 @@ public class IndexSummary {
         this.numChannels = numChannels;
     }
 
-    public double getTime() {
+    public float getTime() {
         return time;
     }
 
-    public void setTime( double time ) {
+    public void setTime( float time ) {
         this.time = time;
     }
 
-    @NotNull
     public Date getDateUploaded() {
         return new Date( dateUploaded );
     }
@@ -82,11 +94,13 @@ public class IndexSummary {
         this.description = description;
     }
 
-    public List<Annotation> getAnnotations() {
-        return annotations;
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY )
+    public List<Comment> getComments() {
+        return comments;
     }
 
-    public void setAnnotations(List<Annotation> annotations) {
-        this.annotations = annotations;
+    public void setComments(List<Comment> comments) {
+        this.comments = comments;
     }
+
 }

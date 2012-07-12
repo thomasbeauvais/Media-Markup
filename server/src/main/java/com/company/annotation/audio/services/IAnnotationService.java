@@ -15,4 +15,6 @@ public interface IAnnotationService {
     VisualData loadVisualData(String idIndexFile, VisualParameters visualParameters);
 
     IndexSummary[] loadAll();
+
+    IndexSummary loadIndexSummary(String uid);
 }

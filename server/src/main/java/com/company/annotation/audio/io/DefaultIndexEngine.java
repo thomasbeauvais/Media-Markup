@@ -1,7 +1,7 @@
 package com.company.annotation.audio.io;
 
 import com.company.annotation.audio.api.IIndexEngine;
-import com.company.annotation.audio.pojos.IndexSummary;
+import com.company.annotation.audio.pojos.IndexWithSamples;
 import com.company.annotation.audio.pojos.Sample;
 import com.company.annotation.audio.pojos.SampleList;
 import javazoom.jl.decoder.Bitstream;
@@ -26,7 +26,7 @@ public class DefaultIndexEngine implements IIndexEngine {
             final Bitstream bitstream   = new Bitstream( input );
             final Decoder decoder       = new Decoder();
             final SampleList sampleList = new SampleList();
-            final IndexSummary index    = new IndexSummary();
+            final IndexWithSamples index    = new IndexWithSamples();
 
             float timeStamp         = 0;
             long pos                = 0;
@@ -49,6 +49,7 @@ public class DefaultIndexEngine implements IIndexEngine {
             index.setTime( timeStamp );
             index.setName( indexName );
             index.setChannels( output.getChannelCount() );
+            index.setSampleList( sampleList );
 
             sampleList.setIndexSummary( index );
             sampleList.updateBounds();

@@ -80,12 +80,12 @@ No file loaded..
 
 <table>
     <tbody>
-        <tr th:each="annotation,count : *{annotations}">
+        <tr th:each="annotation,count : *{comments}">
             <td th:text="${count}">1</td>
             <td>
                 <input type="text"
-                       th:field="*{annotations[__${count.index}__].text}"
-                       th:class="${#fields.hasErrors('annotations[__${count.index}__].text')}? 'fieldError'" />
+                       th:field="*{comments[__${count.index}__].text}"
+                       th:class="${#fields.hasErrors('comments[__${count.index}__].text')}? 'fieldError'" />
             </td>
             <td>
                 <button type="submit" name="removeAnnotation" th:value="${count.index}">Remove</button>

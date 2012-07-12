@@ -16,7 +16,6 @@
     <script src="resources/javascript/audioAnnotation.js"></script>
     <script src="resources/javascript/selectionOverlay.js"></script>
     <script src="resources/javascript/waveForm.js"  type="text/javascript"></script>
-    <script src="resources/javascript/jquery.timer.js"  type="text/javascript"></script>
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 </head>
 
@@ -27,8 +26,6 @@
 
     $( document ).ready( function() {
         audioAnnotation = new AudioAnnotation( innerContainer );
-
-        reloadAnnotations();
     } );
 
     function saveAnnotation() {
@@ -60,7 +57,7 @@
     }
 
     function reloadAnnotations() {
-        $('#include-from-outside').load('/audio/annotations',
+        $('#include-from-outside').load('/audio/annotations?idIndexSummary=' + this.audioAnnotation.idIndexFile,
             function() {
                 $('#include-from-outside #saveAnnotation').click(
                     function() {
@@ -94,7 +91,7 @@
 <div id="indexFileList" class="bordered padded">
     <c:if test="${!empty indexFiles}">
         <c:forEach items="${indexFiles}" var="indexFile">
-            <a href="javascript:void(0);" onclick="javascript:window.loadIndexFile('${ indexFile.name }','${ indexFile.id }');">
+            <a href="javascript:void(0);" onclick="javascript:window.loadIndexFile('${ indexFile.name }','${ indexFile.uid }');">
                 <div class="index-file-list-element bordered padded margined">
                     <span>${indexFile.name}</span>
                 </div>

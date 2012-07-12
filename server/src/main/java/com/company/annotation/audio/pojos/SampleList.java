@@ -1,5 +1,6 @@
 package com.company.annotation.audio.pojos;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -12,15 +13,14 @@ import java.util.Vector;
  * Time: 10:30 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SampleList {
+public class SampleList implements Serializable {
     private List<Sample> samples = new Vector<Sample>();
 
     private short min;
 
     private short max;
 
-    private IndexSummary indexSummary;
-    private String id;
+    private IndexWithSamples indexSummary;
 
     public SampleList() {
 
@@ -43,14 +43,14 @@ public class SampleList {
     }
 
     public Sample[] getSamples() {
-        return this.samples.toArray( new Sample[ 0 ] );
+        return this.samples.toArray(new Sample[0]);
     }
 
     public void setSamples( Sample[] samples ) {
         this.samples = new ArrayList<Sample>( Arrays.asList( samples ) );
     }
 
-    public int getNumSamples() {
+    public int numSamples() {
         return samples.size();
     }
 
@@ -75,19 +75,11 @@ public class SampleList {
         }
     }
 
-    public void setIndexSummary( IndexSummary index ) {
-        this.indexSummary = index;
-    }
-
-    public IndexSummary getIndexSummary() {
+    public IndexWithSamples getIndexSummary() {
         return this.indexSummary;
     }
 
-    public void setId(String id) {
-        this.id = id;
-    }
-
-    public String getId() {
-        return this.id;
+    public void setIndexSummary( IndexWithSamples index ) {
+        this.indexSummary = index;
     }
 }

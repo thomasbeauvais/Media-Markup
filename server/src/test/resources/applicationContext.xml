@@ -1,25 +1,57 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:context="http://www.springframework.org/schema/context"
-    xsi:schemaLocation="
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="
         http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
-    default-lazy-init="true">
+       default-lazy-init="true" xmlns:tx="http://www.springframework.org/schema/tx">
 
     <context:annotation-config/>
 
     <context:component-scan base-package="com.company"/>
 
+    <!--&lt;!&ndash; the DataSource (parameterized for configuration via a PropertyPlaceHolderConfigurer) &ndash;&gt;-->
+    <!--<bean id="dataSource" destroy-method="close" class="org.apache.commons.dbcp.BasicDataSource">-->
+        <!--<property name="driverClassName" value="org.postgresql.Driver"/>-->
+        <!--<property name="url" value="jdbc:postgresql://localhost/audioannotation"/>-->
+        <!--<property name="username" value="postgres"/>-->
+        <!--<property name="password" value="postgres"/>-->
+    <!--</bean>-->
+
+    <!--<bean id="lobHandler" class="org.springframework.jdbc.support.lob.DefaultLobHandler"/>-->
+
+    <!--<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">-->
+        <!--<property name="dataSource" ref="dataSource"/>-->
+        <!--&lt;!&ndash;<property name="configLocation" value="/WEB-INF/hibernate.cfg.xml"/>&ndash;&gt;-->
+        <!--&lt;!&ndash;<property name="configurationClass" value="org.hibernate.cfg.AnnotationConfiguration"/>&ndash;&gt;-->
+        <!--<property name="hibernateProperties">-->
+            <!--<props>-->
+                <!--<prop key="hibernate.dialect">org.hibernate.dialect.PostgreSQL82Dialect</prop>-->
+            <!--</props>-->
+        <!--</property>-->
+        <!--<property name="lobHandler" ref="lobHandler"/>-->
+    <!--</bean>-->
+
+    <!--<tx:annotation-driven transaction-manager="txManager"/>-->
+
+    <!--<bean id="txManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">-->
+        <!--<property name="sessionFactory" ref="sessionFactory"/>-->
+    <!--</bean>-->
+
     <bean class="com.company.annotation.audio.io.DefaultIndexEngine"/>
 
-    <bean class="com.company.annotation.audio.io.FilePersistenceEngine">
-        <!--<constructor-arg value="/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/index"/>-->
+    <bean class="com.company.annotation.audio.io.JpaPersistenceEngine">
+
+    </bean>
+
+    <!--
+    <bean id="filePersistenceEngine" class="com.company.annotation.audio.io.FilePersistenceEngine">
         <constructor-arg value="/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir3"/>
         <constructor-arg>
             <bean class="com.company.annotation.audio.io.json.JSONFilePersistenceConnector"/>
         </constructor-arg>
 
     </bean>
-
+    -->
 </beans>

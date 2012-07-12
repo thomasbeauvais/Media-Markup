@@ -19,15 +19,11 @@
  */
 package com.company.annotation.audio.web.controller;
 
-import com.company.annotation.audio.pojos.Annotation;
+import com.company.annotation.audio.pojos.Comment;
 import com.company.annotation.audio.pojos.IndexSummary;
-import com.company.annotation.audio.pojos.VisualData;
-import com.company.annotation.audio.pojos.VisualParameters;
-import com.company.annotation.audio.services.AudioAnnotationService;
 import com.company.annotation.audio.services.IAnnotationService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -42,34 +38,34 @@ public class AudioIndexController {
     @Autowired
     private IAnnotationService audioAnnotationService;
 
-    // TODO:  THIS IS JUST FOR TESTING
-    private static List<Annotation> s_annotations =  new Vector<Annotation>();
-
     @ModelAttribute("indexFiles")
     public List<IndexSummary> allIndexFiles() {
         return Arrays.asList(this.audioAnnotationService.loadAll());
     }
 
     @ModelAttribute("annotation")
-    public Annotation newAnnotation() {
-        return new Annotation();
+    public Comment newAnnotation() {
+        return new Comment();
     }
 
     @RequestMapping( value = "annotations", method = RequestMethod.GET )
-    public ModelAndView getAnnotations() {
+    public ModelAndView getAnnotations( @RequestParam String idIndexSummary ) {
+        final IndexSummary indexSummary = audioAnnotationService.loadIndexSummary( idIndexSummary );
+        final List<Comment> comments    = indexSummary.getComments();
+
         // Sort based on how many comments are in a thread
-        Collections.sort( s_annotations, new Comparator<Annotation>() {
-            public int compare(Annotation annotationGraph2, Annotation annotationGraph1 ) {
-                if ( annotationGraph1.size() == annotationGraph2.size() ) {
-                    return annotationGraph1.getDate().compareTo(annotationGraph1.getDate());
+        Collections.sort(comments, new Comparator<Comment>() {
+            public int compare(Comment commentGraph2, Comment commentGraph1) {
+                if ( commentGraph1.size() == commentGraph2.size() ) {
+                    return commentGraph1.getDate().compareTo(commentGraph1.getDate());
                 }
 
-                return ((Integer) annotationGraph1.size() ).compareTo( annotationGraph2.size() );
+                return ((Integer) commentGraph1.size() ).compareTo( commentGraph2.size() );
             }
         });
 
         Map modelMap = new HashMap();
-        modelMap.put( "annotations", s_annotations );
+        modelMap.put( "annotations", comments );
 
         return new ModelAndView( "annotations", modelMap );
     }
@@ -80,9 +76,9 @@ public class AudioIndexController {
     }
 
 //    @RequestMapping( value = "/annotations/add", method = RequestMethod.POST )
-//    public ModelAndView addAnnotation( @ModelAttribute("annotation") Annotation annotation ) {
-//        System.out.println( "ID of Index File:" + annotation.getIdIndexFile() );
-//        System.out.println( "Annotation Text:" + annotation.getText() );
+//    public ModelAndView addAnnotation( @ModelAttribute("annotation") Comment annotation ) {
+//        System.out.println( "ID of Index File:" + annotation.getIndexSummary() );
+//        System.out.println( "Comment Text:" + annotation.getText() );
 //
 //        return new ModelAndView( "main" );
 //    }
@@ -95,6 +91,7 @@ public class AudioIndexController {
 
         logger.info("**** adding comment for file=" + idIndexFile + " region(" + startX + "," + endX + ") with text=" + text);
 
-        s_annotations.add( new Annotation( idIndexFile, text, startX, endX ) );
+        final IndexSummary indexSummary = audioAnnotationService.loadIndexSummary( idIndexFile );
+        indexSummary.getComments().add( new Comment( indexSummary, text, startX, endX ) );
     }
 }

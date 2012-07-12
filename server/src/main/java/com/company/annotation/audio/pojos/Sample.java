@@ -1,6 +1,5 @@
 package com.company.annotation.audio.pojos;
 import java.io.Serializable;
-import java.util.Arrays;
 
 public class Sample implements Serializable {
 
@@ -8,7 +7,7 @@ public class Sample implements Serializable {
     private float timeStamp;
     private short value;
 
-	public Sample() {
+    public Sample() {
 
     }
 
