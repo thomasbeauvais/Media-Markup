@@ -36,6 +36,11 @@ function AudioAnnotation( parent ) {
 
         console.log( "loading waveform: " + idIndexFile );
 
+        // Dispatch the event letting everyone know
+        var evt = document.createEvent("Event");
+        evt.initEvent("indexLoaded", true, true);
+        document.dispatchEvent(evt);
+
         var self = this;
 
         $.getJSON( "visualData",

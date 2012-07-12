@@ -26,6 +26,12 @@
 
     $( document ).ready( function() {
         audioAnnotation = new AudioAnnotation( innerContainer );
+
+        var myEventHandler = function() {
+            reloadAnnotations();
+        };
+
+        document.addEventListener( "indexLoaded", myEventHandler, false);
     } );
 
     function saveAnnotation() {
@@ -49,11 +55,10 @@
             }
         ).success( function() { reloadAnnotations(); } );
 
-//        var myVar = setTimeout( function(){
-//            reloadAnnotations();
-//
- //           clearTimeout(myVar);
-//      }, 1000);
+        var myVar = setTimeout( function(){
+            reloadAnnotations();
+            clearTimeout(myVar);
+        }, 1000);
     }
 
     function reloadAnnotations() {
