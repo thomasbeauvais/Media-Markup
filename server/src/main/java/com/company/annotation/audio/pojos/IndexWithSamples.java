@@ -4,6 +4,7 @@ import com.company.common.dao.Identifiable;
 import org.hibernate.annotations.GenericGenerator;
 import org.jetbrains.annotations.NotNull;
 import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -25,7 +26,8 @@ public class IndexWithSamples extends IndexSummary {
     }
 
     @Lob
-    @Basic( optional = false )
+    @Basic( fetch = FetchType.LAZY )
+    @Transactional( readOnly = true )
     public SampleList getSampleList() {
         return this.sampleList;
     }

@@ -4,10 +4,12 @@ import com.company.common.dao.Identifiable;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.engine.jdbc.BlobImplementer;
 import org.jetbrains.annotations.NotNull;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
+import java.util.Vector;
 
 /**
  * Created by IntelliJ IDEA.
@@ -23,7 +25,7 @@ public class IndexSummary implements Identifiable {
     private long dateUploaded;
     private String name;
     private String description;
-    private List<Comment> comments;
+    private List<Comment> comments = new Vector<Comment>();
 
     private String uid;
 
@@ -94,7 +96,7 @@ public class IndexSummary implements Identifiable {
         this.description = description;
     }
 
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.LAZY )
+    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
     public List<Comment> getComments() {
         return comments;
     }
@@ -103,4 +105,20 @@ public class IndexSummary implements Identifiable {
         this.comments = comments;
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        IndexSummary that = (IndexSummary) o;
+
+        if (uid != null ? !uid.equals(that.uid) : that.uid != null) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        return uid != null ? uid.hashCode() : 0;
+    }
 }

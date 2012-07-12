@@ -24,23 +24,21 @@ public class Comment implements Identifiable {
     private Date date;
 
     private List<Comment> childComments = new Vector<Comment>();
-    private IndexSummary indexSummary;
     private String uid;
 
     public Comment() {
 
     }
 
-    public Comment(IndexSummary indexSummary, String text, int start, int end, Date date) {
-        this.indexSummary = indexSummary;
+    public Comment(String text, int start, int end) {
+        this( text, start, end, new Date() );
+    }
+
+    public Comment(String text, int start, int end, Date date) {
         this.text = text;
 //        this.start = start;
 //        this.end = end;
         this.date = date;
-    }
-
-    public Comment(@NotNull IndexSummary indexSummary, @NotNull String text, int start, int end) {
-        this( indexSummary, text, start, end, new Date() );
     }
 
     @Id
@@ -60,15 +58,6 @@ public class Comment implements Identifiable {
 
     public void setText(String text) {
         this.text = text;
-    }
-
-    @ManyToOne
-    public IndexSummary getIndexSummary() {
-        return indexSummary;
-    }
-
-    public void setIndexSummary(IndexSummary indexSummary) {
-        this.indexSummary = indexSummary;
     }
 
     public Date getDate() {

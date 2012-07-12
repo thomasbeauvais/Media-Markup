@@ -18,7 +18,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
-            <version>3.0.6.RELEASE</version>
+            <version>3.1.2.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -74,7 +74,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
-            <version>3.0.5.RELEASE</version>
+            <version>3.1.2.RELEASE</version>
         </dependency>
 
     </dependencies>

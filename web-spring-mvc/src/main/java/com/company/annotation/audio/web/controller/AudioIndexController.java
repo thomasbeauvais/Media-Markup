@@ -26,13 +26,15 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.util.*;
 
 @Controller
-public class AudioIndexController {
+public class AudioIndexController extends DefaultSpringController {
     private static Logger logger = Logger.getLogger( AudioIndexController.class );
 
     @Autowired
@@ -43,26 +45,23 @@ public class AudioIndexController {
         return Arrays.asList(this.audioAnnotationService.loadAll());
     }
 
-    @ModelAttribute("annotation")
-    public Comment newAnnotation() {
-        return new Comment();
-    }
-
     @RequestMapping( value = "annotations", method = RequestMethod.GET )
+    @Transactional
     public ModelAndView getAnnotations( @RequestParam String idIndexSummary ) {
         final IndexSummary indexSummary = audioAnnotationService.loadIndexSummary( idIndexSummary );
         final List<Comment> comments    = indexSummary.getComments();
 
+        //TODO:  Fix lazy loading so that this works..
         // Sort based on how many comments are in a thread
-        Collections.sort(comments, new Comparator<Comment>() {
-            public int compare(Comment commentGraph2, Comment commentGraph1) {
-                if ( commentGraph1.size() == commentGraph2.size() ) {
-                    return commentGraph1.getDate().compareTo(commentGraph1.getDate());
-                }
-
-                return ((Integer) commentGraph1.size() ).compareTo( commentGraph2.size() );
-            }
-        });
+//        Collections.sort(comments, new Comparator<Comment>() {
+//            public int compare(Comment commentGraph2, Comment commentGraph1) {
+//                if ( commentGraph1.size() == commentGraph2.size() ) {
+//                    return commentGraph1.getDate().compareTo(commentGraph1.getDate());
+//                }
+//
+//                return ((Integer) commentGraph1.size() ).compareTo( commentGraph2.size() );
+//            }
+//        });
 
         Map modelMap = new HashMap();
         modelMap.put( "annotations", comments );
@@ -75,14 +74,8 @@ public class AudioIndexController {
         return new ModelAndView( "main" );
     }
 
-//    @RequestMapping( value = "/annotations/add", method = RequestMethod.POST )
-//    public ModelAndView addAnnotation( @ModelAttribute("annotation") Comment annotation ) {
-//        System.out.println( "ID of Index File:" + annotation.getIndexSummary() );
-//        System.out.println( "Comment Text:" + annotation.getText() );
-//
-//        return new ModelAndView( "main" );
-//    }
     @RequestMapping( value = "annotations/add", method = RequestMethod.POST )
+    @Transactional
     public @ResponseStatus( value = HttpStatus.NO_CONTENT ) void addAnnotation(
             @RequestParam String idIndexFile,
             @RequestParam String text,
@@ -92,6 +85,8 @@ public class AudioIndexController {
         logger.info("**** adding comment for file=" + idIndexFile + " region(" + startX + "," + endX + ") with text=" + text);
 
         final IndexSummary indexSummary = audioAnnotationService.loadIndexSummary( idIndexFile );
-        indexSummary.getComments().add( new Comment( indexSummary, text, startX, endX ) );
+        indexSummary.getComments().add( new Comment( text, startX, endX ) );
+
+        audioAnnotationService.save( indexSummary );
     }
 }

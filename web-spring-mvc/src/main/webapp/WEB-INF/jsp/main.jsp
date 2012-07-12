@@ -52,8 +52,11 @@
               text: text,
               startX: startX,
               endX: endX
-            }
-        ).success( function() { reloadAnnotations(); } );
+            })
+        .success( function() { reloadAnnotations(); } )
+        .error( function( e ) {
+            console.log( e );
+        } );
 
         var myVar = setTimeout( function(){
             reloadAnnotations();

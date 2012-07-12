@@ -11,6 +11,8 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.transaction.TransactionConfiguration;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Vector;
@@ -23,10 +25,36 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 @ContextConfiguration( "classpath*:applicationContext.xml" )
+@TransactionConfiguration(defaultRollback=true)
 @RunWith( SpringJUnit4ClassRunner.class )
 public class JpaPersistenceEngineTest {
     @Autowired
     private IPersistenceEngine persistenceEngine;
+
+    @Test
+    @Transactional
+    public void testSaveToExisting() {
+        final IndexSummary indexSummary = persistenceEngine.loadAll(IndexSummary.class)[0];
+        Assert.assertNotNull( indexSummary );
+        Assert.assertNotNull( indexSummary.getComments() );
+
+        Assert.assertSame( 2, indexSummary.getComments().size() );
+
+        final Comment comment = new Comment( "text", 0, 0 );
+        indexSummary.getComments().add( comment );
+
+        persistenceEngine.save( indexSummary );
+
+        final Comment comment1              = persistenceEngine.load( comment.getUid(), Comment.class );
+        Assert.assertNotNull( comment1 );
+        Assert.assertEquals(comment1, comment);
+
+        final IndexSummary indexSummary1    = persistenceEngine.load( indexSummary.getUid(), IndexSummary.class );
+        Assert.assertNotNull( indexSummary1 );
+        Assert.assertNotNull( indexSummary1.getComments() );
+
+        Assert.assertSame( 3, indexSummary1.getComments().size() );
+    }
 
     @Test
     public void testSave() {
@@ -34,8 +62,8 @@ public class JpaPersistenceEngineTest {
         summary.setName( "test summary one");
 
         final List<Comment> comments = new Vector<Comment>();
-        comments.add( new Comment( summary, "test comment one", 0, 0 ) );
-        comments.add( new Comment( summary, "test comment two", 0, 0 ) );
+        comments.add( new Comment( "test comment one", 0, 0 ) );
+        comments.add( new Comment( "test comment two", 0, 0 ) );
 
         summary.setComments( comments );
 

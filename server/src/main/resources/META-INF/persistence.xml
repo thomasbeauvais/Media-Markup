@@ -31,6 +31,8 @@
             Persistence Unit for the Postgres SQL implementation of Audio Annotation
         </description>
 
+        <!--<provider>org.hibernate.ejb.HibernatePersistence</provider>-->
+
         <properties>
             <property name="hibernate.dialect" value="org.hibernate.dialect.PostgreSQL82Dialect"/>
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
@@ -39,6 +41,7 @@
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost/audioannotation"/>
             <property name="hibernate.max_fetch_depth" value="3"/>
 
+            <property name="hibernate.connection.autocommit" value="false"/>
             <!--<property name="hibernate.show_sql" value="true" />-->
             <!--<property name="hibernate.hbm2ddl.auto" value="create" />-->
         </properties>

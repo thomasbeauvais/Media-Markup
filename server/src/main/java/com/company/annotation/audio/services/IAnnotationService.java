@@ -17,4 +17,6 @@ public interface IAnnotationService {
     IndexSummary[] loadAll();
 
     IndexSummary loadIndexSummary(String uid);
+
+    void save( IndexSummary indexSummary );
 }

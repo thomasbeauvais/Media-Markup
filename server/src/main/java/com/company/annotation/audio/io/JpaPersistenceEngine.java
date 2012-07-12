@@ -1,10 +1,13 @@
 package com.company.annotation.audio.io;
 
 import com.company.annotation.audio.api.IPersistenceEngine;
+import com.company.annotation.audio.pojos.IndexWithSamples;
 import com.company.common.dao.Identifiable;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.persistence.EntityManager;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 import java.lang.reflect.Array;
 import java.util.List;
 
@@ -16,36 +19,35 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class JpaPersistenceEngine implements IPersistenceEngine {
-    private static EntityManager entityManager = Persistence.createEntityManagerFactory("com.company.annotation.audio").createEntityManager();
+
+    @PersistenceContext
+    private EntityManager entityManager;
 
     @Override
+    @Transactional
     public void save(Identifiable obj) {
         try {
-            entityManager.getTransaction().begin();
-            entityManager.persist(obj);
+            entityManager.merge(obj);
+//            entityManager.persist(obj);
+//            entityManager.flush();
         } finally {
-            entityManager.getTransaction().commit();
         }
     }
 
     @Override
-    public <T extends Identifiable> T load(String id, Class<T> clazz) {
+    public <T extends Identifiable> T load(String id, Class<T> objectClazz) {
         try{
-            entityManager.getTransaction().begin();
-            return entityManager.find( clazz, id );
+            return entityManager.find(objectClazz, id);
         } finally {
-            entityManager.getTransaction().commit();
         }
     }
 
     @Override
     public <T extends Identifiable> T[] loadAll(Class<T> objectClazz) {
         try {
-            entityManager.getTransaction().begin();
             List<T> result = entityManager.createQuery( "from " + objectClazz.getSimpleName(), objectClazz ).getResultList();
             return result.toArray((T[]) Array.newInstance(objectClazz, 0));
         } finally {
-            entityManager.getTransaction().commit();
         }
     }
 }
