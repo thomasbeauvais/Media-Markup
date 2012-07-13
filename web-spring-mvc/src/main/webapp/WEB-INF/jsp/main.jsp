@@ -17,7 +17,8 @@
     <script src="resources/javascript/regionOverlay.js"></script>
     <script src="resources/javascript/selectionOverlay.js"></script>
     <script src="resources/javascript/waveForm.js"  type="text/javascript"></script>
-    <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="resources/javascript/jquery-latest.min.js"></script>
+    <!--<script src="http://code.jquery.com/jquery-latest.min.js"></script>-->
 </head>
 
 <script type="text/javascript" charset="utf-8">

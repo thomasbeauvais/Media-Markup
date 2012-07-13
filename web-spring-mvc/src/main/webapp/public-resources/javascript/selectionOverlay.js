@@ -2,12 +2,6 @@ function SelectionOverlay( parent ) {
     this.overlayCanvas                 = document.createElement( 'canvas' );
     this.overlayCanvas.id              = "selectionOverlay";
 
-    this.overlayCanvas.addEventListener('mousedown', this.onMouseDown, false);
-    this.overlayCanvas.addEventListener('mouseup', this.onMouseUp, false);
-    this.overlayCanvas.addEventListener('mousemove', this.onMouseMove, false);
-    this.overlayCanvas.addEventListener('click', this.onMouseClick, false);
-    this.overlayCanvas.addEventListener('mouseout', this.onMouseOut, false);
-
     this.idIndexFile = null;
     this.startX = -1;
     this.isDragging = false;
