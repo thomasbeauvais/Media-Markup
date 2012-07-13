@@ -47,11 +47,11 @@ public class IndexDriver {
 
                 final IndexWithSamples indexSummary = sampleList.getIndexSummary();
 
-                final List<Comment> comments = new Vector<Comment>();
-                comments.add( new Comment( "sample text one", 100, 1000 ) );
-                comments.add( new Comment( "sample text two", 100, 1000 ) );
-
-                indexSummary.setComments(comments);
+//                final List<Comment> comments = new Vector<Comment>();
+//                comments.add( new Comment( "sample text one", 100, 1000 ) );
+//                comments.add( new Comment( "sample text two", 100, 1000 ) );
+//
+//                indexSummary.setComments(comments);
 
                 LOGGER.info( "*** Created SampleList: " + uid );
 

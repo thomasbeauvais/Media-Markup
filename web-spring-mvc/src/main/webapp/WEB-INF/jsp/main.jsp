@@ -35,16 +35,20 @@
         document.addEventListener( "indexLoaded", myEventHandler, false);
     } );
 
-    function saveAnnotation() {
+    function saveAnnotation( save ) {
         var text        = $('#include-from-outside #newAnnotationText').val();
         var idIndexFile = this.audioAnnotation.idIndexFile;
         var startX      = this.audioAnnotation.selectionOverlay.startX;
         var endX        = this.audioAnnotation.selectionOverlay.endX;
 
+        console.log( "**** actual region(" + startX + "," + endX + ")" );
+
         startX          = this.audioAnnotation.transform( startX );
         endX            = this.audioAnnotation.transform( endX );
 
         console.log( "**** adding comment for file=" + idIndexFile + " region(" + startX + "," + endX + ") with text=" + text );
+
+        if ( !save ) { return; }
 
         $.post(
             'annotations/add',
@@ -63,11 +67,8 @@
     function reloadAnnotations() {
         $('#include-from-outside').load('/audio/annotations?idIndexSummary=' + this.audioAnnotation.idIndexFile,
             function() {
-                $('#include-from-outside #saveAnnotation').click(
-                    function() {
-                        saveAnnotation();
-                    }
-                );
+                $('#include-from-outside #saveAnnotation').click( function() { saveAnnotation(true) } );
+                $('#include-from-outside #simpleSave').click( function() { saveAnnotation(false) } );
             }
         );
     }

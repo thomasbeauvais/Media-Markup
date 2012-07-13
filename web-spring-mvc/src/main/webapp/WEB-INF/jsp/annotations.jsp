@@ -33,6 +33,7 @@
 
 <div class="bordered margined padded">
     <input id="showComment" type="button" value="New Comment" onclick="window.showComment();"/>
+    <input id="simpleSave" type="button" value="Simple Save (dev)" onclick="window.showComment();"/>
 </div>
 
 <div id="newComment" class="bordered margined padded">
