@@ -1,7 +1,6 @@
 // For now we are going to have the window create the canvas and pass it in
 function Waveform( parent ) {
     this.waveformCanvas                 = document.createElement( 'canvas' );
-//    this.waveformCanvas                 = canvas;
     this.waveformCanvas.id              = "waveform";
 
     this.waveformCanvas.parent          = this;
@@ -16,7 +15,7 @@ function Waveform( parent ) {
     this.waveformCanvas.width           = this.waveformCanvas.offsetWidth;
     this.waveformCanvas.height          = this.waveformCanvas.offsetHeight;
 
-    this.drawWaveform = function( samples ) {
+    this.drawWaveformSamples = function( samples ) {
         this.resetCanvas();
 
         var canvas              = this.waveformCanvas;

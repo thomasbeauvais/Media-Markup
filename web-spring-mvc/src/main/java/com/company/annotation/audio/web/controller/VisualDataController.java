@@ -2,6 +2,7 @@ package com.company.annotation.audio.web.controller;
 
 import com.company.annotation.audio.pojos.VisualData;
 import com.company.annotation.audio.pojos.VisualParameters;
+import com.company.annotation.audio.pojos.VisualRegion;
 import com.company.annotation.audio.services.IAnnotationService;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
@@ -10,12 +11,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.ModelAndView;
-
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -70,8 +65,19 @@ public class VisualDataController extends DefaultSpringController {
             jsonPositions.add(position);
         }
 
+        final JSONArray jsonRegions         = new JSONArray();
+        for ( VisualRegion visualRegion : visualData.getVisualRegions() ) {
+            final JSONObject region         = new JSONObject();
+            region.put( "parentUid", visualRegion.getParentUid() );
+            region.put( "startX", visualRegion.getStartX() );
+            region.put( "endX", visualRegion.getEndX() );
+
+            jsonRegions.add( region );
+        }
+
         jsonObject.put( "samples", jsonSamples );
         jsonObject.put( "positions", jsonPositions );
+        jsonObject.put( "regions", jsonRegions );
 
         return jsonObject.toJSONString();
     }

@@ -43,7 +43,7 @@
 //	private ArrayList<Sample> samples;
 //
 //	private void parse(FileInputStream fis) {
-//		long start = System.currentTimeMillis();
+//		long startX = System.currentTimeMillis();
 //
 //		Scanner scanner = new Scanner( fis );
 //
@@ -74,7 +74,7 @@
 //
 //		long end = System.currentTimeMillis();
 //
-//		System.err.println( "Parsed in " + (end-start)/1000. + " secs.");
+//		System.err.println( "Parsed in " + (end-startX)/1000. + " secs.");
 //	}
 //
 //	private static void show(Sample[] sampleData, int[] maxes) {

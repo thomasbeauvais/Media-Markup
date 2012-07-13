@@ -1,7 +1,5 @@
 package com.company.annotation.audio.pojos;
 
-import java.awt.*;
-
 /**
  * Created with IntelliJ IDEA.
  * User: tbeauvais
@@ -11,38 +9,41 @@ import java.awt.*;
  */
 public class VisualRegion {
 
-    public int start;
-    public int stop;
+    public int startX;
+    public int endX;
     public int r;
     public int g;
     public int b;
+
+    private String parentUid;
 
     public VisualRegion() {
 
     }
 
-    public VisualRegion( String parentUid, int start, int stop, int r, int g, int b) {
-        this.start = start;
-        this.stop = stop;
+    public VisualRegion( String parentUid, int startX, int endX, int r, int g, int b) {
+        this.parentUid = parentUid;
+        this.startX = startX;
+        this.endX = endX;
         this.r = r;
         this.g = g;
         this.b = b;
     }
 
-    public int getStart() {
-        return start;
+    public int getStartX() {
+        return startX;
     }
 
-    public void setStart(int start) {
-        this.start = start;
+    public void setStartX(int startX) {
+        this.startX = startX;
     }
 
-    public int getStop() {
-        return stop;
+    public int getEndX() {
+        return endX;
     }
 
-    public void setStop(int stop) {
-        this.stop = stop;
+    public void setEndX(int endX) {
+        this.endX = endX;
     }
 
     public int getR() {
@@ -67,6 +68,10 @@ public class VisualRegion {
 
     public void setB(int b) {
         this.b = b;
+    }
+
+    public String getParentUid() {
+        return this.parentUid;
     }
 }
 

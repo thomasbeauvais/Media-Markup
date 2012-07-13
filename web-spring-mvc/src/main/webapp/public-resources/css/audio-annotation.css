@@ -93,13 +93,24 @@ canvas#waveform {
     border-color:black;
 }
 
+
+canvas#regionOverlay {
+    z-index: 99;
+
+    #background-color: red;
+}
+
 canvas#selectionOverlay {
     z-index: 100;
 
     #background-color: red;
 }
 
-canvas#waveform, canvas#selectionOverlay {
+canvas#mouseEventOverlay {
+    z-index: 101;
+}
+
+canvas#waveform, canvas#selectionOverlay, canvas#regionOverlay, canvas#mouseEventOverlay {
     width: 800px;
     height: 380px;
 

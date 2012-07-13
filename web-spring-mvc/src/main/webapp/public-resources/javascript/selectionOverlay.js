@@ -23,73 +23,74 @@ function SelectionOverlay( parent ) {
     this.overlayCanvas.width           = this.overlayCanvas.offsetWidth;
     this.overlayCanvas.height          = this.overlayCanvas.offsetHeight;
 
+    var self = this;
+
     this.selectionEnabled = function( isEnabled ) {
-        this.isSelectionEnabled = isEnabled;
+        self.isSelectionEnabled = isEnabled;
     }
 
-    this.clearSelection = function () {
-        this.startX = -1;
-        this.endX = -1;
+    this.clear = function () {
+        self.startX = -1;
+        self.endX = -1;
 
-        this.isDragging = false;
+        self.isDragging = false;
 
-        cleanCanvas( this.overlayCanvas );
+        cleanCanvas( self.overlayCanvas );
     }
 
-}
+    this.mouseout = function (event) {
+        // This should only set it on the first time we escape if we are dragging!
+        if ( self.isDragging == false ) {
+        } else if ( event.layerX < 0 ) {
+            self.paint( self.startX, 0 );
+        } else if ( event.layerX > self.width ) {
+            self.paint( self.startX, self.width );
+        }
 
-SelectionOverlay.prototype.onMouseOut = function (event) {
-    // This should only set it on the first time we escape if we are dragging!
-    if ( this.parent.isDragging == false ) {
-    } else if ( event.layerX < 0 ) {
-        this.parent.paint( this.parent.startX, 0 );
-    } else if ( event.layerX > this.width ) {
-        this.parent.paint( this.parent.startX, this.width );
-    }
+        self.isDragging = false;
+    };
 
-    this.parent.isDragging = false;
-};
+    this.mouseclick = function (event) {
+    };
 
-SelectionOverlay.prototype.onMouseClick = function (event) {
-};
+    this.mouseup= function (event) {
+        self.isDragging = false;
+    };
 
-SelectionOverlay.prototype.onMouseUp = function (event) {
-    this.parent.isDragging = false;
-    //this.parent.startX = -1;
-};
+    this.mousedown = function (event) {
+        // TODO:  When nothing is loaded don't allow selection
+        if ( !self.isSelectionEnabled ) {
+            return;
+        }
 
-SelectionOverlay.prototype.onMouseDown = function (event) {
-    // TODO:  When nothing is loaded don't allow selection
-    if ( !this.parent.isSelectionEnabled ) {
-        return;
-    }
+        // 'this' is the HTMLCanvas 'overlayCanvas'
+        self.isDragging = true;
+        self.startX = event.layerX;
+    };
 
-    // 'this' is the HTMLCanvas 'overlayCanvas'
-    this.parent.isDragging = true;
-    this.parent.startX = event.layerX;
-};
+    this.mousemove = function (event) {
+        if ( self.isDragging == false ) {
+            return;
+        }
 
-SelectionOverlay.prototype.onMouseMove = function (event) {
-    if ( this.parent.isDragging == false ) {
-        return;
-    }
+        self.paint( self.startX, event.layerX );
+    };
 
-    this.parent.paint( this.parent.startX, event.layerX );
-}
+    this.paint = function( startX, endX ) {
+        var canvas  = self.overlayCanvas;
+        // Sync these to make sure that anyone who asks from the selected region can retrieve it..
+        this.startX = startX;
+        this.endX   = endX;
 
-SelectionOverlay.prototype.paint = function( startX, endX ) {
-    // Sync these to make sure that anyone who asks from the selected region can retrieve it..
-    this.startX = startX;
-    this.endX   = endX;
+        var x       = Math.min( startX, endX );
+        var width   = Math.max( startX, endX ) - x;
+        var height  = canvas.height;
 
-    var x       = Math.min( startX, endX );
-    var width   = Math.max( startX, endX ) - x;
-    var height  = this.overlayCanvas.height;
+        var context             = canvas.getContext( "2d" );
+            context.clearRect ( 0 , 0, canvas.width, canvas.height );
+            context.fillStyle   = "rgba(255, 0, 0, 0.2)";
+            context.fillRect( x, 0, width, height );
 
-    var context             = this.overlayCanvas.getContext( "2d" );
-        context.clearRect ( 0 , 0, this.overlayCanvas.width, this.overlayCanvas.height );
-        context.fillStyle   = "rgba(255, 0, 0, 0.2)";
-        context.fillRect( x, 0, width, height );
-
-        //console.log( "height=" + height + ", endX=" + endX + ", x=" + x + ", width=" + width + ",canvas.width=" + this.overlayCanvas.width );
+            //console.log( "height=" + height + ", endX=" + endX + ", x=" + x + ", width=" + width + ",canvas.width=" + this.overlayCanvas.width );
+    };
 };

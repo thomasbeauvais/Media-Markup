@@ -48,11 +48,12 @@ public class AudioAnnotationService implements IAnnotationService {
     public VisualData loadVisualData( String idContentFile, VisualParameters visualParameters ) {
         final VisualData visualData = new VisualData();
 
-        if ( cache.get( idContentFile ) == null ) {
-            cache.put( idContentFile, (IndexWithSamples) loadIndexSummary(idContentFile));
-        }
+//        if ( cache.get( idContentFile ) == null ) {
+//            cache.put( idContentFile, (IndexWithSamples) loadIndexSummary(idContentFile));
+//        }
 
-        final IndexWithSamples indexSummary = cache.get( idContentFile );
+//        final IndexWithSamples indexSummary = cache.get( idContentFile );
+        final IndexWithSamples indexSummary = (IndexWithSamples) loadIndexSummary(idContentFile);
         final SampleList sampleList         = indexSummary.getSampleList();
 
         final int[] visualSamples       = new int[ visualParameters.getWidth() ];

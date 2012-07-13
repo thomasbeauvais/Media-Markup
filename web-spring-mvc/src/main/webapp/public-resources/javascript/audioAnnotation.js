@@ -1,6 +1,7 @@
 // For now we are going to have the window create the canvas and pass it in
 function AudioAnnotation( parent ) {
     this.waveformCanvas                 = new Waveform( parent );
+    this.regionOverlay                  = new RegionOverlay( parent );
     this.selectionOverlay               = new SelectionOverlay( parent );
 
     this.idIndexFile                    =  null;
@@ -19,7 +20,8 @@ function AudioAnnotation( parent ) {
 
         this.currentData = data;
 
-        this.waveformCanvas.drawWaveform( data.samples );
+        this.waveformCanvas.drawWaveformSamples( data.samples );
+        this.regionOverlay.drawWaveformRegions( data.regions );
         this.selectionOverlay.selectionEnabled( true );
     }
 
@@ -29,7 +31,8 @@ function AudioAnnotation( parent ) {
             return;
         }
 
-        this.selectionOverlay.clearSelection();
+        this.regionOverlay.clear();
+        this.selectionOverlay.clear();
         this.waveformCanvas.resetCanvas();
 
         this.idIndexFile        = idIndexFile;
@@ -58,4 +61,34 @@ function AudioAnnotation( parent ) {
                 console.log("error:" + data);
             });
     }
-}
+
+    this.mouseEventOverlay                 = document.createElement( 'canvas' );
+    this.mouseEventOverlay.id              = "mouseEventOverlay";
+
+    var self = this;
+
+    var mouseFunction = function( event ) {
+        if ( self.selectionOverlay ) {
+            var fn = self.selectionOverlay[ event.type ]
+            if(typeof fn === 'function') {
+                fn( event );
+            }
+        }
+
+        if ( self.regionOverlay )  {
+            var fn = self.regionOverlay[ event.type ]
+            if(typeof fn === 'function') {
+                fn( event );
+            }
+        }
+    }
+
+    this.mouseEventOverlay.addEventListener('mousedown',    mouseFunction, false);
+    this.mouseEventOverlay.addEventListener('mouseup',      mouseFunction, false);
+    this.mouseEventOverlay.addEventListener('mousemove',    mouseFunction, false);
+    this.mouseEventOverlay.addEventListener('click',        mouseFunction, false);
+    this.mouseEventOverlay.addEventListener('mouseout',     mouseFunction, false);
+
+    // Add it to the container..
+    parent.appendChild( this.mouseEventOverlay );
+};

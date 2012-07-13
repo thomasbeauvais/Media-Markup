@@ -29,7 +29,7 @@ public class JpaPersistenceEngine implements IPersistenceEngine {
         try {
             entityManager.merge(obj);
 //            entityManager.persist(obj);
-//            entityManager.flush();
+            entityManager.flush();
         } finally {
         }
     }
