@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Vector;
 
 /**
  * Created by IntelliJ IDEA.
@@ -18,7 +20,7 @@ import java.util.Map;
 @Service
 public class AudioAnnotationService implements IAnnotationService {
 
-    private Map<String, SampleList> cache = new HashMap<String, SampleList>();
+    private Map<String, IndexWithSamples> cache = new HashMap<String, IndexWithSamples>();
 
     public AudioAnnotationService() {
     }
@@ -44,19 +46,14 @@ public class AudioAnnotationService implements IAnnotationService {
     }
 
     public VisualData loadVisualData( String idContentFile, VisualParameters visualParameters ) {
-        try {
-            Thread.sleep( 100 );
-        } catch (InterruptedException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
         final VisualData visualData = new VisualData();
 
         if ( cache.get( idContentFile ) == null ) {
-            cache.put( idContentFile, loadSamples( idContentFile ) );
+            cache.put( idContentFile, (IndexWithSamples) loadIndexSummary(idContentFile));
         }
 
-        final SampleList sampleList     = cache.get( idContentFile );
+        final IndexWithSamples indexSummary = cache.get( idContentFile );
+        final SampleList sampleList         = indexSummary.getSampleList();
 
         final int[] visualSamples       = new int[ visualParameters.getWidth() ];
         final long[] samplePositions    = new long[ visualParameters.getWidth() ];
@@ -90,15 +87,31 @@ public class AudioAnnotationService implements IAnnotationService {
             }
         }
 
-        return visualData;
-    }
+        final List<VisualRegion> visualRegions  = new Vector<VisualRegion>();
+        final List<Comment> comments            = indexSummary.getComments();
+        for ( Comment comment : comments ) {
+            int startX = 0;
+            int endX = 0;
+            for (int i = 0, samplePositionsLength = samplePositions.length; i < samplePositionsLength; i++) {
+                long samplePosition = samplePositions[i];
+                if (startX == 0 && comment.getStartPos() < samplePosition) {
+                    startX = i;
+                } else if ( endX == 0 && comment.getEndPos() < samplePosition) {
+                    endX = i;
+                }
+            }
 
-    public VisualRegion[] loadVisualRegions(String indexName, VisualParameters visualParameters) {
-        return new VisualRegion[]{
-                new VisualRegion( 100, 200, 0, 0, 255 ),
-                new VisualRegion( 150, 300, 0, 0, 255 ),
-                new VisualRegion( 600, 700, 0, 0, 255 ),
-        };
+            // If the end was never smaller, then it went to the entire end.. strange.. but a possible case
+            if ( endX == 0 ) {
+                endX = visualParameters.getWidth();
+            }
+
+            visualRegions.add( new VisualRegion( comment.getUid(), startX, endX, 0, 0, 0 ) );
+        }
+
+        visualData.setVisualRegions( visualRegions.toArray( new VisualRegion[ 0 ] ) );
+
+        return visualData;
     }
 
     public IndexSummary loadIndexSummary(String uid) {

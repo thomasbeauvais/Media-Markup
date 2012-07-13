@@ -8,6 +8,7 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -33,6 +34,7 @@ public class VisualDataController extends DefaultSpringController {
     private static Logger logger = Logger.getLogger( "com.company.annotation.audio" );
 
     @RequestMapping( method = RequestMethod.GET )
+    @Transactional
     public @ResponseBody String doGet( @RequestParam String idIndexFile, @RequestParam Integer width, @RequestParam Integer height ) throws Exception {
 //        if ( !System.getenv().containsKey( MEDIA_PROJECT_DIR ) ) {
 //            throw new RuntimeException( "Must have environment variable " + MEDIA_PROJECT_DIR + " that points to the base " +

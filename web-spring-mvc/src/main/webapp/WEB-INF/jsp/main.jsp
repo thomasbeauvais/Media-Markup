@@ -57,11 +57,6 @@
         .error( function( e ) {
             console.log( e );
         } );
-
-        var myVar = setTimeout( function(){
-            reloadAnnotations();
-            clearTimeout(myVar);
-        }, 1000);
     }
 
     function reloadAnnotations() {

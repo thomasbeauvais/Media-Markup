@@ -147,14 +147,15 @@ public class WaveFormPanel extends JLayeredPane {
 
         final int height        = panel_main.getHeight();
 
-        final VisualRegion[] visualRegions = annotationService.loadVisualRegions( indexName, new VisualParameters() );
-        for ( VisualRegion visualRegion : visualRegions ) {
-            final int width = visualRegion.getStop() - visualRegion.getStart();
-
-            graphics.setColor( new Color( 0, 0, 255, 50 ) );
-
-            graphics.fillRect( visualRegion.getStart(), 0, width, height);
-        }
+        //TODO: Actually implement correctly if need be
+//        final VisualRegion[] visualRegions = annotationService.loadVisualRegions( indexName, new VisualParameters() );
+//        for ( VisualRegion visualRegion : visualRegions ) {
+//            final int width = visualRegion.getStop() - visualRegion.getStart();
+//
+//            graphics.setColor( new Color( 0, 0, 255, 50 ) );
+//
+//            graphics.fillRect( visualRegion.getStart(), 0, width, height);
+//        }
     }
 
     private void drawWaveform() {

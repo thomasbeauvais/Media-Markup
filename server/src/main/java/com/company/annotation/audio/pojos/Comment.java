@@ -2,7 +2,6 @@ package com.company.annotation.audio.pojos;
 
 import com.company.common.dao.Identifiable;
 import org.hibernate.annotations.GenericGenerator;
-import org.jetbrains.annotations.NotNull;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -19,8 +18,8 @@ import java.util.Vector;
 @Entity
 public class Comment implements Identifiable {
     private String text;
-//    private int start;
-//    private int end;
+    private long startPos;
+    private long endPos;
     private Date date;
 
     private List<Comment> childComments = new Vector<Comment>();
@@ -36,8 +35,8 @@ public class Comment implements Identifiable {
 
     public Comment(String text, int start, int end, Date date) {
         this.text = text;
-//        this.start = start;
-//        this.end = end;
+        this.startPos = start;
+        this.endPos = end;
         this.date = date;
     }
 
@@ -75,6 +74,22 @@ public class Comment implements Identifiable {
 
     public void setChildComments(List<Comment> childComments) {
         this.childComments = childComments;
+    }
+
+    public long getStartPos() {
+        return startPos;
+    }
+
+    public void setStartPos(long startPos) {
+        this.startPos = startPos;
+    }
+
+    public long getEndPos() {
+        return endPos;
+    }
+
+    public void setEndPos(long endPos) {
+        this.endPos = endPos;
     }
 
     public int size() {

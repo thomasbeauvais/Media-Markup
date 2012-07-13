@@ -17,7 +17,11 @@ public class VisualRegion {
     public int g;
     public int b;
 
-    public VisualRegion(int start, int stop, int r, int g, int b) {
+    public VisualRegion() {
+
+    }
+
+    public VisualRegion( String parentUid, int start, int stop, int r, int g, int b) {
         this.start = start;
         this.stop = stop;
         this.r = r;
