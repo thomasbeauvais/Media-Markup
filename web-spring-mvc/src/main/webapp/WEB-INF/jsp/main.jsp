@@ -14,9 +14,11 @@
 
     <script src="resources/javascript/canvasUtils.js"></script>
     <script src="resources/javascript/audioAnnotation.js"></script>
+    <script src="resources/javascript/audioControls.js"></script>
     <script src="resources/javascript/regionOverlay.js"></script>
     <script src="resources/javascript/selectionOverlay.js"></script>
     <script src="resources/javascript/waveForm.js"  type="text/javascript"></script>
+    <script src="soundmanager/soundmanager2-nodebug-jsmin.js"></script>
     <script src="resources/javascript/jquery-latest.min.js"></script>
     <!--<script src="http://code.jquery.com/jquery-latest.min.js"></script>-->
 </head>
@@ -28,6 +30,8 @@
 
     $( document ).ready( function() {
         audioAnnotation = new AudioAnnotation( innerContainer );
+
+        audioControls   = new AudioControls( controls );
 
         var myEventHandler = function() {
             reloadAnnotations();
@@ -86,6 +90,35 @@
         this.audioAnnotation.loadIndexFile( idIndexFile );
     }
 
+    function playSound() {
+        var sound = soundManager.createSound({
+            id:'testcase',
+            url:'audioData/',
+            whileloading: function() {
+                console.log( 'sound '+this.sID+' loading, '+this.bytesLoaded+' of '+this.bytesTotal);
+
+                audioControls.updateLoaded( this );
+            },
+            whileplaying: function() {
+                console.log( 'Peaks, position/bytes: '+this.position+'/'+this.bytesTotal);
+
+                audioControls.updatePlayed( this );
+            }
+        });
+
+        sound.play();
+    }
+
+    soundManager.setup({
+        // location: path to SWF files, as needed (SWF file name is appended later.)
+        url: '/audio/soundmanager/',
+        onready: function() {
+
+        },
+        onbufferchange: function() {
+            console.log('Buffering '+(this.isBuffering?'started':'stopped')+'.');
+        }
+    });
 //]]>
 
 </script>
@@ -116,10 +149,12 @@ No file loaded..
 <div class="bordered margined padded">
     <input id="toggleList" type="button" value="Toggle List" onclick="window.toggleList();"/>
     <input id="reloadAnnotations" type="button" value="Reload Annotations" onclick="window.reloadAnnotations();"/>
+    <input id="playSound" type="button" value="Play Sound" onclick="window.playSound();"/>
 </div>
 
 <div class="container bordered margined">
     <div id="innerContainer" class="inner-container">
+        <div id="controls" class="bordered"/>
     </div>
 </div>
 

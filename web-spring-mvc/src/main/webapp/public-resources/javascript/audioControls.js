@@ -1,79 +1,63 @@
 // For now we are going to have the window create the canvas and pass it in
-function Waveform( parent ) {
-    this.waveformCanvas                 = document.createElement( 'canvas' );
-    this.waveformCanvas.id              = "waveform";
+function AudioControls( parent ) {
+    this.bytesLoadedCanvas              = document.createElement( 'canvas' );
+    this.bytesLoadedCanvas.id           = "bytesLoadedCanvas";
+    this.bytesLoadedCanvas.parent       = this;
 
-    this.waveformCanvas.parent          = this;
+    this.bytesPlayedCanvas               = document.createElement( 'canvas' );
+    this.bytesPlayedCanvas.id            = "bytesPlayedCanvas";
+    this.bytesPlayedCanvas.parent        = this;
 
-    this.idIndexFile                    =  null;
-
-   // Add it to the container..
-    parent.appendChild( this.waveformCanvas );
+    // Add it to the container..
+    //parent.appendChild( this.bytesLoadedCanvas );
+    parent.appendChild( this.bytesPlayedCanvas );
 
     // Need to set the width after it's been added to the screen
     // The canvas width was the coordinate system with (default is 150 X 300 )
-    this.waveformCanvas.width           = this.waveformCanvas.offsetWidth;
-    this.waveformCanvas.height          = this.waveformCanvas.offsetHeight;
+    this.bytesLoadedCanvas.width        = this.bytesLoadedCanvas.offsetWidth;
+    this.bytesLoadedCanvas.height       = this.bytesLoadedCanvas.offsetHeight;
+    this.bytesPlayedCanvas.width         = this.bytesPlayedCanvas.offsetWidth;
+    this.bytesPlayedCanvas.height        = this.bytesPlayedCanvas.offsetHeight;
 
-    this.drawWaveformSamples = function( samples ) {
-        this.resetCanvas();
+    var self = this;
 
-        var canvas              = this.waveformCanvas;
+    this.updateLoaded = function( sound ) {
+        var canvas              = self.bytesLoadedCanvas;
 
-        var context             = canvas.getContext("2d");
+        cleanCanvas( canvas );
+        var context             = canvas.getContext( '2d' );
 
-        var height              = canvas.height;
-        var width               = canvas.width;
+        context.strokeStyle     = "rgba( 255, 0, 0, 0.2 )"
+        context.fillStyle       = "rgba( 255, 0, 0, 0.2 )"
 
-        context.strokeStyle     = "rgb( 0, 0, 0 )"
-        context.fillStyle       = "rgb( 0, 0, 0 )"
-
-        if ( samples ) {
-            var center          = Math.floor( height / 2 );
-
-            context.moveTo( 0, center );
-
-            for ( var x = 0; x < samples.length; x++ ) {
-                var value   = samples[ x ];
-                var y       = value / 2;
-
-                context.lineTo( x, center - y );
-                context.lineTo( x, center + y );
-            }
-
-//            context.fill();
-            context.stroke();
-        }
-    }
-
-    this.resetCanvas = function() {
-        this.resizeCanvas();
-
-        var canvas              = this.waveformCanvas;
-
-        var context             = canvas.getContext("2d");
+        var percentLoaded       = sound.bytesLoaded / sound.bytesTotal;
 
         var height              = canvas.height;
-        var width               = canvas.width;
+        var x                   = canvas.width * percentLoaded;
 
-        context.clearRect ( 0 , 0, width, height );
+        context.fillStyle       = "rgba( 255, 0, 0, 0.2 )";
 
-        var gradient = context.createLinearGradient( width/2, 0, width/2, height );
-        gradient.addColorStop( 0, "#FFF" );
-        gradient.addColorStop( 0.5, "#00F" );
-        gradient.addColorStop( 1, "#FFF" );
-
-        context.fillStyle       = gradient;
-
-        context.fillRect( 0, 0, width, height );
+        context.fillRect( 0, 0, x, height );
+        context.fill();
     }
 
-    this.resizeCanvas = function() {
-        var canvas          = this.waveformCanvas;
+    this.updatePlayed = function( sound ) {
+        var canvas              = self.bytesPlayedCanvas;
 
-        canvas.width        = canvas.clientWidth;
-        canvas.height       = canvas.clientHeight;
+        cleanCanvas( canvas );
+        var context             = canvas.getContext( '2d' );
+
+        context.strokeStyle     = "rgba( 255, 0, 0, 0.2 )"
+        context.fillStyle       = "rgba( 255, 0, 0, 0.2 )"
+
+        var percentPlayed       = sound.position / sound.bytesTotal;
+
+        var height              = canvas.height;
+        var x                   = canvas.width * percentPlayed;
+
+        context.fillStyle       = "rgba( 0, 0, 255, 0.8 )";
+
+        context.fillRect( 0, 0, x, height );
+        context.fill();
     }
-
-    this.resetCanvas();
 }

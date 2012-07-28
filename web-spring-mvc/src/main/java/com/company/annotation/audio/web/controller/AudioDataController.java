@@ -10,7 +10,16 @@ import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
 
 /**
  * Created with IntelliJ IDEA.
@@ -20,7 +29,7 @@ import org.springframework.web.bind.annotation.*;
  * To change this template use File | Settings | File Templates.
  */
 @Controller
-@RequestMapping("/visualData")
+@RequestMapping("/audioData")
 public class AudioDataController extends DefaultSpringController {
 
     @Autowired
@@ -28,57 +37,31 @@ public class AudioDataController extends DefaultSpringController {
 
     private static Logger logger = Logger.getLogger( "com.company.annotation.audio" );
 
+    @RequestMapping( value = "/music", method = RequestMethod.GET )
+    public ModelAndView showIndexFiles( ) {
+        return new ModelAndView( "music" );
+    }
+
     @RequestMapping( method = RequestMethod.GET )
     @Transactional
-    public @ResponseBody String doGet( @RequestParam String idIndexFile, @RequestParam Integer width, @RequestParam Integer height ) throws Exception {
-//        if ( !System.getenv().containsKey( MEDIA_PROJECT_DIR ) ) {
-//            throw new RuntimeException( "Must have environment variable " + MEDIA_PROJECT_DIR + " that points to the base " +
-//                    "for this project. For instance, 'export " + MEDIA_PROJECT_DIR + "=/home/user/Media-Markup'" );
-//        }
+    public void doGet( @RequestParam(defaultValue = "0" ) long startPos, HttpServletResponse response ) throws Exception {
+        final File song = new File( "/home/tbeauvais/Development/personal/Media-Markup/server/data/songs/test-file-large.mp3" );
+        final InputStream inputStream = new FileInputStream( song );
 
-        //TODO:  Pull this file from the url of the request..
-//        idIndexFile    = "test-file-large";
-//        final String idIndexFile    = "test-file-large";
-//        final String idIndexFile    = "test-file-small";
+        response.setContentType( "audio/mpeg" );
+        response.setContentLength( inputStream.available() );
 
-        System.out.println( " **** Loading visual data for: " + idIndexFile );
-        System.out.println( " **** Parameters: width=" + width + ", height=" + height );
+        final long skip = startPos;
 
-        final VisualParameters visualParameters = new VisualParameters();
-        visualParameters.setHeight( height );
-        visualParameters.setWidth( width );
-
-        final VisualData visualData         =  audioAnnotationService.loadVisualData(idIndexFile, visualParameters);
-
-        final JSONObject jsonObject         = new JSONObject();
-
-        final JSONArray jsonSamples         = new JSONArray();
-        final JSONArray jsonPositions       = new JSONArray();
-
-        int[] visualSamples     = visualData.getVisualSamples();
-        long[] visualPositions  = visualData.getVisualPositions();
-        for (int i = 0, visualSamplesLength = visualSamples.length; i < visualSamplesLength; i++) {
-            int value       = visualSamples[i];
-            long position   = visualPositions[i];
-
-            jsonSamples.add(value);
-            jsonPositions.add(position);
+        byte[] buff = new byte[ 4000 ];
+        int read = -1;
+        long count = 0;
+        while ( (read = inputStream.read(buff) ) > -1 ) {
+            count += read;
+            if ( count > skip ) {
+                response.getOutputStream().write( buff, 0, read );
+                response.flushBuffer();
+            }
         }
-
-        final JSONArray jsonRegions         = new JSONArray();
-        for ( VisualRegion visualRegion : visualData.getVisualRegions() ) {
-            final JSONObject region         = new JSONObject();
-            region.put( "parentUid", visualRegion.getParentUid() );
-            region.put( "startX", visualRegion.getStartX() );
-            region.put( "endX", visualRegion.getEndX() );
-
-            jsonRegions.add( region );
-        }
-
-        jsonObject.put( "samples", jsonSamples );
-        jsonObject.put( "positions", jsonPositions );
-        jsonObject.put( "regions", jsonRegions );
-
-        return jsonObject.toJSONString();
     }
 }

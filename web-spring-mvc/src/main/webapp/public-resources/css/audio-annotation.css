@@ -55,7 +55,7 @@ span.add-comment{
 
 div.container {
     #width: 850px;
-    height: 400px;
+    height: 450px;
 
     background-color: white;
 }
@@ -108,6 +108,17 @@ canvas#selectionOverlay {
 
 canvas#mouseEventOverlay {
     z-index: 101;
+}
+
+div#controls {
+    width: 800px;
+    height: 20px;
+}
+
+canvas#bytesLoadedCanvas, canvas#bytesPlayedCanvas {
+    width: 800px;
+
+    position: absolute;
 }
 
 canvas#waveform, canvas#selectionOverlay, canvas#regionOverlay, canvas#mouseEventOverlay {

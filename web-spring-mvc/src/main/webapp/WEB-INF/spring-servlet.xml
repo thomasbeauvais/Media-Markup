@@ -24,6 +24,7 @@
     <!-- **************************************************************** -->
     <mvc:annotation-driven />
     <mvc:resources mapping="/resources/**" location="/public-resources/"/>
+    <mvc:resources mapping="/soundmanager/**" location="/soundmanager/"/>
 
     <context:component-scan base-package="com.company.annotation.audio.web" />
 
