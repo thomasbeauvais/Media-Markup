@@ -29,6 +29,8 @@ public class IndexSummary implements Identifiable {
 
     private String uid;
 
+    private String audioFileUid;
+
     public IndexSummary() {
 
     }
@@ -120,5 +122,13 @@ public class IndexSummary implements Identifiable {
     @Override
     public int hashCode() {
         return uid != null ? uid.hashCode() : 0;
+    }
+
+    public void setAudioFileUid(String audioFileUid) {
+        this.audioFileUid = audioFileUid;
+    }
+
+    public String getAudioFileUid() {
+        return audioFileUid;
     }
 }
