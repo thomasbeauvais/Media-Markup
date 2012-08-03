@@ -63,7 +63,10 @@
               startX: startX,
               endX: endX
             })
-        .success( function() { reloadAnnotations(); } )
+        .success( function() {
+            reloadAnnotations();
+            this.audioAnnotation.loadIndexFile( this.audioAnnotation.idIndexFile );
+        } )
         .error( function( e ) {
             console.log( e );
         } );

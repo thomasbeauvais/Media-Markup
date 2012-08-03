@@ -23,6 +23,8 @@ import java.net.BindException;
 import java.util.List;
 import java.util.Vector;
 
+import static com.company.annotation.audio.util.StringUtils.getTimeStringFromSeconds;
+
 /**
  * This controller will be used to upload the MP3 files to the database and index them.
  *
@@ -84,14 +86,15 @@ public class UploadController extends SimpleFormController {
         String fileName="";
 
         if(multipartFile!=null){
-            fileName = multipartFile.getOriginalFilename();
+            final String name   = "test-" + System.currentTimeMillis();
+            final long start    = System.currentTimeMillis();
+            fileName            = multipartFile.getOriginalFilename();
 
             InputStream inputStream             = null;
 
             try {
                 inputStream                     = new ByteArrayInputStream( multipartFile.getBytes() );
 
-                final String name = "test-" + System.currentTimeMillis();
                 final SampleList sampleList     = indexEngine.createIndexForAudioStream( inputStream, name );
 
                 final IndexWithSamples indexSummary = sampleList.getIndexSummary();
@@ -117,6 +120,8 @@ public class UploadController extends SimpleFormController {
 
                 LOGGER.info( "*** Creation of index file complete for: " + name );
             } finally {
+                LOGGER.info( "Time to upload " + name + " was " + getTimeStringFromSeconds( start - System.currentTimeMillis() ) );
+
                 try {
                     inputStream.close();
                 } catch( Exception e ) {

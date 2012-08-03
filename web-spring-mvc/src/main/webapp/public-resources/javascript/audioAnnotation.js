@@ -6,6 +6,8 @@ function AudioAnnotation( parent ) {
 
     this.idIndexFile                    =  null;
 
+    var self = this;
+
     this.transform = function( x ) {
         if ( this.currentData == null ) {
             return -1;
