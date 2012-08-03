@@ -40,10 +40,10 @@
             <property name="hibernate.connection.password" value="postgres"/>
             <property name="hibernate.connection.url" value="jdbc:postgresql://localhost/audioannotation"/>
             <property name="hibernate.max_fetch_depth" value="3"/>
-
-            <!--<property name="hibernate.connection.autocommit" value="false"/>-->
             <property name="hibernate.show_sql" value="true" />
-            <property name="hibernate.hbm2ddl.auto" value="create" />
+
+            <property name="hibernate.connection.autocommit" value="false"/>
+            <!--<property name="hibernate.hbm2ddl.auto" value="create-drop" />-->
         </properties>
 
         <!--
