@@ -35,7 +35,7 @@ import java.util.*;
 
 @Controller
 public class AudioIndexController extends DefaultSpringController {
-    private static Logger logger = Logger.getLogger( AudioIndexController.class );
+    private static Logger logger = Logger.getLogger( "com.company.annotation.audio" );
 
     @Autowired
     private IAnnotationService audioAnnotationService;

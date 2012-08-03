@@ -1,10 +1,7 @@
 package com.company.annotation.audio.io;
 
 import com.company.annotation.audio.api.IPersistenceEngine;
-import com.company.annotation.audio.pojos.IndexWithSamples;
 import com.company.common.dao.Identifiable;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -25,11 +22,13 @@ public class JpaPersistenceEngine implements IPersistenceEngine {
 
     @Override
     @Transactional
-    public void save(Identifiable obj) {
+    public <T extends Identifiable> T save(T obj) {
         try {
-            entityManager.merge(obj);
+            T t = entityManager.merge(obj);
 //            entityManager.persist(obj);
             entityManager.flush();
+
+            return t;
         } finally {
         }
     }

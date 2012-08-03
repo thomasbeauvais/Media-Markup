@@ -3,10 +3,8 @@ package com.company.annotation.audio.web.controller;
 import com.company.annotation.audio.api.IIndexEngine;
 import com.company.annotation.audio.api.IPersistenceEngine;
 import com.company.annotation.audio.pojos.AudioFile;
-import com.company.annotation.audio.pojos.Comment;
 import com.company.annotation.audio.pojos.IndexWithSamples;
 import com.company.annotation.audio.pojos.SampleList;
-import org.apache.commons.logging.impl.LogKitLogger;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -20,8 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.*;
 import java.net.BindException;
-import java.util.List;
-import java.util.Vector;
 
 import static com.company.annotation.audio.util.StringUtils.getTimeStringFromSeconds;
 
@@ -34,8 +30,8 @@ import static com.company.annotation.audio.util.StringUtils.getTimeStringFromSec
 @RequestMapping("/upload")
 public class UploadController extends SimpleFormController {
     private IPersistenceEngine persistenceEngine;
-    private static final Logger LOGGER = Logger.getLogger( UploadController.class );
 
+    private static Logger logger = Logger.getLogger( "com.company.annotation.audio" );
 
     @Autowired
     public void setPersistenceEngine( IPersistenceEngine persistenceEngine ) {
@@ -99,28 +95,28 @@ public class UploadController extends SimpleFormController {
 
                 final IndexWithSamples indexSummary = sampleList.getIndexSummary();
 
-                LOGGER.info( "*** Created SampleList: " + name );
+                logger.info("*** Created SampleList: " + name);
 
-                LOGGER.info( "*** Creating AudioFile: " + name );
+                logger.info("*** Creating AudioFile: " + name);
 
                 final AudioFile audioFile = new AudioFile();
                 audioFile.setBytes( multipartFile.getBytes() );
 
-                LOGGER.info( "*** Created AudioFile: " + name );
+                logger.info("*** Created AudioFile: " + name);
 
-                LOGGER.info( "*** Attempting to save AudioFile: " + name );
+                logger.info("*** Attempting to save AudioFile: " + name);
 
-                persistenceEngine.save( audioFile );
+                final AudioFile saved = persistenceEngine.save( audioFile );
 
-                indexSummary.setAudioFileUid( audioFile.getUid() );
+                indexSummary.setAudioFileUid( saved.getUid() );
 
-                LOGGER.info( "*** Attempting to save SampleList: " + name );
+                logger.info("*** Attempting to save SampleList: " + name);
 
                 persistenceEngine.save( indexSummary );
 
-                LOGGER.info( "*** Creation of index file complete for: " + name );
+                logger.info("*** Creation of index file complete for: " + name);
             } finally {
-                LOGGER.info( "Time to upload " + name + " was " + getTimeStringFromSeconds( start - System.currentTimeMillis() ) );
+                logger.info("Time to upload " + name + " was " + getTimeStringFromSeconds(start - System.currentTimeMillis()));
 
                 try {
                     inputStream.close();

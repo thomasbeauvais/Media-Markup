@@ -96,7 +96,7 @@
     function playSound() {
         var sound = soundManager.createSound({
             id:'testcase',
-            url:'audioData/',
+            url:'audioData?uidIndexFile=' + this.audioAnnotation.idIndexFile,
             whileloading: function() {
                 console.log( 'sound '+this.sID+' loading, '+this.bytesLoaded+' of '+this.bytesTotal);
 
