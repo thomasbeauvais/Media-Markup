@@ -131,13 +131,4 @@ public class UploadController extends SimpleFormController {
     public Object createCommandObject() throws IllegalAccessException, InstantiationException {
         return getCommandClass().newInstance();
     }
-
-//    @Override
-//    protected void initBinder(HttpServletRequest request, ServletRequestDataBinder binder)
-//            throws ServletException {
-//
-//        // Convert multipart object to byte[]
-//        binder.registerCustomEditor(byte[].class, new ByteArrayMultipartFileEditor());
-//
-//    }
 }

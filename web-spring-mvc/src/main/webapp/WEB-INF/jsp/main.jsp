@@ -93,8 +93,16 @@
         this.audioAnnotation.loadIndexFile( idIndexFile );
     }
 
-    function playSound() {
-        var sound = soundManager.createSound({
+    function pause() {
+        this.sound.togglePause();
+    }
+
+    function stop() {
+        this.sound.stop();
+    }
+
+    function play() {
+        this.sound = soundManager.createSound({
             id:'testcase',
             url:'audioData?uidIndexFile=' + this.audioAnnotation.idIndexFile,
             whileloading: function() {
@@ -109,7 +117,7 @@
             }
         });
 
-        sound.play();
+        this.sound.play();
     }
 
     soundManager.setup({
@@ -152,7 +160,9 @@ No file loaded..
 <div class="bordered margined padded">
     <input id="toggleList" type="button" value="Toggle List" onclick="window.toggleList();"/>
     <input id="reloadAnnotations" type="button" value="Reload Annotations" onclick="window.reloadAnnotations();"/>
-    <input id="playSound" type="button" value="Play Sound" onclick="window.playSound();"/>
+    <input id="playSound" type="button" value="Play" onclick="window.play();"/>
+    <input id="pauseSound" type="button" value="Pause" onclick="window.pause();"/>
+    <input id="stopSound" type="button" value="Stop" onclick="window.stop();"/>
 </div>
 
 <div class="container bordered margined">
