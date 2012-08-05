@@ -90,7 +90,19 @@
     function loadIndexFile( nameIndexFile, idIndexFile ) {
         $('#currentIndexFile').text( "Current file... " +  nameIndexFile );
 
+        // If there is already a sound.. kill it!
+        stopAndDestroySound();
+
         this.audioAnnotation.loadIndexFile( idIndexFile );
+        audioControls.clear();
+    }
+
+    function stopAndDestroySound() {
+        if ( this.sound ) {
+            this.sound.stop();
+            soundManager.destroySound( this.sound.id );
+            this.sound = null;
+        }
     }
 
     function pause() {
@@ -102,8 +114,17 @@
     }
 
     function play() {
+        if ( !this.audioAnnotation.idIndexFile ) {
+            return;
+        }
+
+        var soundId = "sound-" + this.audioAnnotation.idIndexFile;
+        if ( this.sound && this.sound.id != soundId ) {
+            stopAndDestroySound();
+        }
+
         this.sound = soundManager.createSound({
-            id:'testcase',
+            id: soundId,
             url:'audioData?uidIndexFile=' + this.audioAnnotation.idIndexFile,
             whileloading: function() {
                 console.log( 'sound '+this.sID+' loading, '+this.bytesLoaded+' of '+this.bytesTotal);
@@ -111,7 +132,7 @@
                 audioControls.updateLoaded( this );
             },
             whileplaying: function() {
-                console.log( 'Peaks, position/bytes: '+this.position+'/'+this.bytesTotal);
+                // console.log( 'Peaks, position/bytes: '+this.position+'/'+this.bytesTotal);
 
                 audioControls.updatePlayed( this );
             }

@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletResponse;
-import java.util.Arrays;
+import java.io.ByteArrayInputStream;
+
+import static org.apache.commons.io.IOUtils.copy;
 
 /**
  * Created with IntelliJ IDEA.
@@ -29,6 +31,7 @@ public class AudioDataController extends DefaultSpringController {
     public IPersistenceEngine persistenceEngine;
 
     private static Logger logger = Logger.getLogger( "com.company.annotation.audio" );
+    private static final int BUFF_SIZE = 4096;
 
     @RequestMapping( value = "/music", method = RequestMethod.GET )
     public ModelAndView showIndexFiles( ) {
@@ -37,19 +40,30 @@ public class AudioDataController extends DefaultSpringController {
 
     @RequestMapping( method = RequestMethod.GET )
     @Transactional
-    public void doGet( @RequestParam String uidIndexFile, @RequestParam(defaultValue = "0" ) long startPos, HttpServletResponse response ) throws Exception {
+    public void doGet( @RequestParam String uidIndexFile, @RequestParam(defaultValue = "0" ) int startPos, HttpServletResponse response ) throws Exception {
         final IndexSummary indexSummary     = persistenceEngine.load( uidIndexFile, IndexSummary.class );
 
         final AudioFile audioFile           = persistenceEngine.load( indexSummary.getAudioFileUid(), AudioFile.class );
 
         final byte[] bytes                  = audioFile.getBytes();
 
+        final int len                       = bytes.length;
+
         response.setContentType( "audio/mpeg" );
-        response.setContentLength( bytes.length );
+        response.setContentLength( len );
 
-        response.getOutputStream().write( (byte[]) Arrays.copyOfRange( bytes, (int) startPos, bytes.length - 1 ) );
-        response.flushBuffer();
+        copy( new ByteArrayInputStream( bytes ), response.getOutputStream() );
 
+
+        // ATTEMPT ONE
+//        for ( int i = startPos; i < bytes.length; i+= BUFF_SIZE ) {
+//            final int length = Math.min( i + BUFF_SIZE, bytes.length - 1 );
+//            final byte[] writeBuffer = Arrays.copyOfRange( bytes, i, i + length );
+//            response.getOutputStream().write( writeBuffer );
+//            response.getOutputStream().flush();
+//        }
+
+        // LOAD FROM A FILE
 //        final File song = new File( "/home/tbeauvais/Development/personal/Media-Markup/server/data/songs/test-file-large.mp3" );
 //        final InputStream inputStream = new FileInputStream( song );
 //

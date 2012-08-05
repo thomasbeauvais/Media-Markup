@@ -9,17 +9,23 @@ function AudioControls( parent ) {
     this.bytesPlayedCanvas.parent        = this;
 
     // Add it to the container..
-    //parent.appendChild( this.bytesLoadedCanvas );
+    parent.appendChild( this.bytesLoadedCanvas );
     parent.appendChild( this.bytesPlayedCanvas );
 
     // Need to set the width after it's been added to the screen
     // The canvas width was the coordinate system with (default is 150 X 300 )
     this.bytesLoadedCanvas.width        = this.bytesLoadedCanvas.offsetWidth;
     this.bytesLoadedCanvas.height       = this.bytesLoadedCanvas.offsetHeight;
-    this.bytesPlayedCanvas.width         = this.bytesPlayedCanvas.offsetWidth;
-    this.bytesPlayedCanvas.height        = this.bytesPlayedCanvas.offsetHeight;
+    this.bytesPlayedCanvas.width        = this.bytesPlayedCanvas.offsetWidth;
+    this.bytesPlayedCanvas.height       = this.bytesPlayedCanvas.offsetHeight;
 
     var self = this;
+
+    this.clear = function() {
+        var canvas              = self.bytesLoadedCanvas;
+
+        cleanCanvas( canvas );
+    }
 
     this.updateLoaded = function( sound ) {
         var canvas              = self.bytesLoadedCanvas;
