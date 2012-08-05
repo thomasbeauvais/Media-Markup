@@ -56,35 +56,38 @@ public class AudioAnnotationService implements IAnnotationService {
         final IndexWithSamples indexSummary = (IndexWithSamples) loadIndexSummary(idContentFile);
         final SampleList sampleList         = indexSummary.getSampleList();
 
-        final int[] visualSamples       = new int[ visualParameters.getWidth() ];
-        final long[] samplePositions    = new long[ visualParameters.getWidth() ];
+        final int width                 = visualParameters.getWidth();
+        final int[] visualSamples       = new int[ width ];
+        final long[] samplePositions    = new long[ width ];
 
         visualData.setVisualSamples( visualSamples );
         visualData.setVisualPositions( samplePositions );
 
         if ( sampleList != null && sampleList.getSamples() != null ) {
-            int startX              = 0;
-
             Sample[] sampleArray    = sampleList.getSamples();
 
-            int step                = sampleArray.length / visualParameters.getWidth();
+            int step                = sampleArray.length / width;
             double scale            = sampleList.getMax() / visualParameters.getHeight();
 
-            for ( int i = 0; i < sampleArray.length; i++, startX++ ) {
+            for ( int i = 0, pixelX = 0; pixelX < width && i < sampleArray.length; pixelX++ ) {
                 int max = 0;
                 int min = 0;
 
-                samplePositions[ startX ]   = sampleArray[ i ].getPosition();
+                samplePositions[ pixelX ]   = sampleArray[ i ].getPosition();
 
                 for ( int s = 0; s < step && i < sampleArray.length; s++, i++ ) {
                     max             = Math.max( max, sampleArray[i].getValue() );
                     min             = Math.min( min, sampleArray[i].getValue() );
                 }
 
+                if ( i >= sampleArray.length ) {
+                    System.out.print("");
+                }
+
                 int value           = (int) ((max + (min * -1) ) / scale);
                 int y               = value / 2;
 
-                visualSamples[ startX ] = y;
+                visualSamples[ pixelX ] = y;
             }
         }
 
@@ -104,7 +107,7 @@ public class AudioAnnotationService implements IAnnotationService {
 
             // If the end was never smaller, then it went to the entire end.. strange.. but a possible case
             if ( endX == 0 ) {
-                endX = visualParameters.getWidth();
+                endX = width;
             }
 
             visualRegions.add( new VisualRegion( comment.getUid(), startX, endX, 0, 0, 0 ) );
