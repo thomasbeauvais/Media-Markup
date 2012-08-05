@@ -22,9 +22,8 @@ function AudioControls( parent ) {
     var self = this;
 
     this.clear = function() {
-        var canvas              = self.bytesLoadedCanvas;
-
-        cleanCanvas( canvas );
+        cleanCanvas( self.bytesLoadedCanvas );
+        cleanCanvas( self.bytesPlayedCanvas );
     }
 
     this.updateLoaded = function( sound ) {
@@ -53,10 +52,7 @@ function AudioControls( parent ) {
         cleanCanvas( canvas );
         var context             = canvas.getContext( '2d' );
 
-        context.strokeStyle     = "rgba( 255, 0, 0, 0.2 )"
-        context.fillStyle       = "rgba( 255, 0, 0, 0.2 )"
-
-        var percentPlayed       = sound.position / sound.bytesTotal;
+        var percentPlayed       = sound.position / sound.durationEstimate;
 
         var height              = canvas.height;
         var x                   = canvas.width * percentPlayed;
