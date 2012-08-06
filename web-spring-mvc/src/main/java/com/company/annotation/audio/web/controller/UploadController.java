@@ -108,6 +108,8 @@ public class UploadController extends SimpleFormController {
 
                 final AudioFile saved = persistenceEngine.save( audioFile );
 
+                // TODO:  Add this
+//                indexSummary.setOriginalFilename( fileName );
                 indexSummary.setAudioFileUid( saved.getUid() );
 
                 logger.info("*** Attempting to save SampleList: " + name);

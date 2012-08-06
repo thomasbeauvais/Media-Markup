@@ -41,6 +41,8 @@ function Waveform( parent ) {
                 context.lineTo( x, center + y );
             }
 
+            context.lineTo( x-1, center );
+
             context.fill();
 //            context.stroke();
         }
