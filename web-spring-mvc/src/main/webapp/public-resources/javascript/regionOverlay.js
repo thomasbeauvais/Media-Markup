@@ -15,6 +15,39 @@ function RegionOverlay( parent ) {
 
     var self = this;
 
+    this.regionFromUid = function( uid ) {
+        if ( uid ) {
+            for ( var x = 0; x < self.regions.length; x++ ) {
+                var region          = self.regions[ x ];
+
+                if ( region.parentUid == uid ) {
+                    return region;
+                }
+            }
+        } else {
+            return null;
+        }
+
+    };
+
+    this.rolloverAnnotation = function( uid ) {
+        var region = self.regionFromUid( uid );
+
+        self.rollover = region;
+
+        self.drawWaveformRegions( self.regions );
+    }
+
+    this.selectAnnotation = function( uid ) {
+        var region = self.regionFromUid( uid );
+
+        if ( self.selected != region ) {
+            self.selected = region;
+
+            self.drawWaveformRegions( self.regions );
+        }
+    }
+
     this.clear = function () {
         cleanCanvas( self.regionCanvas );
     };
@@ -64,6 +97,8 @@ function RegionOverlay( parent ) {
     this.mouseout = function (event) {
         self.rollover = null;
         self.drawWaveformRegions( self.regions );
+
+        fireDocumentEvent( "annotationRollover", { uid : null } );
     };
 
     this.mousemove = function (event) {
@@ -80,6 +115,8 @@ function RegionOverlay( parent ) {
 //            console.log( "*** region now rolled over: " + ( self.rollover ? self.rollover.parentUid : "null" ) );
 
             self.drawWaveformRegions( self.regions );
+
+            fireDocumentEvent( "annotationRollover", { uid : self.rollover ? self.rollover.parentUid : null } );
         }
     }
 
@@ -128,6 +165,8 @@ function RegionOverlay( parent ) {
             console.log( "*** region now selected: " + ( self.selected ? self.selected.parentUid : "null" ) );
 
             self.drawWaveformRegions( self.regions );
+
+            fireDocumentEvent( "annotationSelected", { uid : self.selected.parentUid } );
         } else {
             console.log( "You didn't click a region!" );
         }

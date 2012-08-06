@@ -27,10 +27,58 @@
                 // console.log("fuck out");
             }
         );
+
+        document.addEventListener( "annotationSelected", onAnnotationsSelected, false );
+        document.addEventListener( "annotationRollover", onAnnotationsRollover, false );
     } );
+
+    function onAnnotationsSelected( event ) {
+        selectedAnnotation( event.data.uid );
+    }
+
+    function onAnnotationsRollover( event ) {
+        rolloverAnnotation( event.data.uid );
+    }
 
     function fireAnnotationRollover( uid ) {
         fireDocumentEvent( "annotationRollover", { uid : uid } );
+    }
+
+    function fireAnnotationSelected( uid ) {
+        fireDocumentEvent( "annotationSelected", { uid : uid } );
+    }
+
+    var prevSelected = null;
+    var prevRollover = null;
+
+    function selectedAnnotation( uid ) {
+        var clazz = "annotation-selected-element";
+
+        if ( prevSelected ) {
+            prevSelected.removeClass( clazz );
+        }
+
+        if ( uid ) {
+            var annotationId = '#annotation-' + uid;
+
+            prevSelected = $( annotationId );
+            prevSelected.addClass( clazz );
+        }
+    }
+
+    function rolloverAnnotation( uid ) {
+        var clazz = "annotation-rollover-element";
+
+        if ( prevRollover ) {
+            prevRollover.removeClass( clazz );
+        }
+
+        if ( uid ) {
+            var annotationId = '#annotation-' + uid;
+
+            prevRollover = $( annotationId );
+            prevRollover.addClass( clazz );
+        }
     }
 
     function showComment() {
@@ -58,7 +106,11 @@
 <div id="annotationsList" class="bordered padded">
     <c:if test="${!empty annotations}">
         <c:forEach items="${annotations}" var="annotation">
-            <div class="annotationElement bordered margined" onmouseover="fireAnnotationRollover('${ annotation.uid }');"');">${annotation.text}<span class="add-comment">+</span></div>
+            <div id='annotation-${ annotation.uid }'
+            class="annotation-element bordered margined"
+            onmouseout="fireAnnotationRollover(null);"
+            onclick="fireAnnotationSelected('${ annotation.uid }');"
+            onmouseover="fireAnnotationRollover('${ annotation.uid }');"');">${annotation.text}<span class="add-comment">+</span></div>
         </c:forEach>
     </c:if>
     <c:if test="${empty annotations}">

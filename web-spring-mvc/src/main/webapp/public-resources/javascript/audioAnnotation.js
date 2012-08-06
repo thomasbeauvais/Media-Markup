@@ -8,6 +8,14 @@ function AudioAnnotation( parent ) {
 
     var self = this;
 
+    this.rolloverAnnotation = function( uid ) {
+        self.regionOverlay.rolloverAnnotation( uid );
+    };
+
+    this.selectAnnotation = function( uid ) {
+        self.regionOverlay.selectAnnotation( uid );
+    };
+
     this.transform = function( x ) {
         if ( self.currentData == null ) {
             return -1;

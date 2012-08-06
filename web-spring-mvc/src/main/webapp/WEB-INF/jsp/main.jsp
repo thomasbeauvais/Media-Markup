@@ -39,13 +39,16 @@
 
         document.addEventListener( "indexLoaded", myEventHandler, false);
 
-        document.addEventListener( "annotationRollover", onAnnotationsSelected, false );
+        document.addEventListener( "annotationSelected", onAnnotationsSelected, false );
+        document.addEventListener( "annotationRollover", onAnnotationsRollover, false );
     } );
 
     function onAnnotationsSelected( event ) {
-        console.log( event.data.uid );
+        audioAnnotation.selectAnnotation( event.data.uid );
+    }
 
-        //audioAnnotation.rolloverAnnotation( event.data.uid );
+    function onAnnotationsRollover( event ) {
+        audioAnnotation.rolloverAnnotation( event.data.uid );
     }
 
     function saveAnnotation( save ) {

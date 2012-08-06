@@ -41,6 +41,18 @@ div.index-file-list-element:hover {
     background-color:red;
 }
 
+div.annotation-rollover-element {
+    background-color:red;
+}
+
+div.annotation-selected-element {
+    background-color:gray;
+
+    border: 3px;
+    border-style:solid;
+    border-color:black;
+}
+
 div.index-file-list-element {
 
 }
