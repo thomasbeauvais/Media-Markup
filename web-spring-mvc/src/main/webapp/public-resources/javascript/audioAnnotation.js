@@ -9,16 +9,16 @@ function AudioAnnotation( parent ) {
     var self = this;
 
     this.transform = function( x ) {
-        if ( this.currentData == null ) {
+        if ( self.currentData == null ) {
             return -1;
         }
 
-        return this.currentData.positions[ x ];
+        return self.currentData.positions[ x ];
     }
 
     this.onSamplesReceived = function( data ) {
         // data.samples are the values of the waveform starting from a center
-        console.log( "data received for: " + this.idIndexFile );
+        console.log( "data received for: " + self.idIndexFile );
 
         this.currentData = data;
 
@@ -27,8 +27,16 @@ function AudioAnnotation( parent ) {
         this.selectionOverlay.selectionEnabled( true );
     }
 
+    this.reload = function() {
+        this.loadOrReloadIndexFile( this.idIndexFile, true );
+    };
+
     this.loadIndexFile = function( idIndexFile ) {
-        if( this.idIndexFile == idIndexFile ) {
+        this.loadOrReloadIndexFile( idIndexFile, false );
+    };
+
+    this.loadOrReloadIndexFile = function( idIndexFile, reload ) {
+        if( this.idIndexFile == idIndexFile && !reload ) {
             console.log( "already loaded: " + idIndexFile );
             return;
         }
@@ -66,8 +74,6 @@ function AudioAnnotation( parent ) {
 
     this.mouseEventOverlay                 = document.createElement( 'canvas' );
     this.mouseEventOverlay.id              = "mouseEventOverlay";
-
-    var self = this;
 
     var mouseFunction = function( event ) {
         if ( self.selectionOverlay ) {

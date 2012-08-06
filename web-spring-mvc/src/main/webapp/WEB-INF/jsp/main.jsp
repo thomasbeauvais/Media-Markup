@@ -65,7 +65,8 @@
             })
         .success( function() {
             reloadAnnotations();
-            this.audioAnnotation.loadIndexFile( this.audioAnnotation.idIndexFile );
+
+            audioAnnotation.reload();
         } )
         .error( function( e ) {
             console.log( e );
