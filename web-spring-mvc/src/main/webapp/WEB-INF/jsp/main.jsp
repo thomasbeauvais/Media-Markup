@@ -38,7 +38,15 @@
         };
 
         document.addEventListener( "indexLoaded", myEventHandler, false);
+
+        document.addEventListener( "annotationRollover", onAnnotationsSelected, false );
     } );
+
+    function onAnnotationsSelected( event ) {
+        console.log( event.data.uid );
+
+        //audioAnnotation.rolloverAnnotation( event.data.uid );
+    }
 
     function saveAnnotation( save ) {
         var text        = $('#include-from-outside #newAnnotationText').val();

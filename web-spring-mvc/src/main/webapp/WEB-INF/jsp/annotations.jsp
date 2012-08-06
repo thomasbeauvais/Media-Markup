@@ -13,11 +13,25 @@
     <title>Welcome to AudioAnnotation</title>
 
     <script src="http://code.jquery.com/jquery-latest.min.js"></script>
+    <script src="resources/javascript/canvasUtils.js"></script>
 </head>
 
 <script type="text/javascript" charset="utf-8">
     $( document ).ready( function() {
+        $('.annotationElement').hover(
+            function(){
+                // console.log("fuck in");
+
+            },
+            function(){
+                // console.log("fuck out");
+            }
+        );
     } );
+
+    function fireAnnotationRollover( uid ) {
+        fireDocumentEvent( "annotationRollover", { uid : uid } );
+    }
 
     function showComment() {
         $( '#newComment' ).slideDown();
@@ -44,7 +58,7 @@
 <div id="annotationsList" class="bordered padded">
     <c:if test="${!empty annotations}">
         <c:forEach items="${annotations}" var="annotation">
-            <div class="bordered margined">${annotation.text}<span class="add-comment">+</span></div>
+            <div class="annotationElement bordered margined" onmouseover="fireAnnotationRollover('${ annotation.uid }');"');">${annotation.text}<span class="add-comment">+</span></div>
         </c:forEach>
     </c:if>
     <c:if test="${empty annotations}">
