@@ -85,7 +85,7 @@ public class AudioIndexController extends DefaultSpringController {
         logger.info("**** adding comment for file=" + idIndexFile + " region(" + startX + "," + endX + ") with text=" + text);
 
         final IndexSummary indexSummary = audioAnnotationService.loadIndexSummary( idIndexFile );
-        indexSummary.getComments().add( new Comment( text, startX, endX ) );
+        indexSummary.getComments().add( new Comment( text, Math.min( startX, endX ), Math.max( startX, endX ) ) );
 
         audioAnnotationService.save( indexSummary );
     }
