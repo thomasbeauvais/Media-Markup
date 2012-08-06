@@ -42,6 +42,10 @@ function RegionOverlay( parent ) {
 //                console.log( "*** Drawing region( " + region.parentUid + ") at (" + region.startX + ", " + region.endX + ")" );
 
                 if ( region == self.selected ) {
+                    context.strokeRect( region.startX, 0, region.endX - region.startX, height );
+                }
+
+                if ( region == self.rollover || region == self.selected ) {
                     context.fillStyle       = "rgba( 255, 165, 0, 0.5 )";
                 } else {
                     context.fillStyle       = "rgba( 255, 165, 0, 0.2 )";
@@ -58,29 +62,41 @@ function RegionOverlay( parent ) {
     };
 
     this.mouseout = function (event) {
-        self.selected = null;
+        self.rollover = null;
         self.drawWaveformRegions( self.regions );
     };
 
     this.mousemove = function (event) {
+        var curr = null;
+        if ( self.rollover && testRegion( self.rollover, event ) ) {
+            curr = self.rollover;
+        }
+
+        var mousedRegion = self.mousedRegion(  curr, event );
+
+        if ( mousedRegion != self.rollover ) {
+            self.rollover = mousedRegion;
+
+//            console.log( "*** region now rolled over: " + ( self.rollover ? self.rollover.parentUid : "null" ) );
+
+            self.drawWaveformRegions( self.regions );
+        }
+    }
+
+    this.mousedRegion = function( curr, event ) {
         if ( self.regions ) {
             // There are a couple different use cases for selection of regions
             // One, you want to always select the last one if there is an overlay
             // Two, if there is an inclusive region, then you want to only show that
             // Three, is a 'what if' the use dropped into the overlapping region without having selected on
 
-            var curr = null;
-            if ( self.selected && testRegion( self.selected, event ) ) {
-                curr = self.selected;
-            }
-
-//            if ( self.selected && !testRegion( self.selected, event ) ) {
+//            if ( self.rollover && !testRegion( self.rollover, event ) ) {
 //                console.log( "*** nulling selected ");
-//            } else if ( self.selected && testRegion( self.selected, event ) ) {
+//            } else if ( self.rollover && testRegion( self.rollover, event ) ) {
 //            }
 
-            // else, there is nothing selected
 
+            // else, there is nothing selected
             for ( var x = 0; x < self.regions.length; x++ ) {
                 var region          = self.regions[ x ];
 
@@ -89,23 +105,29 @@ function RegionOverlay( parent ) {
                 }
             }
 
-            if ( curr != self.selected ) {
-                self.selected = curr;
-
-                console.log( "*** region now selected: " + ( self.selected ? self.selected.parentUid : "null" ) );
-
-                self.drawWaveformRegions( self.regions );
-            }
-
+            return curr;
         }
     }
 
     this.mouseclick = function (event) {
+        if ( self.rollover ) {
+            self.selected = self.rollover;
+
+            console.log( "*** region now selected: " + ( self.selected ? self.selected.parentUid : "null" ) );
+
+            self.drawWaveformRegions( self.regions );
+        }
     };
 
     this.mousedown = function (event) {
-        if ( self.selected ) {
-            console.log( "You have clicked region: " + self.selected.parentUid );
+        if ( self.rollover ) {
+//            console.log( "You have clicked region: " + self.rollover.parentUid );
+
+            self.selected = self.rollover;
+
+            console.log( "*** region now selected: " + ( self.selected ? self.selected.parentUid : "null" ) );
+
+            self.drawWaveformRegions( self.regions );
         } else {
             console.log( "You didn't click a region!" );
         }
