@@ -8,6 +8,10 @@ html {
 body {
     font-family: 'DejaVu Sans', Arial, Helvetica;
     font-size: 12px;
+    height: 100%;
+}
+
+div#main {
     background-color: #ffffff;
     margin: auto;
     padding: 20px 20px;
@@ -72,6 +76,26 @@ div.container {
     background-color: white;
 }
 
+div#index-list {
+    width: 150px;
+    border: 1px solid black;
+    background: white;
+
+    position: absolute;
+    top: 50px;
+    right: 8px;
+    bottom: 0px;
+}
+
+div#index-list-header {
+    width: 150px;
+    height: 30px;
+    float: right;
+
+    background: white;
+    border: 1px solid black;
+}
+
 div#actionsMenu {
     text-align:center;
 }
@@ -91,7 +115,7 @@ div#newComment{
     display:none;
 }
 
-div#upload{
+div#uploadContainer{
     display:none;
 }
 

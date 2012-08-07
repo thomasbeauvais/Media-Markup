@@ -69,6 +69,11 @@ public class AudioIndexController extends DefaultSpringController {
         return new ModelAndView( "annotations", modelMap );
     }
 
+    @RequestMapping( value = "indexlist", method = RequestMethod.GET )
+    public ModelAndView indexFiles() {
+        return new ModelAndView( "indexlist" );
+    }
+
     @RequestMapping( value = "/", method = RequestMethod.GET )
     public ModelAndView showIndexFiles( ) {
         return new ModelAndView( "main" );

@@ -47,11 +47,14 @@
 
         var uploader = new qq.FileUploader({
             element: document.getElementById('upload'),
+            listElement: document.getElementById('uploadList'),
             action: 'upload',
             debug: true,
             allowedExtensions: ['mp3'],
-            onComplete: function( id, filename, responseJSON ) { location.reload(); }
+            onComplete: function( id, filename, json ) { loadIndexFiles(); }
         });
+
+        loadIndexFiles();
     } );
 
     function onAnnotationsSelected( event ) {
@@ -60,6 +63,13 @@
 
     function onAnnotationsRollover( event ) {
         audioAnnotation.rolloverAnnotation( event.data.uid );
+    }
+
+    function loadIndexFiles() {
+         $('#index-list').load('/audio/indexlist',
+            function() {
+            }
+        );
     }
 
     function saveAnnotation( save ) {
@@ -176,7 +186,15 @@
     });
 
     function showUpload() {
-        $( '#upload' ).slideDown();
+        $( '#uploadContainer' ).slideDown();
+    }
+
+    function toggleList() {
+        $( '#index-list' ).slideToggle();
+    }
+
+    function clearDownloadHistory() {
+        $( '#uploadList' ).html('');
     }
 
     function uploadFile() {
@@ -200,24 +218,20 @@
 
 <body>
 
-<div id="actionsMenu" class="bordered padded margined"><a href="javascript:void(0);" onclick="javascript:showUpload();">Upload</a> | <a href="">Contact</a> | <a href="">Features</a></div>
-
-<div id="upload" class="bordered padded margined">
+<div id="index-list-header">
+    <input id="toggleList" type="button" value="^" onclick="window.toggleList();"/>
 </div>
 
-<div id="indexFileList" class="bordered padded">
-    <c:if test="${!empty indexFiles}">
-        <c:forEach items="${indexFiles}" var="indexFile">
-            <a href="javascript:void(0);" onclick="javascript:window.loadIndexFile('${ indexFile.name }','${ indexFile.uid }');">
-                <div class="index-file-list-element bordered padded margined">
-                    <span>${indexFile.name}</span>
-                </div>
-            </a>
-        </c:forEach>
-    </c:if>
-    <c:if test="${empty indexFiles}">
-        You currently don't have access to any audio files
-    </c:if>
+<div id="index-list">
+</div>
+
+<div id="main">
+<div id="actionsMenu" class="bordered padded margined"><a href="javascript:void(0);" onclick="javascript:showUpload();">Upload</a> | <a href="">Contact</a> | <a href="">Features</a></div>
+
+<div id="uploadContainer" class="bordered padded margined">
+    <div id="upload"></div>
+    <div id="uploadList"></div>
+    <a href="javascript:void(0);" onclick="javascript:window.clearDownloadHistory();">Clear</a>
 </div>
 
 <div id="currentIndexFile" class="bordered padded margined">
@@ -240,5 +254,6 @@ No file loaded..
 
 <div id='include-from-outside'></div>
 
+</div>
 </body>
 </html>
