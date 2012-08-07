@@ -27,7 +27,7 @@ import static com.company.annotation.audio.util.StringUtils.getTimeStringFromSec
  * TODO:  Should this be abstracted?  Are there other places that make more sense to store the bytes?
  */
 @Controller
-@RequestMapping("/upload")
+@RequestMapping("/upload2")
 public class UploadController extends SimpleFormController {
     private IPersistenceEngine persistenceEngine;
 

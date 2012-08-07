@@ -91,6 +91,10 @@ div#newComment{
     display:none;
 }
 
+div#upload{
+    display:none;
+}
+
 div#currentIndexFile {
 }
 

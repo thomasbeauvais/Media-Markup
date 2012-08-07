@@ -6,11 +6,14 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <link rel="stylesheet" type="text/css" href="resources/css/audio-annotation.css"/>
+<link rel="stylesheet" type="text/css" href="resources/css/fileuploader.css"/>
 
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 
 <head>
     <title>Welcome to AudioAnnotation</title>
+
+    <script src="resources/javascript/uploader/fileuploader.js" type="text/javascript"></script>
 
     <script src="resources/javascript/canvasUtils.js"></script>
     <script src="resources/javascript/audioAnnotation.js"></script>
@@ -41,6 +44,14 @@
 
         document.addEventListener( "annotationSelected", onAnnotationsSelected, false );
         document.addEventListener( "annotationRollover", onAnnotationsRollover, false );
+
+        var uploader = new qq.FileUploader({
+            element: document.getElementById('upload'),
+            action: 'upload',
+            debug: true,
+            allowedExtensions: ['mp3'],
+            onComplete: function( id, filename, responseJSON ) { location.reload(); }
+        });
     } );
 
     function onAnnotationsSelected( event ) {
@@ -163,13 +174,36 @@
             console.log('Buffering '+(this.isBuffering?'started':'stopped')+'.');
         }
     });
+
+    function showUpload() {
+        $( '#upload' ).slideDown();
+    }
+
+    function uploadFile() {
+      $.post(
+        'upload',
+        {
+
+        })
+    .success( function() {
+        reloadAnnotations();
+
+        audioAnnotation.reload();
+    } )
+    .error( function( e ) {
+        console.log( e );
+    } );
+    }
 //]]>
 
 </script>
 
 <body>
 
-<div id="actionsMenu" class="bordered padded margined"><a href="">Upload</a> | <a href="">Contact</a></div>
+<div id="actionsMenu" class="bordered padded margined"><a href="javascript:void(0);" onclick="javascript:showUpload();">Upload</a> | <a href="">Contact</a> | <a href="">Features</a></div>
+
+<div id="upload" class="bordered padded margined">
+</div>
 
 <div id="indexFileList" class="bordered padded">
     <c:if test="${!empty indexFiles}">
