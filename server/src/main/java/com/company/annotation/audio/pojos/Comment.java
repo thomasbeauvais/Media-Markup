@@ -25,6 +25,8 @@ public class Comment implements Identifiable {
     private List<Comment> childComments = new Vector<Comment>();
     private String uid;
 
+    private IndexSummary indexSummary;
+
     public Comment() {
 
     }
@@ -51,6 +53,16 @@ public class Comment implements Identifiable {
         this.uid = uid;
     }
 
+    @ManyToOne(cascade = CascadeType.ALL)
+    @JoinTable( name = "indexsummary_comment", joinColumns = {@JoinColumn( name = "indexsummary_uid")})
+    public IndexSummary getIndexSummary() {
+        return indexSummary;
+    }
+
+    public void setIndexSummary(IndexSummary indexSummary) {
+        this.indexSummary = indexSummary;
+    }
+
     public String getText() {
         return text;
     }
@@ -67,7 +79,7 @@ public class Comment implements Identifiable {
         this.date = date;
     }
 
-    @OneToMany
+    @OneToMany( cascade = CascadeType.ALL )
     public List<Comment> getChildComments() {
         return childComments;
     }

@@ -89,6 +89,9 @@
 
     }
 
+    function remove( uid ) {
+        fireDocumentEvent( "annotationRemoved", { uid : uid } );
+    }
 </script>
 
 <body>
@@ -110,7 +113,7 @@
             class="annotation-element bordered margined"
             onmouseout="fireAnnotationRollover(null);"
             onclick="fireAnnotationSelected('${ annotation.uid }');"
-            onmouseover="fireAnnotationRollover('${ annotation.uid }');"');">${annotation.text}<span class="add-comment">+</span></div>
+            onmouseover="fireAnnotationRollover('${ annotation.uid }');"');">${annotation.text}<span class="add-comment"><a href="javascript:void(0);" onclick="javascript:remove('${ annotation.uid }');">-</a>+</span></div>
         </c:forEach>
     </c:if>
     <c:if test="${empty annotations}">

@@ -2,6 +2,7 @@ package com.company.annotation.audio.io;
 
 import com.company.annotation.audio.api.IPersistenceEngine;
 import com.company.common.dao.Identifiable;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.persistence.*;
@@ -46,6 +47,17 @@ public class JpaPersistenceEngine implements IPersistenceEngine {
         try {
             List<T> result = entityManager.createQuery( "from " + objectClazz.getSimpleName(), objectClazz ).getResultList();
             return result.toArray((T[]) Array.newInstance(objectClazz, 0));
+        } finally {
+        }
+    }
+
+    @Override
+    @Transactional( propagation = Propagation.REQUIRED )
+    public <T extends Identifiable> void delete(Class<T> clazz, String uid) {
+        try {
+            final T entity = entityManager.find( clazz, uid );
+            entityManager.remove( entity );
+            entityManager.flush();
         } finally {
         }
     }

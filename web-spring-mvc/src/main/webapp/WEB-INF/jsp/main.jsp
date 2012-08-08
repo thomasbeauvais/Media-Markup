@@ -42,8 +42,9 @@
 
         document.addEventListener( "indexLoaded", myEventHandler, false);
 
-        document.addEventListener( "annotationSelected", onAnnotationsSelected, false );
-        document.addEventListener( "annotationRollover", onAnnotationsRollover, false );
+        document.addEventListener( "annotationSelected", onAnnotationSelected, false );
+        document.addEventListener( "annotationRollover", onAnnotationRollover, false );
+        document.addEventListener( "annotationRemoved", onAnnotationRemoved, false );
 
         var uploader = new qq.FileUploader({
             element: document.getElementById('upload'),
@@ -57,11 +58,27 @@
         loadIndexFiles();
     } );
 
-    function onAnnotationsSelected( event ) {
+    function onAnnotationSelected( event ) {
         audioAnnotation.selectAnnotation( event.data.uid );
     }
 
-    function onAnnotationsRollover( event ) {
+    function onAnnotationRemoved( event ) {
+        $.post(
+            'annotations/remove',
+            {
+              idAnnotation: event.data.uid
+        } )
+        .success( function() {
+            reloadAnnotations();
+
+            audioAnnotation.reload();
+        } )
+        .error( function( e ) {
+            console.log( e );
+        } );
+    }
+
+    function onAnnotationRollover( event ) {
         audioAnnotation.rolloverAnnotation( event.data.uid );
     }
 

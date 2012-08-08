@@ -79,6 +79,24 @@ public class AudioIndexController extends DefaultSpringController {
         return new ModelAndView( "main" );
     }
 
+    @RequestMapping( value = "annotations/remove", method = RequestMethod.POST )
+    @Transactional
+    public @ResponseStatus( value = HttpStatus.NO_CONTENT ) void removeAnnotation(
+            @RequestParam String idAnnotation) {
+
+        logger.info("**** removing comment for file=" + idAnnotation);
+
+        final Comment audioComment      = audioAnnotationService.loadAnnotation(idAnnotation);
+
+        final String idIndexSummary     = audioComment.getIndexSummary().getUid();
+        final IndexSummary indexSummary = audioAnnotationService.loadIndexSummary( idIndexSummary );
+        indexSummary.getComments().remove( audioComment );
+
+        audioAnnotationService.save( indexSummary );
+
+//        audioAnnotationService.deleteAnnotation( idAnnotation );
+    }
+
     @RequestMapping( value = "annotations/add", method = RequestMethod.POST )
     @Transactional
     public @ResponseStatus( value = HttpStatus.NO_CONTENT ) void addAnnotation(
