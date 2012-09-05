@@ -22,9 +22,17 @@ public class Comment implements Identifiable {
     private long endPos;
     private Date date;
 
+    @OneToMany( cascade = CascadeType.ALL )
     private List<Comment> childComments = new Vector<Comment>();
+
+
+    @Id
+    @GeneratedValue( generator= "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String uid;
 
+    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+//    @JoinTable( name = "IndexSummary_Comment", joinColumns = {@JoinColumn( name = "indexSummary_uid", updatable = false, insertable = false)})
     private IndexSummary indexSummary;
 
     public Comment() {
@@ -42,9 +50,6 @@ public class Comment implements Identifiable {
         this.date = date;
     }
 
-    @Id
-    @GeneratedValue( generator= "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
     public String getUid() {
         return this.uid;
     }
@@ -53,8 +58,6 @@ public class Comment implements Identifiable {
         this.uid = uid;
     }
 
-    @ManyToOne(cascade = CascadeType.ALL)
-    @JoinTable( name = "indexsummary_comment", joinColumns = {@JoinColumn( name = "indexsummary_uid")})
     public IndexSummary getIndexSummary() {
         return indexSummary;
     }
@@ -79,7 +82,6 @@ public class Comment implements Identifiable {
         this.date = date;
     }
 
-    @OneToMany( cascade = CascadeType.ALL )
     public List<Comment> getChildComments() {
         return childComments;
     }

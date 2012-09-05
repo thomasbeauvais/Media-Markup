@@ -50,6 +50,11 @@ public class AudioAnnotationService implements IAnnotationService {
         persistenceEngine.delete( Comment.class, uid );
     }
 
+    @Override
+    public Comment loadAnnotation(String idAnnotation) {
+        return persistenceEngine.load( idAnnotation, Comment.class );
+    }
+
     public VisualData loadVisualData( String idContentFile, VisualParameters visualParameters ) {
         final VisualData visualData = new VisualData();
 
