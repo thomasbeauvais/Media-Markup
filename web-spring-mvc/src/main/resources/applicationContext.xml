@@ -29,6 +29,14 @@
 
     <bean class="com.company.annotation.audio.io.DefaultIndexEngine"/>
 
+    <bean class="com.company.annotation.audio.web.controller.UploadBean">
+        <property name="autoUploadFileList">
+            <list>
+                <value>/home/tbeauvais/Development/personal/Media-Markup/server/data/songs/test-file-small.mp3</value>
+            </list>
+        </property>
+    </bean>
+
     <bean class="com.company.annotation.audio.io.JpaPersistenceEngine">
     </bean>
 

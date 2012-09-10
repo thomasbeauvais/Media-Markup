@@ -107,64 +107,20 @@ public class UploadServlet extends DefaultSpringController {
         writer.close();
     }
 
-    private IPersistenceEngine persistenceEngine;
+    private UploadBean uploadBean;
 
     @Autowired
-    public void setPersistenceEngine( IPersistenceEngine persistenceEngine ) {
-        this.persistenceEngine = persistenceEngine;
-    }
-
-    private IIndexEngine indexEngine;
-
-    @Autowired
-    public void setIndexEngine( IIndexEngine indexEngine ) {
-        this.indexEngine = indexEngine;
+    public void setUploadBean( UploadBean uploadBean ) {
+        this.uploadBean = uploadBean;
     }
 
     public void uploadFile( HttpServletRequest request, HttpServletResponse response ) throws Exception {
-
-
-        InputStream inputStream = request.getInputStream();
+        final InputStream inputStream = request.getInputStream();
 
         final String filename   = request.getHeader("X-File-Name");
 
         final String name       = "test-" + System.currentTimeMillis();
-        final long start        = System.currentTimeMillis();
 
-        try {
-            ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-
-            IOUtils.copy( inputStream, byteArrayOutputStream);
-
-            final byte[] bytes              = byteArrayOutputStream.toByteArray();
-            final SampleList sampleList     = indexEngine.createIndexForAudioStream( new ByteArrayInputStream( bytes ), name );
-
-            final IndexWithSamples indexSummary = sampleList.getIndexSummary();
-
-            logger.info("*** Created SampleList: " + name);
-
-            logger.info("*** Creating AudioFile: " + name);
-
-            final AudioFile audioFile = new AudioFile();
-            audioFile.setBytes( bytes );
-
-            logger.info("*** Created AudioFile: " + name);
-
-            logger.info("*** Attempting to save AudioFile: " + name);
-
-            final AudioFile saved = persistenceEngine.save( audioFile );
-
-            // TODO:  Add this
-//                indexSummary.setOriginalFilename( fileName );
-            indexSummary.setAudioFileUid( saved.getUid() );
-
-            logger.info("*** Attempting to save SampleList: " + name);
-
-            persistenceEngine.save( indexSummary );
-
-            logger.info("*** Creation of index file complete for: " + name);
-        } finally {
-            logger.info("Time to upload " + name + " was " + getTimeStringFromSeconds(start - System.currentTimeMillis()));
-        }
+        uploadBean.uploadFile(name, inputStream);
     }
 }
