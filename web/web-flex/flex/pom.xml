@@ -21,7 +21,7 @@
 
     <groupId>audio-annotation</groupId>
     <artifactId>web-flex-flex</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
     <packaging>swf</packaging>
 
     <name>web-flex-flex</name>
@@ -85,7 +85,7 @@
         <dependency>
             <groupId>com.company</groupId>
             <artifactId>common-flex</artifactId>
-            <version>1.0-SNAPSHOT</version>
+            <version>0.1-SNAPSHOT</version>
             <type>swc</type>
         </dependency>
 

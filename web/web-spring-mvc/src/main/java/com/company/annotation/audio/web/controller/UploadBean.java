@@ -8,21 +8,12 @@ import com.company.annotation.audio.pojos.SampleList;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.transaction.annotation.Transactional;
-import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.annotation.PostConstruct;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.io.*;
-import java.net.BindException;
 import java.util.List;
 
-import static com.company.annotation.audio.util.StringUtils.getTimeStringFromSeconds;
+import static com.company.annotation.audio.util.StringUtils.*;
 
 /**
  * This controller will be used to upload the MP3 files to the database and index them.

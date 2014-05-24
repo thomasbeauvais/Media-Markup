@@ -1,3 +1,6 @@
+Todo List
+o   Switch from Log4J to Apache Commons Logging
+
 Feature Requests:
 o   Does it make sense to have 'child' comments be able to select a different region than the parent?
     For instance, someone makes a new selection and comment does it make sense for someone to comment saying, "No,
@@ -14,5 +17,3 @@ o   It would be better to have good buffering.  Get a hold of the peoples at Sou
 Known Issues:
 o   The slideUp() and slideDown() functions cause a jitter in the layout of the page.  This is probably do to
     incorrect styling and absolute positioning.
-
-o

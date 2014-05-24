@@ -5,21 +5,27 @@
     <groupId>audio-annotation</groupId>
     <artifactId>audio-annotation</artifactId>
     <packaging>pom</packaging>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
 
     <name>_aggregator-audio-annotation</name>
 
-    <modules>
-        <module>common</module>
-        <module>third-party-custom</module>
-        <module>server</module>
-        <module>java-client</module>
-        <module>web-spring-mvc</module>
-        <!--<module>web-html5</module>-->
-        <!--<module>web-flex</module>-->
-        <!--<module>web-thyme</module>-->
-        <!--<module>thymeleaf-examples</module>-->
+    <properties>
+        <spring.version>4.0.5.RELEASE</spring.version>
+    </properties>
 
+    <modules>
+        <module>common/common-flex</module>
+        <module>common/common-java</module>
+
+        <module>third-party/javazoom-custom</module>
+        <module>third-party/musicg-sound-api-custom</module>
+
+        <module>server</module>
+
+        <module>standalone/java-client</module>
+
+        <!--<module>web/web-flex</module>-->
+        <module>web/web-spring-mvc</module>
   </modules>
 
 </project>

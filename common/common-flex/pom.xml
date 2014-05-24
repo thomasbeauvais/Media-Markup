@@ -21,7 +21,7 @@
 
     <groupId>com.company</groupId>
     <artifactId>common-flex</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <version>0.1-SNAPSHOT</version>
     <packaging>swc</packaging>
 
     <name>common-flex</name>
