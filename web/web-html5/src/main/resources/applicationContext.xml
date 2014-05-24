@@ -7,16 +7,16 @@
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd"
     default-lazy-init="true">
 
-    <context:component-scan base-package="com.company"/>
+    <context:component-scan base-package="org.branch"/>
 
     <context:annotation-config/>
 
-    <bean scope="session" class="com.company.annotation.audio.io.DefaultIndexEngine"/>
+    <bean scope="session" class="org.branch.annotation.audio.io.DefaultIndexEngine"/>
 
-    <bean scope="session" class="com.company.annotation.audio.io.FilePersistenceEngine">
+    <bean scope="session" class="org.branch.annotation.audio.io.FilePersistenceEngine">
         <constructor-arg value="."/>
         <constructor-arg>
-            <bean class="com.company.annotation.audio.io.json.JSONFilePersistenceConnector"/>
+            <bean class="org.branch.annotation.audio.io.json.JSONFilePersistenceConnector"/>
         </constructor-arg>
 
     </bean>

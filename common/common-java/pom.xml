@@ -13,7 +13,7 @@
         <relativePath>../../pom.xml</relativePath>
     </parent>
 
-    <groupId>com.company</groupId>
+    <groupId>org.branch</groupId>
     <artifactId>common-java</artifactId>
 
     <dependencies>

@@ -29,7 +29,7 @@
  * SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  */
 
-package com.company.annotation.audio;
+package org.branch.annotation.audio;
 
 import javax.swing.*;
 import javax.swing.border.*;

@@ -9,14 +9,14 @@
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.company"/>
+    <context:component-scan base-package="org.branch"/>
 
-    <bean class="com.company.annotation.audio.io.DefaultIndexEngine"/>
+    <bean class="org.branch.annotation.audio.io.DefaultIndexEngine"/>
 
-    <!--<bean class="com.company.annotation.audio.io.json.JSONFilePersistenceConnector"/>-->
-    <bean class="com.company.annotation.audio.io.binary.BinaryPersistenceConnector"/>
+    <!--<bean class="org.branch.annotation.audio.io.json.JSONFilePersistenceConnector"/>-->
+    <bean class="org.branch.annotation.audio.io.binary.BinaryPersistenceConnector"/>
 
-    <bean class="com.company.annotation.audio.io.FilePersistenceEngine">
+    <bean class="org.branch.annotation.audio.io.FilePersistenceEngine">
         <!--<constructor-arg value="/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/filePersistenceDir"/>-->
         <constructor-arg value="/Users/tbeauvais/IdeaProjects/Media-Markup/server/data/filePersistenceDir2"/>
     </bean>

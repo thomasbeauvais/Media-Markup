@@ -15,15 +15,15 @@
     </bean>
 
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalEntityManagerFactoryBean">
-        <property name="persistenceUnitName" value="com.company.annotation.audio" />
+        <property name="persistenceUnitName" value="org.branch.annotation.audio" />
     </bean>
 
     <context:annotation-config/>
 
-    <context:component-scan base-package="com.company.annotation.audio"/>
+    <context:component-scan base-package="org.branch.annotation.audio"/>
 
-    <bean class="com.company.annotation.audio.io.DefaultIndexEngine"/>
+    <bean class="org.branch.annotation.audio.io.DefaultIndexEngine"/>
 
-    <bean class="com.company.annotation.audio.io.JpaPersistenceEngine">
+    <bean class="org.branch.annotation.audio.io.JpaPersistenceEngine">
     </bean>
 </beans>

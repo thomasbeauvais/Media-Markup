@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:gui="com.company.annotation.audio.gui.*"
+<mx:Application xmlns:mx="http://www.adobe.com/2006/mxml" xmlns:gui="org.branch.annotation.audio.gui.*"
                 layout="absolute">
     <mx:Button id="pingButton" label="Ping" click="{ onLoad() }"/>
     <gui:WaveForm id="can"
@@ -13,9 +13,9 @@
              labelField="name"/>
     <mx:Script>
         <![CDATA[
-        import com.company.annotation.audio.pojos.SampleList;
-        import com.company.annotation.audio.pojos.IndexSummary;
-        import com.company.annotation.audio.services.AudioAnnotationService;
+        import org.branch.annotation.audio.pojos.SampleList;
+        import org.branch.annotation.audio.pojos.IndexSummary;
+        import org.branch.annotation.audio.services.AudioAnnotationService;
 
         private var audioAnnotationService:AudioAnnotationService;
 

@@ -19,7 +19,7 @@
                                <!--exclude-methods=""-->
                                <!--channels="my-amf"/>-->
 
-    <bean id="audioAnnotationService" class="com.company.annotation.audio.services.AudioAnnotationService">
+    <bean id="audioAnnotationService" class="org.branch.annotation.audio.services.AudioAnnotationService">
         <flex:remoting-destination/>
     </bean>
 

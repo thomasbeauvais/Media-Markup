@@ -15,7 +15,7 @@
 
     <dependencies>
         <dependency>
-            <groupId>com.company</groupId>
+            <groupId>org.branch</groupId>
             <artifactId>common-java</artifactId>
             <version>0.1-SNAPSHOT</version>
         </dependency>

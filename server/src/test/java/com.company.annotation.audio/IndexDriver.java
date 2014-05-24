@@ -1,17 +1,14 @@
-package com.company.annotation.audio;
+package org.branch.annotation.audio;
 
-import com.company.annotation.audio.api.IIndexEngine;
-import com.company.annotation.audio.api.IPersistenceEngine;
-import com.company.annotation.audio.pojos.Comment;
-import com.company.annotation.audio.pojos.IndexWithSamples;
-import com.company.annotation.audio.pojos.SampleList;
+import org.branch.annotation.audio.api.IIndexEngine;
+import org.branch.annotation.audio.api.IPersistenceEngine;
+import org.branch.annotation.audio.pojos.IndexWithSamples;
+import org.branch.annotation.audio.pojos.SampleList;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 import java.io.*;
-import java.util.List;
-import java.util.Vector;
 
 /**
  */

@@ -15,7 +15,7 @@
 
     <servlet>
         <servlet-name>Persistence Servlet</servlet-name>
-        <servlet-class>com.company.annotation.audio.web.servlet.PersistenceServlet</servlet-class>
+        <servlet-class>org.branch.annotation.audio.web.servlet.PersistenceServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 
@@ -26,7 +26,7 @@
 
     <servlet>
         <servlet-name>Audio Servlet</servlet-name>
-        <servlet-class>com.company.annotation.audio.web.servlet.AudioServlet</servlet-class>
+        <servlet-class>org.branch.annotation.audio.web.servlet.AudioServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
 

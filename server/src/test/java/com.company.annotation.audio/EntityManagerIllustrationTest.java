@@ -21,15 +21,14 @@
  * 51 Franklin Street, Fifth Floor
  * Boston, MA  02110-1301  USA
  */
-package com.company.annotation.audio;
+package org.branch.annotation.audio;
 
-import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import com.company.annotation.audio.pojos.IndexSummary;
+import org.branch.annotation.audio.pojos.IndexSummary;
 import junit.framework.TestCase;
 
 /**
@@ -44,7 +43,7 @@ public class EntityManagerIllustrationTest extends TestCase {
     protected void setUp() throws Exception {
         // like discussed with regards to SessionFactory, an EntityManagerFactory is set up once for an application
         // 		IMPORTANT: notice how the name here matches the name we gave the persistence-unit in persistence.xml!
-        entityManagerFactory = Persistence.createEntityManagerFactory( "com.company.annotation.audio" );
+        entityManagerFactory = Persistence.createEntityManagerFactory( "org.branch.annotation.audio" );
     }
 
     @Override

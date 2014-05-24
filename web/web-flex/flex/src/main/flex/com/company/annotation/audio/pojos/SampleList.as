@@ -1,7 +1,7 @@
-package com.company.annotation.audio.pojos {
+package org.branch.annotation.audio.pojos {
 import mx.collections.ArrayCollection;
 
-[RemoteClass(alias="com.company.annotation.audio.pojos.SampleList")]
+[RemoteClass(alias="org.branch.annotation.audio.pojos.SampleList")]
 public class SampleList {
     public var samples:Array;
     public var min:int;

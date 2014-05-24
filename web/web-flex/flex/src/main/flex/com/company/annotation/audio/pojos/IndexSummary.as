@@ -1,6 +1,6 @@
-package com.company.annotation.audio.pojos {
+package org.branch.annotation.audio.pojos {
 
-[RemoteClass(alias="com.company.annotation.audio.pojos.IndexSummary")]
+[RemoteClass(alias="org.branch.annotation.audio.pojos.IndexSummary")]
 public class IndexSummary {
     public var name:String;
     public var numChannels:int;

@@ -1,6 +1,6 @@
-package com.company.annotation.audio.services {
-import com.company.annotation.audio.pojos.IndexSummary;
-import com.company.common.blaze.BlazeResponder;
+package org.branch.annotation.audio.services {
+import org.branch.annotation.audio.pojos.IndexSummary;
+import org.branch.common.blaze.BlazeResponder;
 
 import mx.rpc.remoting.RemoteObject;
 

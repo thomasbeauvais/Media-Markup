@@ -1,10 +1,10 @@
-package com.company.annotation.audio;
+package org.branch.annotation.audio;
 
-import com.company.annotation.audio.api.IPersistenceEngine;
-import com.company.annotation.audio.pojos.Comment;
-import com.company.annotation.audio.pojos.IndexWithSamples;
-import com.company.annotation.audio.pojos.IndexSummary;
-import com.company.annotation.audio.pojos.SampleList;
+import org.branch.annotation.audio.api.IPersistenceEngine;
+import org.branch.annotation.audio.pojos.Comment;
+import org.branch.annotation.audio.pojos.IndexWithSamples;
+import org.branch.annotation.audio.pojos.IndexSummary;
+import org.branch.annotation.audio.pojos.SampleList;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;

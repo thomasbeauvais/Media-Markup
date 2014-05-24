@@ -1,8 +1,8 @@
-package com.company.annotation.audio;
+package org.branch.annotation.audio;
 
-import com.company.annotation.audio.api.IIndexEngine;
-import com.company.annotation.audio.api.IPersistenceEngine;
-import com.company.annotation.audio.pojos.*;
+import org.branch.annotation.audio.api.IIndexEngine;
+import org.branch.annotation.audio.api.IPersistenceEngine;
+import org.branch.annotation.audio.pojos.*;
 import org.apache.log4j.Logger;
 import org.junit.BeforeClass;
 import org.junit.Test;

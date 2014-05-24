@@ -5,8 +5,8 @@
  * Time: 6:31 PM
  * To change this template use File | Settings | File Templates.
  */
-package com.company.annotation.audio.gui {
-import com.company.annotation.audio.pojos.SampleList;
+package org.branch.annotation.audio.gui {
+import org.branch.annotation.audio.pojos.SampleList;
 
 import flash.display.GradientType;
 import flash.display.Graphics;
