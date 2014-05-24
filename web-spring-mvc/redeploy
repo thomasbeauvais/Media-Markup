@@ -1,4 +1,0 @@
-mvn -o -DskipTests clean install
-rm -rf /usr/tomcat/latest/webapps/audio*
-cp target/web-spring-mvc-1.0-SNAPSHOT.war /usr/tomcat/latest/webapps/audio.war
-/usr/tomcat/latest/bin/catalina.sh jpda run
