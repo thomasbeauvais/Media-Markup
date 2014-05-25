@@ -40,16 +40,22 @@ public class MetadataRepositoryTest extends AbstractSpringTest
         final String expected_value1 = "dskjfalksjfdlk";
         final String expected_value2 = "ksjdflkjajsdjf";
 
-        final Map<String, Object> metadataMap = new HashMap<String, Object>();
+        final Map<String, String> metadataMap = new HashMap<String, String>();
         metadataMap.put(expected_key0, expected_value0);
         metadataMap.put(expected_key1, expected_value1);
         metadataMap.put(expected_key2, expected_value2);
 
-        final Metadata metadata = new Metadata(UUID.randomUUID().toString(), metadataMap);
+        final String targetUuid = UUID.randomUUID().toString();
+
+        final Metadata metadata = new Metadata(targetUuid, metadataMap);
 
         uuid = metadataRepository.save(metadata).getId();
 
         final Metadata persisted = getPersisted();
+
+        assertEquals(expected_value0, persisted.getMetadataValues().get(expected_key0));
+        assertEquals(expected_value1, persisted.getMetadataValues().get(expected_key1));
+        assertEquals(expected_value2, persisted.getMetadataValues().get(expected_key2));
     }
 
     @Test
