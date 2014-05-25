@@ -1,12 +1,12 @@
 package org.branch.annotation.audio.services;
 
-import org.branch.annotation.audio.jpa.IndexSamplesRepository;
+import org.branch.annotation.audio.dao.IndexSamplesRepository;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.VisualData;
 import org.branch.annotation.audio.model.VisualParameters;
 import org.branch.annotation.audio.model.VisualRegion;
-import org.branch.annotation.audio.model.jpa.Annotation;
-import org.branch.annotation.audio.model.jpa.IndexSamples;
+import org.branch.annotation.audio.model.dao.Annotation;
+import org.branch.annotation.audio.model.dao.IndexSamples;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

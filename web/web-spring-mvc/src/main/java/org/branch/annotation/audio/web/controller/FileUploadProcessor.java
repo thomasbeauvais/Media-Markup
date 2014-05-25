@@ -4,9 +4,9 @@ import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
 import org.branch.annotation.audio.io.FileStore;
-import org.branch.annotation.audio.jpa.IndexSamplesRepository;
-import org.branch.annotation.audio.model.jpa.AudioFile;
-import org.branch.annotation.audio.model.jpa.IndexSamples;
+import org.branch.annotation.audio.dao.IndexSamplesRepository;
+import org.branch.annotation.audio.model.dao.AudioFile;
+import org.branch.annotation.audio.model.dao.IndexSamples;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.ByteArrayInputStream;

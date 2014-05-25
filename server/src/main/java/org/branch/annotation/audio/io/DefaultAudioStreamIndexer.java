@@ -6,7 +6,7 @@ import javazoom.jl.decoder.Header;
 import javazoom.jl.decoder.SampleBuffer;
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.model.Sample;
-import org.branch.annotation.audio.model.jpa.IndexSamples;
+import org.branch.annotation.audio.model.dao.IndexSamples;
 import org.branch.common.utils.HumanReadable;
 import org.jetbrains.annotations.NotNull;
 

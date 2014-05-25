@@ -2,8 +2,8 @@ package org.branch.annotation.audio.web.controller;
 
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.io.FileStore;
-import org.branch.annotation.audio.jpa.IndexSamplesRepository;
-import org.branch.annotation.audio.model.jpa.IndexSummary;
+import org.branch.annotation.audio.dao.IndexSamplesRepository;
+import org.branch.annotation.audio.model.dao.IndexSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

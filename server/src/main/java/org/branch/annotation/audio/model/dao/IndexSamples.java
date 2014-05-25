@@ -1,4 +1,4 @@
-package org.branch.annotation.audio.model.jpa;
+package org.branch.annotation.audio.model.dao;
 
 import org.branch.annotation.audio.model.Sample;
 
@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.Vector;
 
 /**
- * Heavy weight representation of the {@link org.branch.annotation.audio.model.jpa.IndexSummary} that also includes the {@link org.branch.annotation.audio.model.Sample samples}.
+ * Heavy weight representation of the {@link org.branch.annotation.audio.model.dao.IndexSummary} that also includes the {@link org.branch.annotation.audio.model.Sample samples}.
  */
 @Entity
 public class IndexSamples extends IndexSummary

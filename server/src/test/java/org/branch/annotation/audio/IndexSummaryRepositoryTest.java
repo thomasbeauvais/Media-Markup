@@ -1,11 +1,11 @@
 package org.branch.annotation.audio;
 
 import com.mysema.query.jpa.impl.JPAQuery;
-import org.branch.annotation.audio.jpa.IndexSummaryRepository;
-import org.branch.annotation.audio.model.jpa.Annotation;
-import org.branch.annotation.audio.model.jpa.IndexSamples;
-import org.branch.annotation.audio.model.jpa.IndexSummary;
-import org.branch.annotation.audio.model.jpa.QIndexSamples;
+import org.branch.annotation.audio.dao.IndexSummaryRepository;
+import org.branch.annotation.audio.model.dao.Annotation;
+import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.IndexSummary;
+import org.branch.annotation.audio.model.dao.QIndexSamples;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;

@@ -20,10 +20,10 @@
 package org.branch.annotation.audio.web.controller;
 
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.jpa.AnnotationRepository;
-import org.branch.annotation.audio.jpa.IndexSummaryRepository;
-import org.branch.annotation.audio.model.jpa.Annotation;
-import org.branch.annotation.audio.model.jpa.IndexSummary;
+import org.branch.annotation.audio.dao.AnnotationRepository;
+import org.branch.annotation.audio.dao.IndexSummaryRepository;
+import org.branch.annotation.audio.model.dao.Annotation;
+import org.branch.annotation.audio.model.dao.IndexSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;

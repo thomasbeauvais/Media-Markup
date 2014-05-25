@@ -1,6 +1,6 @@
-package org.branch.annotation.audio.jpa;
+package org.branch.annotation.audio.dao;
 
-import org.branch.annotation.audio.model.jpa.Annotation;
+import org.branch.annotation.audio.model.dao.Annotation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface AnnotationRepository extends JpaRepository<Annotation, String>

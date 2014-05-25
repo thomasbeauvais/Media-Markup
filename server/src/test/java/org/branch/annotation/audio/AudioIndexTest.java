@@ -1,7 +1,7 @@
 package org.branch.annotation.audio;
 
 import org.branch.annotation.audio.io.AudioStreamIndexer;
-import org.branch.annotation.audio.model.jpa.IndexSamples;
+import org.branch.annotation.audio.model.dao.IndexSamples;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 

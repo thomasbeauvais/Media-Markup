@@ -40,6 +40,6 @@
         <property name="password" value=""/>
     </bean>
 
-    <jpa:repositories base-package="org.branch.annotation.audio.jpa" />
+    <jpa:repositories base-package="org.branch.annotation.audio.dao" />
 
 </beans>

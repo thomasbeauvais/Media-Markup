@@ -2,8 +2,8 @@ package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
-import org.branch.annotation.audio.jpa.IndexSamplesRepository;
-import org.branch.annotation.audio.model.jpa.IndexSamples;
+import org.branch.annotation.audio.dao.IndexSamplesRepository;
+import org.branch.annotation.audio.model.dao.IndexSamples;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 

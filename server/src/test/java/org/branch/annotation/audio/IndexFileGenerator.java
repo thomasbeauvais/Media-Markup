@@ -2,10 +2,10 @@ package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
-import org.branch.annotation.audio.jpa.IndexSamplesRepository;
+import org.branch.annotation.audio.dao.IndexSamplesRepository;
 import org.branch.annotation.audio.model.Sample;
-import org.branch.annotation.audio.model.jpa.Annotation;
-import org.branch.annotation.audio.model.jpa.IndexSamples;
+import org.branch.annotation.audio.model.dao.Annotation;
+import org.branch.annotation.audio.model.dao.IndexSamples;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;

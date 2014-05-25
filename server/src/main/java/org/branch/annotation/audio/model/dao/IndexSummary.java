@@ -1,4 +1,4 @@
-package org.branch.annotation.audio.model.jpa;
+package org.branch.annotation.audio.model.dao;
 
 import org.branch.common.data.Identifiable;
 import org.hibernate.annotations.GenericGenerator;

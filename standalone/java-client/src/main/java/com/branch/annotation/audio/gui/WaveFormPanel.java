@@ -1,10 +1,10 @@
 package org.branch.annotation.audio.gui;
 
-import org.branch.annotation.audio.jpa.IndexSamplesRepository;
+import org.branch.annotation.audio.dao.IndexSamplesRepository;
 import org.branch.annotation.audio.model.VisualData;
 import org.branch.annotation.audio.model.VisualParameters;
-import org.branch.annotation.audio.model.jpa.IndexSamples;
-import org.branch.annotation.audio.model.jpa.IndexSummary;
+import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.IndexSummary;
 import org.branch.annotation.audio.services.VisualDataService;
 
 import javax.swing.*;
