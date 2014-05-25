@@ -83,7 +83,7 @@ public class AnnotationController extends DefaultSpringController
         return new ModelAndView("main");
     }
 
-    @RequestMapping(value = "indexList", method = RequestMethod.GET)
+    @RequestMapping(value = "indexlist", method = RequestMethod.GET)
     public ModelAndView indexFiles()
     {
         return new ModelAndView("indexList");
