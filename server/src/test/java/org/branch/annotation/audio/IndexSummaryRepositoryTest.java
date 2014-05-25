@@ -48,8 +48,8 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         // create some nested objects - in the case, org.branch.annotation.audio.model.jpa.Comment
         final List<Comment> comments = new Vector<Comment>();
-        comments.add(new Comment(expected_comment0, 0, 0));
-        comments.add(new Comment(expected_comment1, 0, 0));
+        comments.add(new Comment(expected_comment0, 1, 100));
+        comments.add(new Comment(expected_comment1, 2, 200));
 
         local.setComments(comments);
 
@@ -71,10 +71,16 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         assertNotNull(persisted.getComments());
         assertEquals(2, persisted.getComments().size());
-        assertNotNull(persisted.getComments().get(0));
         assertNotNull(persisted.getComments().get(1));
 
-        assertEquals(expected_comment0, persisted.getComments().get(0).getText());
+        final Comment comment0 = persisted.getComments().get(0);
+        assertNotNull(comment0);
+        assertEquals(expected_comment0, comment0.getText());
+        assertEquals(1, comment0.getStartPos());
+        assertEquals(100, comment0.getEndPos());
+
         assertEquals(expected_comment1, persisted.getComments().get(1).getText());
+
+
     }
 }

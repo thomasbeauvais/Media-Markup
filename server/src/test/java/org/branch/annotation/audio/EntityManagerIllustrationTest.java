@@ -30,12 +30,14 @@ import javax.persistence.Persistence;
 
 import org.branch.annotation.audio.model.jpa.IndexSummary;
 import junit.framework.TestCase;
+import org.junit.Ignore;
 
 /**
  * Illustrates basic use of Hibernate as a JPA provider.
  *
  * @author Steve Ebersole
  */
+@Ignore
 public class EntityManagerIllustrationTest extends TestCase {
     private EntityManagerFactory entityManagerFactory;
 

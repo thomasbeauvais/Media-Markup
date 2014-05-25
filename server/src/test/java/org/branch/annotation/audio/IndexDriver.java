@@ -2,7 +2,7 @@ package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.api.PersistenceEngine;
-import org.branch.annotation.audio.api.IndexEngine;
+import org.branch.annotation.audio.api.AudioStreamIndexer;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,7 +23,7 @@ public class IndexDriver
 
     public static void main(String[] asdf)
     {
-        final IndexEngine indexEngine = applicationContext.getBean(IndexEngine.class);
+        final AudioStreamIndexer audioStreamIndexer = applicationContext.getBean(AudioStreamIndexer.class);
 
         final File audioDirectory = new File(PATH_AUDIO_FILES);
         final File[] audioFiles = audioDirectory.listFiles(new FilenameFilter()
@@ -46,7 +46,7 @@ public class IndexDriver
             {
                 inputStream = new FileInputStream(audioFile);
 
-                final IndexSamples indexSamples = indexEngine.createIndex(inputStream);
+                final IndexSamples indexSamples = audioStreamIndexer.createIndex(inputStream);
                 indexSamples.setUid(uid);
 
 //                final List<Comment> comments = new Vector<Comment>();

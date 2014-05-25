@@ -11,7 +11,7 @@
 
     <context:component-scan base-package="org.branch"/>
 
-    <bean class="org.branch.annotation.audio.io.DefaultIndexEngine"/>
+    <bean class="org.branch.annotation.audio.io.DefaultAudioStreamIndexer"/>
 
     <bean class="org.branch.annotation.audio.io.FilePersistenceEngine">
         <constructor-arg value="/home/tbeauvais/Personal/Code/github/Media-Markup/server/data/index"/>

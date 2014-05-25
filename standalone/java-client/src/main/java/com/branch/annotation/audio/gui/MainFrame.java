@@ -1,6 +1,6 @@
 package org.branch.annotation.audio.gui;
 
-import org.branch.annotation.audio.api.IndexEngine;
+import org.branch.annotation.audio.api.AudioStreamIndexer;
 import org.branch.annotation.audio.services.DefaultAudioAnnotationService;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
@@ -59,7 +59,7 @@ public class MainFrame extends JFrame {
 
                 final File inputFile = fileChooser.getSelectedFile();
 
-                final IndexEngine indexEngine = applicationContext.getBean( IndexEngine.class );
+                final AudioStreamIndexer audioStreamIndexer = applicationContext.getBean( AudioStreamIndexer.class );
             }
         } ) );
 

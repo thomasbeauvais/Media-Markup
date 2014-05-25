@@ -6,7 +6,7 @@ import java.io.InputStream;
 
 /**
  */
-public interface IndexEngine
+public interface AudioStreamIndexer
 {
     /**
      *

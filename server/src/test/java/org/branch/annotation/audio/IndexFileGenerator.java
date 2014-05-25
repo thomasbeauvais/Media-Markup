@@ -2,11 +2,12 @@ package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.api.PersistenceEngine;
-import org.branch.annotation.audio.api.IndexEngine;
+import org.branch.annotation.audio.api.AudioStreamIndexer;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.jpa.Comment;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -23,6 +24,7 @@ import java.util.Vector;
  * Time: 2:34 PM
  * To change this template use File | Settings | File Templates.
  */
+@Ignore
 public class IndexFileGenerator
 {
 
@@ -62,7 +64,7 @@ public class IndexFileGenerator
     @Rollback(false)
     public void test()
     {
-        final IndexEngine indexEngine = applicationContext.getBean(IndexEngine.class);
+        final AudioStreamIndexer audioStreamIndexer = applicationContext.getBean(AudioStreamIndexer.class);
 
         final File audioDirectory = new File(PATH_AUDIO_FILES);
         final File[] audioFiles = audioDirectory.listFiles(new FilenameFilter()
@@ -85,7 +87,7 @@ public class IndexFileGenerator
             {
                 inputStream = new FileInputStream(audioFile);
 
-                final IndexSamples indexSummary = indexEngine.createIndex(inputStream);
+                final IndexSamples indexSummary = audioStreamIndexer.createIndex(inputStream);
                 indexSummary.setUid(uid);
 
                 final List<Comment> comments = new Vector<Comment>();

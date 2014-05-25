@@ -10,11 +10,9 @@
 
     <context:component-scan base-package="org.branch.annotation.audio"/>
 
-    <bean class="org.branch.annotation.audio.io.DefaultIndexEngine"/>
+    <bean class="org.branch.annotation.audio.io.DefaultAudioStreamIndexer"/>
 
     <tx:annotation-driven transaction-manager="transactionManager"/>
-
-    <bean class="org.branch.annotation.audio.jpa.JpaPersistenceEngine"/>
 
     <!-- FOR TESTS ONLY: in-memory JPA configuration via H2 -->
     <bean id="entityManager" class="javax.persistence.EntityManager" factory-bean="entityManagerFactory" factory-method="createEntityManager"/>

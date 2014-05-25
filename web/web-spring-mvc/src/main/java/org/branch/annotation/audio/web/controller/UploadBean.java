@@ -2,7 +2,7 @@ package org.branch.annotation.audio.web.controller;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.api.IndexEngine;
+import org.branch.annotation.audio.api.AudioStreamIndexer;
 import org.branch.annotation.audio.api.PersistenceEngine;
 import org.branch.annotation.audio.model.jpa.AudioFile;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
@@ -30,11 +30,11 @@ public class UploadBean {
         this.persistenceEngine = persistenceEngine;
     }
 
-    private IndexEngine indexEngine;
+    private AudioStreamIndexer audioStreamIndexer;
 
     @Autowired
-    public void setIndexEngine( IndexEngine indexEngine ) {
-        this.indexEngine = indexEngine;
+    public void setAudioStreamIndexer(AudioStreamIndexer audioStreamIndexer) {
+        this.audioStreamIndexer = audioStreamIndexer;
     }
 
     private List<String> autoUploadFileList;
@@ -81,7 +81,7 @@ public class UploadBean {
             IOUtils.copy(inputStream, byteArrayOutputStream);
 
             final byte[] bytes              = byteArrayOutputStream.toByteArray();
-            final IndexSamples indexSamples     = indexEngine.createIndex(new ByteArrayInputStream(bytes));
+            final IndexSamples indexSamples     = audioStreamIndexer.createIndex(new ByteArrayInputStream(bytes));
             indexSamples.setUid(name);
 
             logger.info("*** Created SampleList: " + name);
