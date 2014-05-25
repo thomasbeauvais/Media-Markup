@@ -29,13 +29,13 @@
 //@Controller
 //@RequestMapping("/upload2")
 //public class UploadController extends SimpleFormController {
-//    private IPersistenceEngine persistenceEngine;
+//    private IPersistenceEngine indexSamplesRepository;
 //
 //    private static Logger logger = Logger.getLogger( "org.branch.annotation.audio" );
 //
 //    @Autowired
-//    public void setPersistenceEngine( IPersistenceEngine persistenceEngine ) {
-//        this.persistenceEngine = persistenceEngine;
+//    public void setPersistenceEngine( IPersistenceEngine indexSamplesRepository ) {
+//        this.indexSamplesRepository = indexSamplesRepository;
 //    }
 //
 //    private IIndexEngine indexEngine;
@@ -56,7 +56,7 @@
 //
 //    @RequestMapping( value = "print", method = RequestMethod.GET )
 //    public @ResponseBody String doGet2(@RequestParam(defaultValue = "" ) String uid ) {
-//        final AudioFile audioFile = persistenceEngine.load( uid, AudioFile.class );
+//        final AudioFile audioFile = indexSamplesRepository.load( uid, AudioFile.class );
 //        final StringBuffer strBuff = new StringBuffer();
 //        byte[] bytes = audioFile.getBytes();
 //        for ( int i = 0; i < bytes.length; i++ ) {
@@ -106,7 +106,7 @@
 //
 //                logger.info("*** Attempting to save AudioFile: " + name);
 //
-//                final AudioFile saved = persistenceEngine.save( audioFile );
+//                final AudioFile saved = indexSamplesRepository.save( audioFile );
 //
 //                // TODO:  Add this
 ////                indexSummary.setOriginalFilename( fileName );
@@ -114,7 +114,7 @@
 //
 //                logger.info("*** Attempting to save SampleList: " + name);
 //
-//                persistenceEngine.save( indexSummary );
+//                indexSamplesRepository.save( indexSummary );
 //
 //                logger.info("*** Creation of index file complete for: " + name);
 //            } finally {

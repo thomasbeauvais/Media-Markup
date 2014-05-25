@@ -52,67 +52,49 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.PrintWriter;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Reads an <code>application/octet-stream</code> and writes it to a file.
+ *
  * @author John Yeary <jyeary@bluelotussoftware.com>
  * @author Allan O'Driscoll
  * @version 1.0
  */
 @Controller
 @RequestMapping("/upload")
-public class UploadServlet extends DefaultSpringController {
+public class UploadServlet extends DefaultSpringController
+{
 
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
 
+    @Autowired
+    private FileUploadProcessor fileUploadProcessor;
+
     /**
      * Handles the HTTP <code>POST</code> method.
-     * @param request servlet request
+     *
+     * @param request  servlet request
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
-     * @throws IOException if an I/O error occurs
+     * @throws IOException      if an I/O error occurs
      */
-    @RequestMapping( method = RequestMethod.POST )
-    protected void doPost(@RequestParam(defaultValue = "") String qqfile, HttpServletRequest request, HttpServletResponse response)
-            throws ServletException {
+    @RequestMapping(method = RequestMethod.POST)
+    protected void post(@RequestParam(defaultValue = "") String qqfile, HttpServletRequest request, HttpServletResponse response) throws Exception
+    {
+        final PrintWriter writer = response.getWriter();
 
-        PrintWriter writer = null;
-
-        try {
-            writer = response.getWriter();
-        } catch (IOException ex) {
-            logger.error(UploadServlet.class.getName() + " has thrown an exception: " + ex.getMessage(), ex);
-        }
-
-        try {
-            uploadFile( request, response );
-            response.setStatus(response.SC_OK);
-            writer.print("{success: true}");
-        } catch (Exception ex) {
-            response.setStatus(response.SC_INTERNAL_SERVER_ERROR);
-            writer.print("{success: false}");
-            logger.error(UploadServlet.class.getName() + " has thrown an exception: " + ex.getMessage(), ex);
-        } finally {
-        }
-
-        writer.flush();
-        writer.close();
-    }
-
-    private UploadBean uploadBean;
-
-    @Autowired
-    public void setUploadBean( UploadBean uploadBean ) {
-        this.uploadBean = uploadBean;
-    }
-
-    public void uploadFile( HttpServletRequest request, HttpServletResponse response ) throws Exception {
         final InputStream inputStream = request.getInputStream();
 
-        final String filename   = request.getHeader("X-File-Name");
+        final String originalFilename = request.getHeader("X-File-Name");
 
-        final String name       = "test-" + System.currentTimeMillis();
+        final Map<String, Object> metadata = new HashMap<String, Object>();
+        metadata.put("originalFilename", originalFilename);
 
-        uploadBean.uploadFile(name, inputStream);
+        fileUploadProcessor.uploadFile(metadata, inputStream);
+
+        writer.print("{success: true}");
     }
+
 }

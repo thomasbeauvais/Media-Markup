@@ -5,7 +5,6 @@ import javazoom.jl.decoder.Decoder;
 import javazoom.jl.decoder.Header;
 import javazoom.jl.decoder.SampleBuffer;
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.api.AudioStreamIndexer;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.branch.common.utils.HumanReadable;

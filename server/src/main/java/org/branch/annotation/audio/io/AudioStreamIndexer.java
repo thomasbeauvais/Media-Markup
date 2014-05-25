@@ -1,4 +1,4 @@
-package org.branch.annotation.audio.api;
+package org.branch.annotation.audio.io;
 
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 

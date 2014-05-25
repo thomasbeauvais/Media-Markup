@@ -29,7 +29,7 @@
 
     <bean class="org.branch.annotation.audio.io.DefaultAudioStreamIndexer"/>
 
-    <bean class="org.branch.annotation.audio.web.controller.UploadBean">
+    <bean class="org.branch.annotation.audio.web.controller.FileUploadProcessor">
         <property name="autoUploadFileList">
             <list>
                 <value>/home/tbeauvais/Development/personal/Media-Markup/server/data/songs/test-file-small.mp3</value>

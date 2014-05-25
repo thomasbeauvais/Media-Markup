@@ -1,6 +1,6 @@
 package org.branch.annotation.audio;
 
-import org.branch.annotation.audio.api.AudioStreamIndexer;
+import org.branch.annotation.audio.io.AudioStreamIndexer;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +12,7 @@ import java.io.FileNotFoundException;
 import static org.junit.Assert.*;
 
 /**
- * Tests to make sure that whichever {@link org.branch.annotation.audio.api.AudioStreamIndexer} in the context, can properly index a number of audio streams.
+ * Tests to make sure that whichever {@link org.branch.annotation.audio.io.AudioStreamIndexer} in the context, can properly index a number of audio streams.
  *
  * TODO Parametrize these tests
  *

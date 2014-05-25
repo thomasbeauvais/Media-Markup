@@ -1,6 +1,6 @@
 package org.branch.annotation.audio;
 
-import org.branch.annotation.audio.api.AudioStreamIndexer;
+import org.branch.annotation.audio.io.AudioStreamIndexer;
 import org.branch.annotation.audio.jpa.IndexSummaryRepository;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.junit.Ignore;

@@ -1,8 +1,8 @@
 package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.api.PersistenceEngine;
-import org.branch.annotation.audio.api.AudioStreamIndexer;
+import org.branch.annotation.audio.io.AudioStreamIndexer;
+import org.branch.annotation.audio.jpa.IndexSamplesRepository;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.jpa.Annotation;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
@@ -28,12 +28,12 @@ import java.util.Vector;
 public class IndexFileGenerator
 {
 
-    private static Logger LOGGER = Logger.getLogger(IndexDriver.class);
+    private static Logger logger = Logger.getLogger(IndexDriver.class);
 
     private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
 
-    //    public static final String PATH_FILE_PERSISTENCE_BASE   = "/home/tbeauvais/Development/personal/Media-Markup/server/data/filePersistenceDir3";
-    public static final String PATH_AUDIO_FILES = "/home/tbeauvais/Development/personal/Media-Markup/server/data/songs";
+//        public static final String PATH_FILE_PERSISTENCE_BASE   = "data/filePersistenceDir3";
+    public static final String PATH_AUDIO_FILES = "data/audio";
 
     @BeforeClass
     public static void beforeClass()
@@ -50,9 +50,9 @@ public class IndexFileGenerator
     @Test
     public void retrieveAll()
     {
-        final PersistenceEngine indexEngine = applicationContext.getBean(PersistenceEngine.class);
-        final IndexSamples[] indexSummaries = indexEngine.loadAll(IndexSamples.class);
-        final IndexSamples indexSamples = indexSummaries[0];
+        final IndexSamplesRepository indexEngine = applicationContext.getBean(IndexSamplesRepository.class);
+        final List<IndexSamples> indexSummaries = indexEngine.findAll();
+        final IndexSamples indexSamples = indexSummaries.get(0);
 
         for (Sample sample : indexSamples.getSamples())
         {
@@ -79,7 +79,7 @@ public class IndexFileGenerator
         {
             final String uid = audioFile.getName().substring(0, audioFile.getName().length() - 4);
 
-            LOGGER.info("*** Attempting to create index file for: " + audioFile.getAbsolutePath());
+            logger.info("*** Attempting to create index file for: " + audioFile.getAbsolutePath());
 
             InputStream inputStream = null;
 
@@ -96,17 +96,17 @@ public class IndexFileGenerator
 
                 indexSummary.setAnnotations(annotations);
 
-                LOGGER.info("*** Created SampleList: " + uid);
+                logger.info("*** Created SampleList: " + uid);
 
-                LOGGER.info("*** Attempting to save SampleList: " + uid);
+                logger.info("*** Attempting to save SampleList: " + uid);
 
-                applicationContext.getBean(PersistenceEngine.class).save(indexSummary);
+                applicationContext.getBean(IndexSamplesRepository.class).save(indexSummary);
 
-                LOGGER.info("*** Creation of index file complete for: " + uid);
+                logger.info("*** Creation of index file complete for: " + uid);
             }
             catch (FileNotFoundException e)
             {
-                LOGGER.warn("*** Error creating index file: " + audioFile.getAbsolutePath(), e);
+                logger.warn("*** Error creating index file: " + audioFile.getAbsolutePath(), e);
             }
             finally
             {

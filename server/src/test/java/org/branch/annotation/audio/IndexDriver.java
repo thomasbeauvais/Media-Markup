@@ -1,8 +1,8 @@
 package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.api.PersistenceEngine;
-import org.branch.annotation.audio.api.AudioStreamIndexer;
+import org.branch.annotation.audio.io.AudioStreamIndexer;
+import org.branch.annotation.audio.jpa.IndexSamplesRepository;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -17,11 +17,10 @@ public class IndexDriver
     private static Logger LOGGER = Logger.getLogger(IndexDriver.class);
 
     private static ApplicationContext applicationContext = new ClassPathXmlApplicationContext("applicationContext.xml");
-    ;
 
     public static final String PATH_AUDIO_FILES = "/home/tbeauvais/Development/personal/Media-Markup/server/data/songs";
 
-    public static void main(String[] asdf)
+    public static void main(String[] arguments)
     {
         final AudioStreamIndexer audioStreamIndexer = applicationContext.getBean(AudioStreamIndexer.class);
 
@@ -59,7 +58,7 @@ public class IndexDriver
 
                 LOGGER.info("*** Attempting to save SampleList: " + uid);
 
-                applicationContext.getBean(PersistenceEngine.class).save(indexSamples);
+                applicationContext.getBean(IndexSamplesRepository.class).save(indexSamples);
 
                 LOGGER.info("*** Creation of index file complete for: " + uid);
             }

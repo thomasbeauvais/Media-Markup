@@ -29,6 +29,7 @@ public class IndexSummary implements Identifiable
     private String uid;
 
     private String audioFileUid;
+    private String originalFilename;
 
     public IndexSummary()
     {
@@ -160,5 +161,15 @@ public class IndexSummary implements Identifiable
     public String getAudioFileUid()
     {
         return audioFileUid;
+    }
+
+    public void setOriginalFilename(String originalFilename)
+    {
+        this.originalFilename = originalFilename;
+    }
+
+    public String getOriginalFilename()
+    {
+        return originalFilename;
     }
 }
