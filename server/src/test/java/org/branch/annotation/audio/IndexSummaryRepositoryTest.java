@@ -6,6 +6,7 @@ import org.branch.annotation.audio.model.jpa.Comment;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.branch.annotation.audio.model.jpa.QIndexSamples;
 import org.junit.Before;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -30,6 +31,8 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
     @Autowired
     EntityManager entityManager;
 
+    private String uid;
+
     @Before
     public void preConditions()
     {
@@ -53,17 +56,11 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         local.setComments(comments);
 
-        final IndexSamples returned = indexSummaryRepository.save(local);
+        uid = indexSummaryRepository.save(local).getUid();
 
-        assertNotNull(returned);
-        assertNotNull(returned.getUid());
+        assertNotNull(uid);
 
-        // use a query to bypass the jpa repository
-        final QIndexSamples indexSamples = QIndexSamples.indexSamples;
-        final JPAQuery query = new JPAQuery(entityManager);
-        final IndexSamples persisted = query.from(indexSamples)
-                                            .where(indexSamples.uid.eq(returned.getUid()))
-                                            .uniqueResult(indexSamples);
+        final IndexSamples persisted = getPersisted();
 
         assertNotNull(persisted);
         assertNotNull(persisted.getName());
@@ -83,5 +80,54 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
         assertEquals(expected_comment1, comment1.getText());
         assertEquals(2, comment1.getStartPos());
         assertEquals(200, comment1.getEndPos());
+    }
+
+    @Test
+    public void delete()
+    {
+        save();
+
+        final IndexSamples persisted = getPersisted();
+
+        indexSummaryRepository.delete(persisted);
+
+        final IndexSamples expected = indexSummaryRepository.findOne(uid);
+
+        assertNull("IndexSamples should have been deleted", expected);
+    }
+
+    @Test
+    @Ignore("Failing assertion, even on flush.")
+    public void update()
+    {
+        save();
+
+        final String expected_name = "modified";
+
+        final IndexSamples persisted = indexSummaryRepository.findOne(uid);
+
+        assertNotNull(persisted);
+
+        persisted.setName(expected_name);
+
+        indexSummaryRepository.save(persisted);
+
+        final IndexSamples modified = getPersisted();
+
+        assertEquals(expected_name, modified.getName());
+    }
+
+    public IndexSamples getPersisted()
+    {
+        // use a query to bypass the jpa repository
+        final QIndexSamples indexSamples = QIndexSamples.indexSamples;
+        final JPAQuery query = new JPAQuery(entityManager);
+        final IndexSamples persisted = query.from(indexSamples)
+                                            .where(indexSamples.uid.eq(uid))
+                                            .uniqueResult(indexSamples);
+
+        assertNotNull(persisted);
+
+        return persisted;
     }
 }

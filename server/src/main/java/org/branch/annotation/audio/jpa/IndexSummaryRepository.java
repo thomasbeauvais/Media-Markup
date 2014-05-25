@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
  * @since 25.05.14
  */
-public interface IndexSummaryRepository<T extends IndexSummary> extends JpaRepository<T, Long>
+public interface IndexSummaryRepository<T extends IndexSummary> extends JpaRepository<T, String>
 {
 
 }
