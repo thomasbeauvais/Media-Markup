@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Created with IntelliJ IDEA.
@@ -19,13 +20,15 @@ public class ErrorServlet extends HttpServlet
 {
     private static Logger logger = Logger.getLogger(ErrorServlet.class);
 
-    public void doGet(HttpServletRequest request, HttpServletResponse response)
+    public void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException
     {
-        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
         // You can log the exception, send to email, etc
-
-        logger.error(throwable);
-
-        throwable.printStackTrace();
+//        Throwable throwable = (Throwable) request.getAttribute("javax.servlet.error.exception");
+//
+//        logger.error(throwable);
+//
+//        throwable.printStackTrace();
+//
+//        throw throwable;
     }
 }

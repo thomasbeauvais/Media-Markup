@@ -3,7 +3,6 @@ package org.branch.annotation.audio.dao;
 import org.branch.annotation.audio.AbstractSpringTest;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
 import org.branch.annotation.audio.model.dao.IndexSamples;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,7 +21,6 @@ public class IndexSummaryIntegrationTest extends AbstractSpringTest
     IndexSummaryRepository indexSummaryRepository;
 
     @Test
-    @Ignore("Test fails: Value too long for column \"SAMPLES BINARY(255)\"")
     public void persist_indexed_audio() throws FileNotFoundException
     {
         final File file = new File("data/audio/test-file-small.mp3");
@@ -36,7 +34,6 @@ public class IndexSummaryIntegrationTest extends AbstractSpringTest
 
         final IndexSamples saved = indexSummaryRepository.save(indexSamples);
 
-        assertNotNull(saved.getAudioFileUid());
-
+        assertNotNull(saved.getId());
     }
 }

@@ -1,6 +1,7 @@
 package org.branch.annotation.audio.io;
 
-import org.apache.commons.io.FileUtils;
+import org.branch.common.utils.FileUtils;
+import org.apache.log4j.Logger;
 import org.branch.common.UncheckedException;
 
 import java.io.File;
@@ -12,6 +13,8 @@ public class LocalFileStore implements FileStore
 {
     private File storeDirectory;
 
+    private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
+
     @Override
     public String persist(byte[] bytes)
     {
@@ -21,6 +24,8 @@ public class LocalFileStore implements FileStore
 
         try
         {
+            logger.info("*** persisting file to: " + FileUtils.getCanonicalPath(file));
+
             FileUtils.writeByteArrayToFile(file, bytes);
         }
         catch (IOException e)
@@ -88,6 +93,8 @@ public class LocalFileStore implements FileStore
     public void setStoreDirectory(File storeDirectory)
     {
         this.storeDirectory = storeDirectory;
+
+        logger.info("*** setting storeDirectory to: " + FileUtils.getCanonicalPath(storeDirectory));
 
         try
         {

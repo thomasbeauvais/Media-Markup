@@ -41,6 +41,16 @@
             <version>6.0.3</version>
         </dependency>
 
+        <!-- Apache Commons Libraries -->
+        <dependency>
+            <groupId>org.apache.commons</groupId>
+            <artifactId>commons-lang3</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>commons-io</groupId>
+            <artifactId>commons-io</artifactId>
+        </dependency>
+
     </dependencies>
 
 </project>

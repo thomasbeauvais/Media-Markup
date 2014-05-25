@@ -2,8 +2,7 @@
 <web-app id="stsm" version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"
-         xmlns:context="http://www.springframework.org/schema/context">
-
+        >
 
     <display-name>Audio Annotation</display-name>
 
@@ -35,6 +34,7 @@
     </servlet-mapping>
 
     <!-- WEB-INF/web.xml -->
+    <!--
     <servlet>
         <servlet-name>ErrorServlet</servlet-name>
         <servlet-class>org.branch.annotation.audio.web.controller.ErrorServlet</servlet-class>
@@ -49,6 +49,7 @@
         <exception-type>java.lang.Throwable</exception-type>
         <location>/error</location>
     </error-page>
+    -->
 
     <welcome-file-list>
         <welcome-file>index.html</welcome-file>
