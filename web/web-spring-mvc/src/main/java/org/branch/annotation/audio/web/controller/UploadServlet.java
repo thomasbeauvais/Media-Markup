@@ -39,17 +39,19 @@
  */
 package org.branch.annotation.audio.web.controller;
 
-import java.io.*;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintWriter;
 
 /**
  * Reads an <code>application/octet-stream</code> and writes it to a file.
@@ -79,7 +81,7 @@ public class UploadServlet extends DefaultSpringController {
         try {
             writer = response.getWriter();
         } catch (IOException ex) {
-            logger.error(UploadServlet.class.getName() + "has thrown an exception: " + ex.getMessage(), ex);
+            logger.error(UploadServlet.class.getName() + " has thrown an exception: " + ex.getMessage(), ex);
         }
 
         try {
@@ -89,7 +91,7 @@ public class UploadServlet extends DefaultSpringController {
         } catch (Exception ex) {
             response.setStatus(response.SC_INTERNAL_SERVER_ERROR);
             writer.print("{success: false}");
-            logger.error(UploadServlet.class.getName() + "has thrown an exception: " + ex.getMessage(), ex);
+            logger.error(UploadServlet.class.getName() + " has thrown an exception: " + ex.getMessage(), ex);
         } finally {
         }
 

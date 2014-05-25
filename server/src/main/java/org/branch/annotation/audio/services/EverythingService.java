@@ -24,12 +24,12 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 @Service
-public class DefaultAnnotationService implements AnnotationService
+public class EverythingService implements AnnotationService, IndexService, VisualService
 {
 
     private Map<String, IndexSamples> cache = new HashMap<String, IndexSamples>();
 
-    public DefaultAnnotationService()
+    public EverythingService()
     {
     }
 
