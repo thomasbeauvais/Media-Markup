@@ -28,7 +28,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.Persistence;
 
-import org.branch.annotation.audio.pojos.IndexSummary;
+import org.branch.annotation.audio.model.jpa.IndexSummary;
 import junit.framework.TestCase;
 
 /**

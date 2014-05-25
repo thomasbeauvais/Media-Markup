@@ -1,8 +1,9 @@
 package org.branch.annotation.audio.web.controller;
 
 import org.branch.annotation.audio.api.IPersistenceEngine;
-import org.branch.annotation.audio.pojos.*;
 import org.apache.log4j.Logger;
+import org.branch.annotation.audio.model.jpa.AudioFile;
+import org.branch.annotation.audio.model.jpa.IndexSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;

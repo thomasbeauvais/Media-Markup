@@ -1,77 +1,82 @@
 package org.branch.annotation.audio.io;
 
-import org.branch.annotation.audio.api.IIndexEngine;
-import org.branch.annotation.audio.pojos.IndexWithSamples;
-import org.branch.annotation.audio.pojos.Sample;
-import org.branch.annotation.audio.pojos.SampleList;
 import javazoom.jl.decoder.Bitstream;
 import javazoom.jl.decoder.Decoder;
 import javazoom.jl.decoder.Header;
 import javazoom.jl.decoder.SampleBuffer;
 import org.apache.log4j.Logger;
+import org.branch.annotation.audio.api.IndexEngine;
+import org.branch.annotation.audio.model.Sample;
+import org.branch.annotation.audio.model.jpa.IndexSamples;
+import org.branch.common.utils.FileUtils;
 import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
+import java.io.InputStream;
 
 /**
+ *
  */
-public class DefaultIndexEngine implements IIndexEngine {
-    private static final Logger LOGGER = Logger.getLogger( IIndexEngine.class );
+public class DefaultIndexEngine implements IndexEngine
+{
+    private static final Logger logger = Logger.getLogger(IndexEngine.class);
 
-    public synchronized SampleList createIndexForAudioStream( @NotNull InputStream input, @NotNull String indexName ) {
+    public IndexSamples createIndex(@NotNull InputStream input)
+    {
 
-		long start = System.currentTimeMillis();
+        final long start = System.currentTimeMillis();
 
-		try {
-            final Bitstream bitstream   = new Bitstream( input );
-            final Decoder decoder       = new Decoder();
-            final SampleList sampleList = new SampleList();
-            final IndexWithSamples index    = new IndexWithSamples();
+        try
+        {
+            final Bitstream bitstream = new Bitstream(input);
+            final Decoder decoder = new Decoder();
+            final IndexSamples index = new IndexSamples();
 
-            float timeStamp         = 0;
-            long pos                = 0;
-            Header h                = null;
-            SampleBuffer output     = null;
-            short[] samples         = null;
+            float timeStamp = 0;
+            long pos = 0;
+            Header h = null;
+            SampleBuffer output = null;
+            short[] samples = null;
 
-            while((h = bitstream.readFrame()) != null) {
-				pos             = bitstream.pos();
-				output          = (SampleBuffer) decoder.decodeFrame(h, bitstream);
+            while ((h = bitstream.readFrame()) != null)
+            {
+                pos = bitstream.pos();
+                output = (SampleBuffer) decoder.decodeFrame(h, bitstream);
 
-                samples         = getSamples( output.getBuffer(), output.getChannelCount() );
+                samples = getSamples(output.getBuffer(), output.getChannelCount());
 
-                sampleList.addSample( new Sample( timeStamp, pos, samples[0] ), false );
+                index.addSample(new Sample(timeStamp, pos, samples[0]), false);
 
-				timeStamp +=  ( (float) output.getBufferLength() ) / output.getChannelCount() / output.getSampleFrequency();
-				bitstream.closeFrame();
-			}
+                timeStamp += ((float) output.getBufferLength()) / output.getChannelCount() / output.getSampleFrequency();
+                bitstream.closeFrame();
+            }
 
-            index.setTime( timeStamp );
-            index.setName( indexName );
-            index.setChannels( output.getChannelCount() );
-            index.setSampleList( sampleList );
+            index.setTime(timeStamp);
+            index.setChannels(output.getChannelCount());
+            index.updateBounds();
 
-            sampleList.setIndexSummary( index );
-            sampleList.updateBounds();
+            final long end = System.currentTimeMillis();
 
-			final long end = System.currentTimeMillis();
+            logger.info("Audio stream of size(" + FileUtils.humanReadableBytes(pos) + ") indexed in " + (end - start) / 1000. + " seconds.");
 
-			LOGGER.info( "Audio stream indexed in " + (end-start)/1000. + " seconds.");
-			
-			return sampleList;
-		} catch (Exception e) {
-            LOGGER.error( e );
+            return index;
+        }
+        catch (Exception e)
+        {
+            logger.error(e);
 
-            e.printStackTrace();
-
-			throw new RuntimeException( e );
-		} finally {
-            try {
+            throw new RuntimeException(e);
+        }
+        finally
+        {
+            try
+            {
                 input.close();
-            } catch( Exception e ) {
+            }
+            catch (Exception e)
+            {
             }
         }
-	}
+    }
 
 //	private static int[] getLargestGap(short[] maxes, short[] mins) {
 //		int[] ret = new int[ maxes.length ];
@@ -102,13 +107,15 @@ public class DefaultIndexEngine implements IIndexEngine {
 //		return str.toString();
 //	}
 
-	private static short[] getSamples(short[] buffer, int numChannels) {
-		short[] shorts = new short[ numChannels ];
-		for ( int i = 0; i < numChannels; i++ ) {
-			shorts[ i ] = buffer[ i ];
-		}
-		
-		return shorts;
-	}
+    private short[] getSamples(short[] buffer, int numChannels)
+    {
+        short[] shorts = new short[numChannels];
+        for (int i = 0; i < numChannels; i++)
+        {
+            shorts[i] = buffer[i];
+        }
+
+        return shorts;
+    }
 
 }

@@ -91,7 +91,7 @@
 //            try {
 //                inputStream                     = new ByteArrayInputStream( multipartFile.getBytes() );
 //
-//                final SampleList sampleList     = indexEngine.createIndexForAudioStream( inputStream, name );
+//                final SampleList sampleList     = indexEngine.createIndex( inputStream, name );
 //
 //                final IndexWithSamples indexSummary = sampleList.getIndexSummary();
 //

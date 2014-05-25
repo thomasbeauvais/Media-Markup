@@ -5,7 +5,7 @@ import java.awt.Graphics2D;
 
 import javax.swing.JPanel;
 
-import org.branch.annotation.audio.pojos.Sample;
+import org.branch.annotation.audio.model.Sample;
 
 
 public class WaveFormPanel extends JPanel {

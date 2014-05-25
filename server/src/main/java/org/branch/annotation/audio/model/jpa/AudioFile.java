@@ -1,4 +1,4 @@
-package org.branch.annotation.audio.pojos;
+package org.branch.annotation.audio.model.jpa;
 
 import org.branch.common.dao.Identifiable;
 import org.hibernate.annotations.GenericGenerator;
@@ -9,11 +9,7 @@ import javax.persistence.Id;
 import javax.persistence.Lob;
 
 /**
- * Created with IntelliJ IDEA.
- * User: tbeauvais
- * Date: 8/3/12
- * Time: 3:27 PM
- * To change this template use File | Settings | File Templates.
+ *
  */
 @Entity
 public class AudioFile implements Identifiable {

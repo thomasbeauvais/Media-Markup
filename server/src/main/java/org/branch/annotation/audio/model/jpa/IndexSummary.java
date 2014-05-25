@@ -1,4 +1,4 @@
-package org.branch.annotation.audio.pojos;
+package org.branch.annotation.audio.model.jpa;
 
 import org.branch.common.dao.Identifiable;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,7 +17,8 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class IndexSummary implements Identifiable {
+public class IndexSummary implements Identifiable
+{
     private int numChannels;
     private float time;
     private long dateUploaded;
@@ -29,104 +30,135 @@ public class IndexSummary implements Identifiable {
 
     private String audioFileUid;
 
-    public IndexSummary() {
+    public IndexSummary()
+    {
 
     }
 
-    public IndexSummary( String name ) {
+    public IndexSummary(String name)
+    {
         this.name = name;
     }
 
     @Id
-    @GeneratedValue( generator= "uuid")
+    @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
-    public String getUid() {
+    public String getUid()
+    {
         return this.uid;
     }
 
-    public void setUid( String uid ) {
+    public void setUid(String uid)
+    {
         this.uid = uid;
     }
 
-    public String getName() {
+    public String getName()
+    {
         return name;
     }
 
-    public void setName( String name ) {
+    public void setName(String name)
+    {
         this.name = name;
     }
 
-    public void setChannels( int numChannels ) {
+    public void setChannels(int numChannels)
+    {
         this.numChannels = numChannels;
     }
 
-    public int getNumChannels() {
+    public int getNumChannels()
+    {
         return numChannels;
     }
 
-    public void setNumChannels( int numChannels ) {
+    public void setNumChannels(int numChannels)
+    {
         this.numChannels = numChannels;
     }
 
-    public float getTime() {
+    public float getTime()
+    {
         return time;
     }
 
-    public void setTime( float time ) {
+    public void setTime(float time)
+    {
         this.time = time;
     }
 
-    public Date getDateUploaded() {
-        return new Date( dateUploaded );
+    public Date getDateUploaded()
+    {
+        return new Date(dateUploaded);
     }
 
-    public void setDateUploaded( long dateUploaded ) {
+    public void setDateUploaded(long dateUploaded)
+    {
         this.dateUploaded = dateUploaded;
     }
 
-    public void setDateUploaded( @NotNull Date dateUploaded ) {
+    public void setDateUploaded(@NotNull Date dateUploaded)
+    {
         this.dateUploaded = dateUploaded.getTime();
     }
 
-    public String getDescription() {
+    public String getDescription()
+    {
         return description;
     }
 
-    public void setDescription( String description ) {
+    public void setDescription(String description)
+    {
         this.description = description;
     }
 
-    @OneToMany( cascade = CascadeType.ALL, fetch = FetchType.EAGER )
-    public List<Comment> getComments() {
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    public List<Comment> getComments()
+    {
         return comments;
     }
 
-    public void setComments(List<Comment> comments) {
+    public void setComments(List<Comment> comments)
+    {
         this.comments = comments;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(Object o)
+    {
+        if (this == o)
+        {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass())
+        {
+            return false;
+        }
 
         IndexSummary that = (IndexSummary) o;
 
-        if (uid != null ? !uid.equals(that.uid) : that.uid != null) return false;
+        if (uid != null ? !uid.equals(that.uid) : that.uid != null)
+        {
+            return false;
+        }
 
         return true;
     }
 
     @Override
-    public int hashCode() {
+    public int hashCode()
+    {
         return uid != null ? uid.hashCode() : 0;
     }
 
-    public void setAudioFileUid(String audioFileUid) {
+    public void setAudioFileUid(String audioFileUid)
+    {
         this.audioFileUid = audioFileUid;
     }
 
-    public String getAudioFileUid() {
+    public String getAudioFileUid()
+    {
         return audioFileUid;
     }
 }

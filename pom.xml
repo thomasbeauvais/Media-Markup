@@ -7,7 +7,7 @@
     <packaging>pom</packaging>
     <version>0.1-SNAPSHOT</version>
 
-    <name>_aggregator-audio-annotation</name>
+    <name>audio-annotation</name>
 
     <properties>
         <spring.version>4.0.5.RELEASE</spring.version>
@@ -18,7 +18,7 @@
         <module>common/common-java</module>
 
         <module>third-party/javazoom-custom</module>
-        <module>third-party/musicg-sound-api-custom</module>
+        <!--<module>third-party/musicg-sound-api-custom</module>-->
 
         <module>server</module>
 
@@ -26,6 +26,57 @@
 
         <!--<module>web/web-flex</module>-->
         <module>web/web-spring-mvc</module>
-  </modules>
+    </modules>
 
+    <dependencyManagement>
+        <dependencies>
+            <!-- Spring Dependencies -->
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aop</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-aspects</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-beans</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-core</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-context</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-expression</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-test</artifactId>
+                <version>${spring.version}</version>
+                <scope>test</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-web</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>org.springframework</groupId>
+                <artifactId>spring-webmvc</artifactId>
+                <version>${spring.version}</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 </project>

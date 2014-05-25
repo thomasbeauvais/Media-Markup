@@ -8,22 +8,54 @@
         <groupId>audio-annotation</groupId>
         <artifactId>audio-annotation</artifactId>
         <version>0.1-SNAPSHOT</version>
-        <relativePath>../../pom.xml</relativePath>
+        <relativePath>../pom.xml</relativePath>
     </parent>
 
     <artifactId>server</artifactId>
 
     <dependencies>
+        <!-- Spring Dependencies -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aop</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-aspects</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-beans</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-expression</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-test</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-web</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-webmvc</artifactId>
+        </dependency>
+
         <dependency>
             <groupId>org.branch</groupId>
             <artifactId>common-java</artifactId>
             <version>0.1-SNAPSHOT</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>3.1.2.RELEASE</version>
         </dependency>
 
         <dependency>
@@ -69,46 +101,7 @@
             <version>7.0.3</version>
         </dependency>
 
-        <!--<dependency>-->
-            <!--<groupId>com.adobe.flex.messaging</groupId>-->
-            <!--<artifactId>flex-messaging-remoting</artifactId>-->
-            <!--<version>4.0.1.17657</version>-->
-        <!--</dependency>-->
-
-        <!--<dependency>-->
-            <!--<groupId>com.adobe.flex.messaging</groupId>-->
-            <!--<artifactId>flex-messaging-remoting</artifactId>-->
-            <!--<version>4.0.1.17657</version>-->
-        <!--</dependency>-->
-
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.8.2 </version>
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>3.1.2.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-beans</artifactId>
-            <version>3.1.2.RELEASE</version>
-        </dependency>
-
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-tx</artifactId>
-            <version>3.1.2.RELEASE</version>
-        </dependency>
-
-
         <!-- ORM -->
-
         <dependency>
             <groupId>postgresql</groupId>
             <artifactId>postgresql</artifactId>
@@ -150,13 +143,5 @@
     <build>
 
     </build>
-
-    <!--<repositories>-->
-        <!--<repository>-->
-            <!--<id>spring-maven-external</id>-->
-            <!--<name>Springframework Maven External Repository</name>-->
-            <!--<url>http://maven.springframework.org/external</url>-->
-        <!--</repository>-->
-    <!--</repositories>-->
 
 </project>

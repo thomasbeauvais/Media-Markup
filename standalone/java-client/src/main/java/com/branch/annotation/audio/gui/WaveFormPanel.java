@@ -6,13 +6,13 @@ import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 
-import org.branch.annotation.audio.pojos.IndexSummary;
-import org.branch.annotation.audio.pojos.VisualData;
-import org.branch.annotation.audio.pojos.VisualParameters;
-import org.branch.annotation.audio.services.AudioAnnotationService;
+import org.branch.annotation.audio.model.jpa.IndexSummary;
+import org.branch.annotation.audio.model.VisualData;
+import org.branch.annotation.audio.model.VisualParameters;
+import org.branch.annotation.audio.services.DefaultAudioAnnotationService;
 
 public class WaveFormPanel extends JLayeredPane {
-    private AudioAnnotationService annotationService;
+    private DefaultAudioAnnotationService annotationService;
 
     private String indexName;
     private JPanel panel_wave;
@@ -26,7 +26,7 @@ public class WaveFormPanel extends JLayeredPane {
 //        this.sampleList = sampleList;
 //    }
 
-    public WaveFormPanel(AudioAnnotationService annotationService, String indexName) {
+    public WaveFormPanel(DefaultAudioAnnotationService annotationService, String indexName) {
         this.annotationService  = annotationService;
         this.indexName          = indexName;
 

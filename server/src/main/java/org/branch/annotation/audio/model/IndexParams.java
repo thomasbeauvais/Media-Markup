@@ -1,4 +1,4 @@
-package org.branch.annotation.audio.pojos;
+package org.branch.annotation.audio.model;
 
 /**
  * Index Parameters that describe certain injesti

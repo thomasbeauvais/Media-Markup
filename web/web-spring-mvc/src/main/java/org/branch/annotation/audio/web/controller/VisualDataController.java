@@ -1,9 +1,9 @@
 package org.branch.annotation.audio.web.controller;
 
-import org.branch.annotation.audio.pojos.VisualData;
-import org.branch.annotation.audio.pojos.VisualParameters;
-import org.branch.annotation.audio.pojos.VisualRegion;
-import org.branch.annotation.audio.services.IAnnotationService;
+import org.branch.annotation.audio.model.VisualData;
+import org.branch.annotation.audio.model.VisualParameters;
+import org.branch.annotation.audio.model.VisualRegion;
+import org.branch.annotation.audio.services.AudioAnnotationService;
 import org.apache.log4j.Logger;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -24,7 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class VisualDataController extends DefaultSpringController {
 
     @Autowired
-    private IAnnotationService audioAnnotationService;
+    private AudioAnnotationService audioAnnotationService;
 
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
 

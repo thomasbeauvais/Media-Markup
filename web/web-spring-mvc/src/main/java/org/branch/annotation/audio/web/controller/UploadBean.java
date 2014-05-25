@@ -1,10 +1,10 @@
 package org.branch.annotation.audio.web.controller;
 
-import org.branch.annotation.audio.api.IIndexEngine;
+import org.branch.annotation.audio.api.IndexEngine;
 import org.branch.annotation.audio.api.IPersistenceEngine;
-import org.branch.annotation.audio.pojos.AudioFile;
-import org.branch.annotation.audio.pojos.IndexWithSamples;
-import org.branch.annotation.audio.pojos.SampleList;
+import org.branch.annotation.audio.model.jpa.AudioFile;
+import org.branch.annotation.audio.model.jpa.IndexSamples;
+import org.branch.annotation.audio.model.SampleIndex;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,10 +31,10 @@ public class UploadBean {
         this.persistenceEngine = persistenceEngine;
     }
 
-    private IIndexEngine indexEngine;
+    private IndexEngine indexEngine;
 
     @Autowired
-    public void setIndexEngine( IIndexEngine indexEngine ) {
+    public void setIndexEngine( IndexEngine indexEngine ) {
         this.indexEngine = indexEngine;
     }
 
@@ -82,9 +82,9 @@ public class UploadBean {
             IOUtils.copy(inputStream, byteArrayOutputStream);
 
             final byte[] bytes              = byteArrayOutputStream.toByteArray();
-            final SampleList sampleList     = indexEngine.createIndexForAudioStream( new ByteArrayInputStream( bytes ), name );
+            final SampleIndex sampleList     = indexEngine.createIndex(new ByteArrayInputStream(bytes), name);
 
-            final IndexWithSamples indexSummary = sampleList.getIndexSummary();
+            final IndexSamples indexSummary = sampleList.getIndexSummary();
 
             logger.info("*** Created SampleList: " + name);
 

@@ -19,9 +19,9 @@
  */
 package org.branch.annotation.audio.web.controller;
 
-import org.branch.annotation.audio.pojos.Comment;
-import org.branch.annotation.audio.pojos.IndexSummary;
-import org.branch.annotation.audio.services.IAnnotationService;
+import org.branch.annotation.audio.model.jpa.Comment;
+import org.branch.annotation.audio.model.jpa.IndexSummary;
+import org.branch.annotation.audio.services.AudioAnnotationService;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -37,7 +37,7 @@ public class AudioIndexController extends DefaultSpringController {
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
 
     @Autowired
-    private IAnnotationService audioAnnotationService;
+    private AudioAnnotationService audioAnnotationService;
 
     @ModelAttribute("indexFiles")
     public List<IndexSummary> allIndexFiles() {
