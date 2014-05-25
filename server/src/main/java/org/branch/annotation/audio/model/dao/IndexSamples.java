@@ -4,6 +4,7 @@ import org.branch.annotation.audio.model.Sample;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Lob;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -14,10 +15,10 @@ import java.util.Vector;
  * Heavy weight representation of the {@link org.branch.annotation.audio.model.dao.IndexSummary} that also includes the {@link org.branch.annotation.audio.model.Sample samples}.
  */
 @Entity
-public class IndexSamples extends IndexSummary
+public class IndexSamples extends IndexAnnotations
 {
     @Lob
-    @ElementCollection
+    @ElementCollection(fetch = FetchType.LAZY)
     private List<Sample> samples = new Vector<Sample>();
 
     private short min;

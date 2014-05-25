@@ -116,11 +116,21 @@
             <version>${querydsl.version}</version>
         </dependency>
 
-        <!-- For rapid development, we can use this H2 in-memory and file based database-->
+        <!-- h2: for rapid development we can use this H2 in-memory and file based database-->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.178</version>
+        </dependency>
+
+        <!-- jackson-mapper-asl: required for JSON translation -->
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-core-asl</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
         </dependency>
 
         <dependency>

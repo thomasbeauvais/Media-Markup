@@ -21,8 +21,10 @@ package org.branch.annotation.audio.web.controller;
 
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.dao.AnnotationRepository;
+import org.branch.annotation.audio.dao.IndexAnnotationsRepository;
 import org.branch.annotation.audio.dao.IndexSummaryRepository;
 import org.branch.annotation.audio.model.dao.Annotation;
+import org.branch.annotation.audio.model.dao.IndexAnnotations;
 import org.branch.annotation.audio.model.dao.IndexSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -46,6 +48,9 @@ public class AnnotationController extends DefaultSpringController
     @Autowired
     private IndexSummaryRepository indexSummaryRepository;
 
+    @Autowired
+    private IndexAnnotationsRepository indexAnnotationsRepository;
+
     @ModelAttribute("indexFiles")
     public List<IndexSummary> allIndexFiles()
     {
@@ -56,8 +61,8 @@ public class AnnotationController extends DefaultSpringController
     @Transactional
     public ModelAndView allAnnotations(@RequestParam String id)
     {
-        final IndexSummary indexSummary = indexSummaryRepository.findOne(id);
-        final List<Annotation> annotations = indexSummary.getAnnotations();
+        final IndexAnnotations indexAnnotations = indexAnnotationsRepository.findOne(id);
+        final List<Annotation> annotations = indexAnnotations.getAnnotations();
 
         //TODO:  Fix lazy loading so that this works..
         // Sort based on how many comments are in a thread
@@ -103,10 +108,10 @@ public class AnnotationController extends DefaultSpringController
         final Annotation audioAnnotation = annotationRepository.findOne(id);
 
         final String indexSummaryId = audioAnnotation.getIndexSummary().getId();
-        final IndexSummary indexSummary = indexSummaryRepository.findOne(indexSummaryId);
-        indexSummary.getAnnotations().remove(audioAnnotation);
+        final IndexAnnotations indexAnnotations = indexAnnotationsRepository.findOne(indexSummaryId);
+        indexAnnotations.getAnnotations().remove(audioAnnotation);
 
-        indexSummaryRepository.save(indexSummary);
+        indexSummaryRepository.save(indexAnnotations);
     }
 
     @RequestMapping(value = "annotations/add", method = RequestMethod.POST)
@@ -123,9 +128,9 @@ public class AnnotationController extends DefaultSpringController
 
         logger.info("**** adding comment for file=" + id + " region(" + startX + "," + endX + ") with text=" + text);
 
-        final IndexSummary indexSummary = indexSummaryRepository.findOne(id);
-        indexSummary.getAnnotations().add(new Annotation(text, Math.min(startX, endX), Math.max(startX, endX)));
+        final IndexAnnotations indexAnnotations = indexAnnotationsRepository.findOne(id);
+        indexAnnotations.getAnnotations().add(new Annotation(text, Math.min(startX, endX), Math.max(startX, endX)));
 
-        indexSummaryRepository.save(indexSummary);
+        indexSummaryRepository.save(indexAnnotations);
     }
 }
