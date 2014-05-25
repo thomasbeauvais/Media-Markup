@@ -3,6 +3,7 @@ package org.branch.annotation.audio.model.jpa;
 import org.branch.annotation.audio.model.Sample;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -14,6 +15,7 @@ import java.util.Vector;
 @Entity
 public class IndexSamples extends IndexSummary
 {
+    @Lob
     private List<Sample> samples = new Vector<Sample>();
     private short min;
     private short max;

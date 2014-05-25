@@ -4,6 +4,7 @@ import com.mysema.query.jpa.impl.JPAQuery;
 import org.branch.annotation.audio.jpa.IndexSummaryRepository;
 import org.branch.annotation.audio.model.jpa.Comment;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
+import org.branch.annotation.audio.model.jpa.IndexSummary;
 import org.branch.annotation.audio.model.jpa.QIndexSamples;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -26,7 +27,7 @@ import static org.junit.Assert.*;
 public class IndexSummaryRepositoryTest extends AbstractSpringTest
 {
     @Autowired
-    IndexSummaryRepository<IndexSamples> indexSummaryRepository;
+    IndexSummaryRepository<IndexSummary> indexSummaryRepository;
 
     @Autowired
     EntityManager entityManager;
@@ -91,7 +92,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         indexSummaryRepository.delete(persisted);
 
-        final IndexSamples expected = indexSummaryRepository.findOne(uid);
+        final IndexSummary expected = indexSummaryRepository.findOne(uid);
 
         assertNull("IndexSamples should have been deleted", expected);
     }
@@ -104,7 +105,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         final String expected_name = "modified";
 
-        final IndexSamples persisted = indexSummaryRepository.findOne(uid);
+        final IndexSummary persisted = indexSummaryRepository.findOne(uid);
 
         assertNotNull(persisted);
 
