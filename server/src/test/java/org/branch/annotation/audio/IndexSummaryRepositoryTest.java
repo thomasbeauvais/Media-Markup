@@ -117,7 +117,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
         final QIndexSamples indexSamples = QIndexSamples.indexSamples;
         final JPAQuery query = new JPAQuery(entityManager);
         final IndexSamples persisted = query.from(indexSamples)
-                                            .where(indexSamples.uid.eq(uid))
+                                            .where(indexSamples.id.eq(uid))
                                             .uniqueResult(indexSamples);
 
         assertNotNull(persisted);
