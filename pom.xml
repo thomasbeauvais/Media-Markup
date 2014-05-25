@@ -22,7 +22,7 @@
 
         <module>server</module>
 
-        <module>standalone/java-client</module>
+        <!--<module>standalone/java-client</module>-->
 
         <!--<module>web/web-flex</module>-->
         <module>web/web-spring-mvc</module>

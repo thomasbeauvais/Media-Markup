@@ -1,73 +1,29 @@
 package org.branch.annotation.audio.services;
 
-import org.branch.annotation.audio.api.PersistenceEngine;
+import org.branch.annotation.audio.jpa.IndexSamplesRepository;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.VisualData;
 import org.branch.annotation.audio.model.VisualParameters;
 import org.branch.annotation.audio.model.VisualRegion;
 import org.branch.annotation.audio.model.jpa.Annotation;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
-import org.branch.annotation.audio.model.jpa.IndexSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Vector;
 
-/**
- * Created by IntelliJ IDEA.
- * User: tbeauvais
- * Date: 3/6/12
- * Time: 3:25 PM
- * To change this template use File | Settings | File Templates.
- */
 @Service
-public class EverythingService implements AnnotationService, IndexService, VisualService
+public class DefaultVisualDataService implements VisualDataService
 {
-    public EverythingService()
-    {
-    }
-
-    private PersistenceEngine persistenceEngine;
-
     @Autowired
-    public void setPersistenceEngine(PersistenceEngine persistenceEngine)
-    {
-        this.persistenceEngine = persistenceEngine;
-    }
+    private IndexSamplesRepository indexSamplesRepository;
 
-    public IndexSummary[] loadAll()
+    public VisualData loadVisualData(String id, VisualParameters visualParameters)
     {
-        return persistenceEngine.loadAll(IndexSummary.class);
-    }
+        final IndexSamples indexSamples = indexSamplesRepository.findOne(id);
 
-    public IndexSamples loadSamples(String indexFileUid)
-    {
-        return persistenceEngine.load(indexFileUid, IndexSamples.class);
-    }
-
-    public void save(IndexSummary indexSummary)
-    {
-        persistenceEngine.save(indexSummary);
-    }
-
-    @Override
-    public void deleteAnnotation(String uid)
-    {
-        persistenceEngine.delete(Annotation.class, uid);
-    }
-
-    @Override
-    public Annotation loadAnnotation(String idAnnotation)
-    {
-        return persistenceEngine.load(idAnnotation, Annotation.class);
-    }
-
-    public VisualData loadVisualData(String idContentFile, VisualParameters visualParameters)
-    {
         final VisualData visualData = new VisualData();
-
-        final IndexSamples indexSamples = (IndexSamples) loadIndexSummary(idContentFile);
 
         final int width = visualParameters.getWidth();
         final int[] visualSamples = new int[width];
@@ -136,13 +92,8 @@ public class EverythingService implements AnnotationService, IndexService, Visua
             visualRegions.add(new VisualRegion(annotation.getUid(), startX, endX, 0, 0, 0));
         }
 
-        visualData.setVisualRegions(visualRegions.toArray(new VisualRegion[0]));
+        visualData.setVisualRegions(visualRegions.toArray(new VisualRegion[visualRegions.size()]));
 
         return visualData;
-    }
-
-    public IndexSummary loadIndexSummary(String uid)
-    {
-        return persistenceEngine.load(uid, IndexSummary.class);
     }
 }

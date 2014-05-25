@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.branch.annotation.audio.model.VisualData;
 import org.branch.annotation.audio.model.VisualParameters;
 import org.branch.annotation.audio.model.VisualRegion;
-import org.branch.annotation.audio.services.VisualService;
+import org.branch.annotation.audio.services.VisualDataService;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,9 +25,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 @RequestMapping("/visualData")
 public class VisualDataController
 {
-
     @Autowired
-    private VisualService visualService;
+    private VisualDataService visualDataService;
 
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
 
@@ -51,7 +50,7 @@ public class VisualDataController
         visualParameters.setHeight(height);
         visualParameters.setWidth(width);
 
-        final VisualData visualData = visualService.loadVisualData(uid, visualParameters);
+        final VisualData visualData = visualDataService.loadVisualData(uid, visualParameters);
 
         // in this instance we want to create a custom more explicit json object
         final JSONObject jsonObject = new JSONObject();

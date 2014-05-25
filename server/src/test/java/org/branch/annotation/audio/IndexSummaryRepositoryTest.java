@@ -27,7 +27,7 @@ import static org.junit.Assert.*;
 public class IndexSummaryRepositoryTest extends AbstractSpringTest
 {
     @Autowired
-    IndexSummaryRepository<IndexSummary> indexSummaryRepository;
+    IndexSummaryRepository indexSummaryRepository;
 
     @Autowired
     EntityManager entityManager;

@@ -5,7 +5,7 @@ import org.branch.annotation.audio.model.VisualParameters;
 
 /**
  */
-public interface VisualService
+public interface VisualDataService
 {
     /**
      * Retrieves all data need to display the wave form for an {@link org.branch.annotation.audio.model.jpa.IndexSamples object} specified by the {@code uid}.

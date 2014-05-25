@@ -1,6 +1,6 @@
 package org.branch.annotation.audio.jpa;
 
-import org.branch.annotation.audio.model.jpa.IndexSummary;
+import org.branch.annotation.audio.model.jpa.Annotation;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**
@@ -10,7 +10,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
  * @since 25.05.14
  */
-public interface IndexSummaryRepository extends JpaRepository<IndexSummary, String>
+public interface AnnotationRepository extends JpaRepository<Annotation, String>
 {
 
 }

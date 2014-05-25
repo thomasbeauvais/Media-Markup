@@ -20,10 +20,10 @@
 package org.branch.annotation.audio.web.controller;
 
 import org.apache.log4j.Logger;
+import org.branch.annotation.audio.jpa.AnnotationRepository;
+import org.branch.annotation.audio.jpa.IndexSummaryRepository;
 import org.branch.annotation.audio.model.jpa.Annotation;
 import org.branch.annotation.audio.model.jpa.IndexSummary;
-import org.branch.annotation.audio.services.AnnotationService;
-import org.branch.annotation.audio.services.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -31,30 +31,32 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 @Controller
-public class AnnotationController extends DefaultSpringController {
+public class AnnotationController extends DefaultSpringController
+{
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
 
     @Autowired
-    private IndexService indexService;
+    private AnnotationRepository annotationRepository;
 
     @Autowired
-    private AnnotationService annotationService;
+    private IndexSummaryRepository indexSummaryRepository;
 
     @ModelAttribute("indexFiles")
-    public List<IndexSummary> allIndexFiles() {
-        return Arrays.asList(indexService.loadAll());
+    public List<IndexSummary> allIndexFiles()
+    {
+        return indexSummaryRepository.findAll();
     }
 
-    @RequestMapping( value = "annotations", method = RequestMethod.GET )
+    @RequestMapping(value = "annotations", method = RequestMethod.GET)
     @Transactional
-    public ModelAndView getAnnotations( @RequestParam String idIndexSummary ) {
-        final IndexSummary indexSummary = indexService.loadIndexSummary( idIndexSummary );
+    public ModelAndView allAnnotations(@RequestParam String id)
+    {
+        final IndexSummary indexSummary = indexSummaryRepository.findOne(id);
         final List<Annotation> annotations = indexSummary.getAnnotations();
 
         //TODO:  Fix lazy loading so that this works..
@@ -70,50 +72,60 @@ public class AnnotationController extends DefaultSpringController {
 //        });
 
         Map modelMap = new HashMap();
-        modelMap.put( "annotations", annotations);
+        modelMap.put("annotations", annotations);
 
-        return new ModelAndView( "annotations", modelMap );
+        return new ModelAndView("annotations", modelMap);
     }
 
-    @RequestMapping( value = "/", method = RequestMethod.GET )
-    public ModelAndView showIndexFiles( ) {
-        return new ModelAndView( "main" );
+    @RequestMapping(value = "/", method = RequestMethod.GET)
+    public ModelAndView showIndexFiles()
+    {
+        return new ModelAndView("main");
     }
 
-    @RequestMapping( value = "indexList", method = RequestMethod.GET )
-    public ModelAndView indexFiles() {
-        return new ModelAndView( "indexList" );
+    @RequestMapping(value = "indexList", method = RequestMethod.GET)
+    public ModelAndView indexFiles()
+    {
+        return new ModelAndView("indexList");
     }
 
-    @RequestMapping( value = "annotations/remove", method = RequestMethod.POST )
+    @RequestMapping(value = "annotations/remove", method = RequestMethod.POST)
     @Transactional
-    public @ResponseStatus( value = HttpStatus.NO_CONTENT ) void removeAnnotation(
-            @RequestParam String idAnnotation) {
+    public
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    void removeAnnotation(
+            @RequestParam String id
+    )
+    {
 
-        logger.info("**** removing comment for file=" + idAnnotation);
+        logger.info("**** removing annotation for file=" + id);
 
-        final Annotation audioAnnotation = annotationService.loadAnnotation(idAnnotation);
+        final Annotation audioAnnotation = annotationRepository.findOne(id);
 
-        final String idIndexSummary     = audioAnnotation.getIndexSummary().getUid();
-        final IndexSummary indexSummary = indexService.loadIndexSummary(idIndexSummary);
+        final String indexSummaryId = audioAnnotation.getIndexSummary().getUid();
+        final IndexSummary indexSummary = indexSummaryRepository.findOne(indexSummaryId);
         indexSummary.getAnnotations().remove(audioAnnotation);
 
-        indexService.save(indexSummary);
+        indexSummaryRepository.save(indexSummary);
     }
 
-    @RequestMapping( value = "annotations/add", method = RequestMethod.POST )
+    @RequestMapping(value = "annotations/add", method = RequestMethod.POST)
     @Transactional
-    public @ResponseStatus( value = HttpStatus.NO_CONTENT ) void addAnnotation(
-            @RequestParam String idIndexFile,
+    public
+    @ResponseStatus(value = HttpStatus.NO_CONTENT)
+    void addAnnotation(
+            @RequestParam String id,
             @RequestParam String text,
             @RequestParam int startX,
-            @RequestParam int endX) {
+            @RequestParam int endX
+    )
+    {
 
-        logger.info("**** adding comment for file=" + idIndexFile + " region(" + startX + "," + endX + ") with text=" + text);
+        logger.info("**** adding comment for file=" + id + " region(" + startX + "," + endX + ") with text=" + text);
 
-        final IndexSummary indexSummary = indexService.loadIndexSummary( idIndexFile );
+        final IndexSummary indexSummary = indexSummaryRepository.findOne(id);
         indexSummary.getAnnotations().add(new Annotation(text, Math.min(startX, endX), Math.max(startX, endX)));
 
-        indexService.save(indexSummary);
+        indexSummaryRepository.save(indexSummary);
     }
 }

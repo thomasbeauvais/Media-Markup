@@ -25,7 +25,7 @@ public class IndexSummaryIntegrationTest extends AbstractSpringTest
     AudioStreamIndexer audioStreamIndexer;
 
     @Autowired
-    IndexSummaryRepository<IndexSamples> indexSummaryRepository;
+    IndexSummaryRepository indexSummaryRepository;
 
     @Test
     @Ignore("Test fails: Value too long for column \"SAMPLES BINARY(255)\"")

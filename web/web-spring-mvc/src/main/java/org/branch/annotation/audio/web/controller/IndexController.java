@@ -1,7 +1,4 @@
-package org.branch.annotation.audio.jpa;
-
-import org.branch.annotation.audio.model.jpa.IndexSummary;
-import org.springframework.data.jpa.repository.JpaRepository;
+package org.branch.annotation.audio.web.controller;
 
 /**
  * TODO:  Please document properly all classes and methods using the Silbury JavaDoc Guidelines
@@ -10,7 +7,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
  * @since 25.05.14
  */
-public interface IndexSummaryRepository extends JpaRepository<IndexSummary, String>
+public class IndexController
 {
-
 }
