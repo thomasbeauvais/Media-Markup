@@ -1,7 +1,7 @@
 package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.api.IPersistenceEngine;
+import org.branch.annotation.audio.api.PersistenceEngine;
 import org.branch.annotation.audio.api.IndexEngine;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.jpa.Comment;
@@ -48,7 +48,7 @@ public class IndexFileGenerator
     @Test
     public void retrieveAll()
     {
-        final IPersistenceEngine indexEngine = applicationContext.getBean(IPersistenceEngine.class);
+        final PersistenceEngine indexEngine = applicationContext.getBean(PersistenceEngine.class);
         final IndexSamples[] indexSummaries = indexEngine.loadAll(IndexSamples.class);
         final IndexSamples indexSamples = indexSummaries[0];
 
@@ -98,7 +98,7 @@ public class IndexFileGenerator
 
                 LOGGER.info("*** Attempting to save SampleList: " + uid);
 
-                applicationContext.getBean(IPersistenceEngine.class).save(indexSummary);
+                applicationContext.getBean(PersistenceEngine.class).save(indexSummary);
 
                 LOGGER.info("*** Creation of index file complete for: " + uid);
             }

@@ -1,7 +1,7 @@
 package org.branch.annotation.audio.io.binary;
 
 import org.branch.annotation.audio.api.IFilePersistenceConnector;
-import org.branch.annotation.audio.api.IPersistenceEngine;
+import org.branch.annotation.audio.api.PersistenceEngine;
 import org.branch.annotation.audio.io.exceptions.PersistenceException;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
@@ -18,11 +18,11 @@ import java.io.*;
 public class BinaryPersistenceConnector implements IFilePersistenceConnector
 {
 
-    private IPersistenceEngine persistenceEngine;
+    private PersistenceEngine persistenceEngine;
 
     @Autowired
     @Lazy
-    public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
+    public void setPersistenceEngine(PersistenceEngine persistenceEngine)
     {
         this.persistenceEngine = persistenceEngine;
     }

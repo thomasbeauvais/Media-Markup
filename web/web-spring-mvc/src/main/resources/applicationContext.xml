@@ -37,7 +37,7 @@
         </property>
     </bean>
 
-    <bean class="org.branch.annotation.audio.io.JpaPersistenceEngine">
+    <bean class="org.branch.annotation.audio.jpa.JpaPersistenceEngine">
     </bean>
 
 </beans>

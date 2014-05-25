@@ -1,6 +1,6 @@
 package org.branch.annotation.audio.services;
 
-import org.branch.annotation.audio.api.IPersistenceEngine;
+import org.branch.annotation.audio.api.PersistenceEngine;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.VisualData;
 import org.branch.annotation.audio.model.VisualParameters;
@@ -33,10 +33,10 @@ public class DefaultAudioAnnotationService implements AudioAnnotationService
     {
     }
 
-    private IPersistenceEngine persistenceEngine;
+    private PersistenceEngine persistenceEngine;
 
     @Autowired
-    public void setPersistenceEngine(IPersistenceEngine persistenceEngine)
+    public void setPersistenceEngine(PersistenceEngine persistenceEngine)
     {
         this.persistenceEngine = persistenceEngine;
     }

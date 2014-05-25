@@ -1,11 +1,12 @@
 package org.branch.annotation.audio.api;
 
-import org.branch.common.dao.Identifiable;
+import org.branch.common.data.Identifiable;
 
 /**
  *
  */
-public interface IPersistenceEngine {
+public interface PersistenceEngine
+{
     <T extends Identifiable> T save(T obj);
 
     <T extends Identifiable> T load( String uid, Class<T> objectClazz );

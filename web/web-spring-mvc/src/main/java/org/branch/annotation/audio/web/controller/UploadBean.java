@@ -1,12 +1,11 @@
 package org.branch.annotation.audio.web.controller;
 
-import org.branch.annotation.audio.api.IndexEngine;
-import org.branch.annotation.audio.api.IPersistenceEngine;
-import org.branch.annotation.audio.model.jpa.AudioFile;
-import org.branch.annotation.audio.model.jpa.IndexSamples;
-import org.branch.annotation.audio.model.SampleIndex;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.branch.annotation.audio.api.IndexEngine;
+import org.branch.annotation.audio.api.PersistenceEngine;
+import org.branch.annotation.audio.model.jpa.AudioFile;
+import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.annotation.PostConstruct;
@@ -24,10 +23,10 @@ public class UploadBean {
 
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
 
-    private IPersistenceEngine persistenceEngine;
+    private PersistenceEngine persistenceEngine;
 
     @Autowired
-    public void setPersistenceEngine( IPersistenceEngine persistenceEngine ) {
+    public void setPersistenceEngine( PersistenceEngine persistenceEngine ) {
         this.persistenceEngine = persistenceEngine;
     }
 
@@ -82,16 +81,15 @@ public class UploadBean {
             IOUtils.copy(inputStream, byteArrayOutputStream);
 
             final byte[] bytes              = byteArrayOutputStream.toByteArray();
-            final SampleIndex sampleList     = indexEngine.createIndex(new ByteArrayInputStream(bytes), name);
-
-            final IndexSamples indexSummary = sampleList.getIndexSummary();
+            final IndexSamples indexSamples     = indexEngine.createIndex(new ByteArrayInputStream(bytes));
+            indexSamples.setUid(name);
 
             logger.info("*** Created SampleList: " + name);
 
             logger.info("*** Creating AudioFile: " + name);
 
             final AudioFile audioFile = new AudioFile();
-            audioFile.setBytes( bytes );
+            audioFile.setBytes(bytes);
 
             logger.info("*** Created AudioFile: " + name);
 
@@ -100,12 +98,12 @@ public class UploadBean {
             final AudioFile saved = persistenceEngine.save( audioFile );
 
             // TODO:  Add this
-//                indexSummary.setOriginalFilename( fileName );
-            indexSummary.setAudioFileUid( saved.getUid() );
+//                indexSamples.setOriginalFilename( fileName );
+            indexSamples.setAudioFileUid(saved.getUid());
 
             logger.info("*** Attempting to save SampleList: " + name);
 
-            persistenceEngine.save( indexSummary );
+            persistenceEngine.save( indexSamples );
 
             logger.info("*** Creation of index file complete for: " + name);
         } finally {

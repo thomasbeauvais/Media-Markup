@@ -1,4 +1,4 @@
-package org.branch.common.dao;
+package org.branch.common.data;
 
 import org.hibernate.dialect.PostgreSQL82Dialect;
 

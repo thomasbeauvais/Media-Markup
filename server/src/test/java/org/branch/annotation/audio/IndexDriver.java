@@ -1,7 +1,7 @@
 package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.api.IPersistenceEngine;
+import org.branch.annotation.audio.api.PersistenceEngine;
 import org.branch.annotation.audio.api.IndexEngine;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.springframework.context.ApplicationContext;
@@ -59,7 +59,7 @@ public class IndexDriver
 
                 LOGGER.info("*** Attempting to save SampleList: " + uid);
 
-                applicationContext.getBean(IPersistenceEngine.class).save(indexSamples);
+                applicationContext.getBean(PersistenceEngine.class).save(indexSamples);
 
                 LOGGER.info("*** Creation of index file complete for: " + uid);
             }

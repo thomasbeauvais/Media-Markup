@@ -1,6 +1,6 @@
 package org.branch.annotation.audio.model.jpa;
 
-import org.branch.common.dao.Identifiable;
+import org.branch.common.data.Identifiable;
 import org.hibernate.annotations.GenericGenerator;
 import org.jetbrains.annotations.NotNull;
 

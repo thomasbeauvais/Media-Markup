@@ -62,19 +62,7 @@ public class DefaultIndexEngine implements IndexEngine
         }
         catch (Exception e)
         {
-            logger.error(e);
-
             throw new RuntimeException(e);
-        }
-        finally
-        {
-            try
-            {
-                input.close();
-            }
-            catch (Exception e)
-            {
-            }
         }
     }
 

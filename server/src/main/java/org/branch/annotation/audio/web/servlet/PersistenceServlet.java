@@ -1,6 +1,6 @@
 package org.branch.annotation.audio.web.servlet;
 
-import org.branch.annotation.audio.api.IPersistenceEngine;
+import org.branch.annotation.audio.api.PersistenceEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.servlet.ServletException;
@@ -21,10 +21,10 @@ import java.io.IOException;
 public class PersistenceServlet extends HttpServlet {
     public static final String MEDIA_PROJECT_DIR = "MEDIA_PROJECT_DIR";
 
-    private IPersistenceEngine persistenceEngine;
+    private PersistenceEngine persistenceEngine;
 
     @Autowired
-    public void setPersistenceEngine( IPersistenceEngine persistenceEngine ) {
+    public void setPersistenceEngine( PersistenceEngine persistenceEngine ) {
         this.persistenceEngine = persistenceEngine;
     }
 

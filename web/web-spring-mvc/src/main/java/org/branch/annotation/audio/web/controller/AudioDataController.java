@@ -1,6 +1,6 @@
 package org.branch.annotation.audio.web.controller;
 
-import org.branch.annotation.audio.api.IPersistenceEngine;
+import org.branch.annotation.audio.api.PersistenceEngine;
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.model.jpa.AudioFile;
 import org.branch.annotation.audio.model.jpa.IndexSummary;
@@ -29,7 +29,7 @@ import static org.apache.commons.io.IOUtils.copy;
 public class AudioDataController extends DefaultSpringController {
 
     @Autowired
-    public IPersistenceEngine persistenceEngine;
+    public PersistenceEngine persistenceEngine;
 
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
     private static final int BUFF_SIZE = 4096;
