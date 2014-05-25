@@ -1,7 +1,7 @@
 package org.branch.annotation.audio.web.controller;
 
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.dao.SamplesRepository;
+import org.branch.annotation.audio.dao.SummaryRepository;
 import org.branch.annotation.audio.io.FileStore;
 import org.branch.annotation.audio.model.dao.Summary;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,7 +30,7 @@ public class AudioDataController extends DefaultSpringController
 {
 
     @Autowired
-    public SamplesRepository indexSamplesRepository;
+    public SummaryRepository summaryRepository;
 
     @Autowired
     private FileStore fileStore;
@@ -48,7 +48,7 @@ public class AudioDataController extends DefaultSpringController
     @Transactional
     public void doGet(@RequestParam String id, @RequestParam(defaultValue = "0") int startPos, HttpServletResponse response) throws Exception
     {
-        final Summary summary = indexSamplesRepository.findOne(id);
+        final Summary summary = summaryRepository.findOne(id);
 
         final InputStream inputStream = fileStore.getInputStream(summary.getAudioFileUid());
 

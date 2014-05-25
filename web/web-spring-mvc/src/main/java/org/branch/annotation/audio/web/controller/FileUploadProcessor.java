@@ -8,6 +8,7 @@ import org.branch.annotation.audio.io.AudioStreamIndexer;
 import org.branch.annotation.audio.io.FileStore;
 import org.branch.annotation.audio.model.dao.Samples;
 import org.branch.annotation.audio.model.dao.Metadata;
+import org.branch.annotation.audio.model.dao.Summary;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.ByteArrayInputStream;
@@ -55,7 +56,9 @@ public class FileUploadProcessor
 
             // TODO split so that each indexing and uploading is asynchronous
             final byte[] bytes = byteArrayOutputStream.toByteArray();
+            final Summary summary = new Summary();
             final Samples indexSamples = audioStreamIndexer.createIndex(new ByteArrayInputStream(bytes));
+            indexSamples.setSummary(summary);
 
             logger.info("*** Created AudioFile: " + originalFilename);
 
@@ -63,7 +66,7 @@ public class FileUploadProcessor
 
             final String fileId = fileStore.persist(bytes);
 
-            indexSamples.setAudioFileUid(fileId);
+            summary.setAudioFileUid(fileId);
 
             logger.info("*** Attempting to save IndexSamples: " + originalFilename);
 

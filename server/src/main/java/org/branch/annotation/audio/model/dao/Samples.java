@@ -2,10 +2,7 @@ package org.branch.annotation.audio.model.dao;
 
 import org.branch.annotation.audio.model.Sample;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.Lob;
-import javax.persistence.OneToOne;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -25,7 +22,7 @@ public class Samples extends UuidIdentifiable
     private short max;
     private float time;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.PERSIST)
     private Summary summary;
 
     public Samples()

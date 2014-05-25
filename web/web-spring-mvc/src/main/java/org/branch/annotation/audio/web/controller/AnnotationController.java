@@ -22,10 +22,9 @@ package org.branch.annotation.audio.web.controller;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.dao.AnnotationRepository;
-import org.branch.annotation.audio.dao.IndexAnnotationsRepository;
 import org.branch.annotation.audio.dao.SummaryRepository;
 import org.branch.annotation.audio.model.dao.Annotation;
-import org.branch.annotation.audio.model.dao.IndexAnnotations;
+import org.branch.annotation.audio.model.dao.Summary;
 import org.branch.common.UncheckedException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -51,15 +50,11 @@ public class AnnotationController extends DefaultSpringController
     @Autowired
     private SummaryRepository indexSummaryRepository;
 
-    @Autowired
-    private IndexAnnotationsRepository indexAnnotationsRepository;
-
     @Transactional
     @RequestMapping
     public String all(@RequestParam String indexId, Model model)
     {
-        final IndexAnnotations indexAnnotations = indexAnnotationsRepository.findOne(indexId);
-        final List<Annotation> annotations = indexAnnotations.getAnnotations();
+        final List<Annotation> annotations = annotationRepository.findAllForSummary(indexId);
 
         //TODO:  Fix lazy loading so that this works..
         // Sort based on how many comments are in a thread
@@ -99,30 +94,27 @@ public class AnnotationController extends DefaultSpringController
             @RequestParam int endX
     )
     {
+        final Annotation annotation;
         if (!StringUtils.isEmpty(id))
         {
             logger.info("**** updating existing annotation for id=" + id + " with region(" + startX + "," + endX + ") with text=" + text);
 
-            final Annotation annotation = annotationRepository.findOne(id);
-
-            annotation.setText(text);
-            annotation.setStartPos(startX);
-            annotation.setEndPos(endX);
-
-            annotationRepository.save(annotation);
+            annotation = annotationRepository.findOne(id);
         }
-        if (!StringUtils.isEmpty(indexId))
+        else if (!StringUtils.isEmpty(indexId))
         {
-            logger.info("**** adding annotation for file=" + indexId + " region(" + startX + "," + endX + ") with text=" + text);
-
-            final IndexAnnotations indexAnnotations = indexAnnotationsRepository.findOne(indexId);
-            indexAnnotations.getAnnotations().add(new Annotation(text, Math.min(startX, endX), Math.max(startX, endX)));
-
-            indexSummaryRepository.save(indexAnnotations);
+            annotation = new Annotation();
+            annotation.setSummary(new Summary());
         }
         else
         {
             throw new UncheckedException("Must supply parameter of either 'indexId' or 'id' to modify/add an annotation");
         }
+
+        annotation.setText(text);
+        annotation.setStartPos(startX);
+        annotation.setEndPos(endX);
+
+        annotationRepository.save(annotation);
     }
 }

@@ -34,9 +34,9 @@ public class Summary extends UuidIdentifiable implements Identifiable
 
     }
 
-    public Summary(String name)
+    public Summary(String uuid)
     {
-        this.name = name;
+        setId(uuid);
     }
 
     public String getName()
