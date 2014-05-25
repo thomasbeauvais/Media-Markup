@@ -14,13 +14,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-/**
- * Created with IntelliJ IDEA.
- * User: tbeauvais
- * Date: 7/4/12
- * Time: 1:02 AM
- * To change this template use File | Settings | File Templates.
- */
 @Controller
 @RequestMapping("/visualData")
 public class VisualDataController

@@ -66,35 +66,6 @@ public class DefaultAudioStreamIndexer implements AudioStreamIndexer
         }
     }
 
-//	private static int[] getLargestGap(short[] maxes, short[] mins) {
-//		int[] ret = new int[ maxes.length ];
-//
-//		for ( int i = 0; i < maxes.length; i++ ) {
-//			ret[ i ] = maxes[ i ] + ( mins[ i ] * -1 );
-//		}
-//
-//		return ret;
-//	}
-//
-//	private static String getSampleStr(int[] samples) {
-//		StringBuffer str = new StringBuffer();
-//		for ( int i = 0; i < samples.length; i++) {
-//			str.append( samples[ i ] ).append("\t" );
-//		}
-//
-//		return str.toString();
-//	}
-//
-//
-//	private static String getSampleStr(short[] samples) {
-//		StringBuffer str = new StringBuffer();
-//		for ( int i = 0; i < samples.length; i++) {
-//			str.append( samples[ i ] ).append("\t" );
-//		}
-//
-//		return str.toString();
-//	}
-
     private short[] getSamples(short[] buffer, int numChannels)
     {
         short[] shorts = new short[numChannels];
