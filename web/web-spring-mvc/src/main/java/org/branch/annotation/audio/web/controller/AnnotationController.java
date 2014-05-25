@@ -102,7 +102,7 @@ public class AnnotationController extends DefaultSpringController
 
         final Annotation audioAnnotation = annotationRepository.findOne(id);
 
-        final String indexSummaryId = audioAnnotation.getIndexSummary().getUid();
+        final String indexSummaryId = audioAnnotation.getIndexSummary().getId();
         final IndexSummary indexSummary = indexSummaryRepository.findOne(indexSummaryId);
         indexSummary.getAnnotations().remove(audioAnnotation);
 

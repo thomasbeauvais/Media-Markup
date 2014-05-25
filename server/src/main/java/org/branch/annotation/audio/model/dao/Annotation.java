@@ -1,7 +1,6 @@
 package org.branch.annotation.audio.model.dao;
 
 import org.branch.common.data.Identifiable;
-import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.util.Date;
@@ -16,106 +15,112 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class Annotation implements Identifiable {
+public class Annotation extends UuidIdentifiable implements Identifiable
+{
     private String text;
     private long startPos;
     private long endPos;
     private Date date;
 
-    @OneToMany( cascade = CascadeType.ALL )
+    @OneToMany(cascade = CascadeType.ALL)
     private List<Annotation> children = new Vector<Annotation>();
-
-
-    @Id
-    @GeneratedValue( generator= "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    private String uid;
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
 //    @JoinTable( name = "IndexSummary_Comment", joinColumns = {@JoinColumn( name = "indexSummary_uid", updatable = false, insertable = false)})
     private IndexSummary indexSummary;
 
-    public Annotation() {
+    public Annotation()
+    {
 
     }
 
-    public Annotation(String text, int start, int end) {
-        this( text, start, end, new Date() );
+    public Annotation(String text, int start, int end)
+    {
+        this(text, start, end, new Date());
     }
 
-    public Annotation(String text, int start, int end, Date date) {
+    public Annotation(String text, int start, int end, Date date)
+    {
         this.text = text;
         this.startPos = start;
         this.endPos = end;
         this.date = date;
     }
 
-    public String getUid() {
-        return this.uid;
-    }
-
-    public void setUid( String uid ) {
-        this.uid = uid;
-    }
-
-    public IndexSummary getIndexSummary() {
+    public IndexSummary getIndexSummary()
+    {
         return indexSummary;
     }
 
-    public void setIndexSummary(IndexSummary indexSummary) {
+    public void setIndexSummary(IndexSummary indexSummary)
+    {
         this.indexSummary = indexSummary;
     }
 
-    public String getText() {
+    public String getText()
+    {
         return text;
     }
 
-    public void setText(String text) {
+    public void setText(String text)
+    {
         this.text = text;
     }
 
-    public Date getDate() {
+    public Date getDate()
+    {
         return date;
     }
 
-    public void setDate( Date date ) {
+    public void setDate(Date date)
+    {
         this.date = date;
     }
 
-    public List<Annotation> getChildren() {
+    public List<Annotation> getChildren()
+    {
         return children;
     }
 
-    public void setChildren(List<Annotation> children) {
+    public void setChildren(List<Annotation> children)
+    {
         this.children = children;
     }
 
-    public long getStartPos() {
+    public long getStartPos()
+    {
         return startPos;
     }
 
-    public void setStartPos(long startPos) {
+    public void setStartPos(long startPos)
+    {
         this.startPos = startPos;
     }
 
-    public long getEndPos() {
+    public long getEndPos()
+    {
         return endPos;
     }
 
-    public void setEndPos(long endPos) {
+    public void setEndPos(long endPos)
+    {
         this.endPos = endPos;
     }
 
-    public int size() {
-        return size( true );
+    public int size()
+    {
+        return size(true);
     }
 
-    public int size( boolean recursive ) {
+    public int size(boolean recursive)
+    {
         int size = children.size();
 
-        if ( recursive ) {
-            for ( Annotation childAnnotation : children) {
-                size += childAnnotation.size( true );
+        if (recursive)
+        {
+            for (Annotation childAnnotation : children)
+            {
+                size += childAnnotation.size(true);
             }
         }
 

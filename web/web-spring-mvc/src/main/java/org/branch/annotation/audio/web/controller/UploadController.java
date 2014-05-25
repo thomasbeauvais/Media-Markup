@@ -110,7 +110,7 @@
 //
 //                // TODO:  Add this
 ////                indexSummary.setOriginalFilename( fileName );
-//                indexSummary.setAudioFileUid( saved.getUid() );
+//                indexSummary.setAudioFileUid( saved.getId() );
 //
 //                logger.info("*** Attempting to save SampleList: " + name);
 //

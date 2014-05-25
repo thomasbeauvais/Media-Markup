@@ -89,7 +89,7 @@ public class DefaultVisualDataService implements VisualDataService
                 endX = width;
             }
 
-            visualRegions.add(new VisualRegion(annotation.getUid(), startX, endX, 0, 0, 0));
+            visualRegions.add(new VisualRegion(annotation.getId(), startX, endX, 0, 0, 0));
         }
 
         visualData.setVisualRegions(visualRegions.toArray(new VisualRegion[visualRegions.size()]));

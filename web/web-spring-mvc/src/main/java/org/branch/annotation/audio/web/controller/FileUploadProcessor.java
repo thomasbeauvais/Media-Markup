@@ -69,7 +69,7 @@ public class FileUploadProcessor
 
             indexSamplesRepository.save(indexSamples);
 
-            final Metadata metadata = new Metadata(indexSamples.getUid(), metadataMap);
+            final Metadata metadata = new Metadata(indexSamples.getId(), metadataMap);
 
             metadataRepository.save(metadata);
 

@@ -88,7 +88,7 @@ public class IndexFileGenerator
                 inputStream = new FileInputStream(audioFile);
 
                 final IndexSamples indexSummary = audioStreamIndexer.createIndex(inputStream);
-                indexSummary.setUid(uid);
+                indexSummary.setId(uid);
 
                 final List<Annotation> annotations = new Vector<Annotation>();
                 annotations.add(new Annotation("sample text one", 100, 1000));

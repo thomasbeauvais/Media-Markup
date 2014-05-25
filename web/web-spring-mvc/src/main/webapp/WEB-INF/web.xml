@@ -22,6 +22,7 @@
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+
     <servlet>
         <servlet-name>spring</servlet-name>
         <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -36,7 +37,7 @@
     <!-- WEB-INF/web.xml -->
     <servlet>
         <servlet-name>ErrorServlet</servlet-name>
-        <servlet-class>com.domain.MyErrorServlet</servlet-class>
+        <servlet-class>org.branch.annotation.audio.web.controller.ErrorServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>

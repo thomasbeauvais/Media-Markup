@@ -46,7 +46,7 @@ public class IndexDriver
                 inputStream = new FileInputStream(audioFile);
 
                 final IndexSamples indexSamples = audioStreamIndexer.createIndex(inputStream);
-                indexSamples.setUid(uid);
+                indexSamples.setId(uid);
 
 //                final List<Comment> comments = new Vector<Comment>();
 //                comments.add( new Comment( "sample text one", 100, 1000 ) );

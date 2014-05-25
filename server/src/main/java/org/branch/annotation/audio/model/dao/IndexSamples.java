@@ -20,6 +20,11 @@ public class IndexSamples extends IndexSummary
     private short min;
     private short max;
 
+    public IndexSamples()
+    {
+
+    }
+
     public short getMax()
     {
         return this.max;
@@ -53,11 +58,6 @@ public class IndexSamples extends IndexSummary
     public int size()
     {
         return samples.size();
-    }
-
-    public IndexSamples()
-    {
-
     }
 
     public void updateBoundsForValue(Sample sample)

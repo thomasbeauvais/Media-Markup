@@ -1,10 +1,12 @@
 package org.branch.annotation.audio.model.dao;
 
 import org.branch.common.data.Identifiable;
-import org.hibernate.annotations.GenericGenerator;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.*;
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.OneToMany;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -17,7 +19,7 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class IndexSummary implements Identifiable
+public class IndexSummary extends UuidIdentifiable implements Identifiable
 {
     private int numChannels;
     private float time;
@@ -25,8 +27,6 @@ public class IndexSummary implements Identifiable
     private String name;
     private String description;
     private List<Annotation> annotations = new Vector<Annotation>();
-
-    private String uid;
 
     private String audioFileUid;
     private String originalFilename;
@@ -39,19 +39,6 @@ public class IndexSummary implements Identifiable
     public IndexSummary(String name)
     {
         this.name = name;
-    }
-
-    @Id
-    @GeneratedValue(generator = "uuid")
-    @GenericGenerator(name = "uuid", strategy = "uuid2")
-    public String getUid()
-    {
-        return this.uid;
-    }
-
-    public void setUid(String uid)
-    {
-        this.uid = uid;
     }
 
     public String getName()
@@ -123,34 +110,6 @@ public class IndexSummary implements Identifiable
     public void setAnnotations(List<Annotation> annotations)
     {
         this.annotations = annotations;
-    }
-
-    @Override
-    public boolean equals(Object o)
-    {
-        if (this == o)
-        {
-            return true;
-        }
-        if (o == null || getClass() != o.getClass())
-        {
-            return false;
-        }
-
-        IndexSummary that = (IndexSummary) o;
-
-        if (uid != null ? !uid.equals(that.uid) : that.uid != null)
-        {
-            return false;
-        }
-
-        return true;
-    }
-
-    @Override
-    public int hashCode()
-    {
-        return uid != null ? uid.hashCode() : 0;
     }
 
     public void setAudioFileUid(String audioFileUid)

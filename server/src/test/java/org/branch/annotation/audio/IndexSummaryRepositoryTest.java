@@ -50,7 +50,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         local.setAnnotations(annotations);
 
-        uid = indexSummaryRepository.save(local).getUid();
+        uid = indexSummaryRepository.save(local).getId();
 
         assertNotNull(uid);
 

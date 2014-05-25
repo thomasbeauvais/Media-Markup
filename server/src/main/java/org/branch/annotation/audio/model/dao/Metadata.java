@@ -1,11 +1,13 @@
 package org.branch.annotation.audio.model.dao;
 
+import org.branch.common.data.Identifiable;
+
 import javax.persistence.Entity;
 import java.util.HashMap;
 import java.util.Map;
 
 @Entity
-public class Metadata
+public class Metadata extends UuidIdentifiable implements Identifiable<String>
 {
     private String targetUuid;
 
