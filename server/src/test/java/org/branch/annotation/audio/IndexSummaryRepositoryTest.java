@@ -71,7 +71,6 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         assertNotNull(persisted.getComments());
         assertEquals(2, persisted.getComments().size());
-        assertNotNull(persisted.getComments().get(1));
 
         final Comment comment0 = persisted.getComments().get(0);
         assertNotNull(comment0);
@@ -79,8 +78,10 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
         assertEquals(1, comment0.getStartPos());
         assertEquals(100, comment0.getEndPos());
 
-        assertEquals(expected_comment1, persisted.getComments().get(1).getText());
-
-
+        final Comment comment1 = persisted.getComments().get(1);
+        assertNotNull(comment1);
+        assertEquals(expected_comment1, comment1.getText());
+        assertEquals(2, comment1.getStartPos());
+        assertEquals(200, comment1.getEndPos());
     }
 }
