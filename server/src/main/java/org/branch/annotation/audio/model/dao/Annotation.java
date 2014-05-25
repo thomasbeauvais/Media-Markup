@@ -23,6 +23,7 @@ public class Annotation extends UuidIdentifiable implements Identifiable
     private Date date;
 
     @OneToMany(cascade = CascadeType.ALL)
+    @ElementCollection
     private List<Annotation> children = new Vector<Annotation>();
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)

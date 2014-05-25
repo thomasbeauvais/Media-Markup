@@ -3,10 +3,7 @@ package org.branch.annotation.audio.model.dao;
 import org.branch.common.data.Identifiable;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.Date;
 import java.util.List;
 import java.util.Vector;
@@ -28,6 +25,7 @@ public class IndexSummary extends UuidIdentifiable implements Identifiable
     private String description;
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ElementCollection(targetClass = Annotation.class)
     private List<Annotation> annotations = new Vector<Annotation>();
 
     private String audioFileUid;

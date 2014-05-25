@@ -3,6 +3,7 @@ package org.branch.annotation.audio.model.dao;
 import org.branch.common.data.Identifiable;
 
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -11,6 +12,7 @@ public class Metadata extends UuidIdentifiable implements Identifiable<String>
 {
     private String targetUuid;
 
+    @Lob
     private Map<String, Object> metadataValues = new HashMap<String, Object>();
 
     public Metadata()

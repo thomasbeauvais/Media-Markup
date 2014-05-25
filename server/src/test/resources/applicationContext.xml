@@ -34,7 +34,7 @@
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:mem:test"/>
+        <property name="url" value="jdbc:h2:mem:test;DB_CLOSE_DELAY=-1"/>
         <!--<property name="url" value="jdbc:h2:database/PATH"/>-->
         <property name="username" value="sa"/>
         <property name="password" value=""/>
