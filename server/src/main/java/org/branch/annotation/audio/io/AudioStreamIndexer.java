@@ -1,6 +1,6 @@
 package org.branch.annotation.audio.io;
 
-import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.Samples;
 
 import java.io.InputStream;
 
@@ -13,5 +13,5 @@ public interface AudioStreamIndexer
      * @param inputStream
      * @return
      */
-    IndexSamples createIndex(InputStream inputStream);
+    Samples createIndex(InputStream inputStream);
 }

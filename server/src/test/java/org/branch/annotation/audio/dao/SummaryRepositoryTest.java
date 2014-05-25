@@ -3,9 +3,8 @@ package org.branch.annotation.audio.dao;
 import com.mysema.query.jpa.impl.JPAQuery;
 import org.branch.annotation.audio.AbstractSpringTest;
 import org.branch.annotation.audio.model.dao.Annotation;
-import org.branch.annotation.audio.model.dao.IndexSamples;
-import org.branch.annotation.audio.model.dao.IndexSummary;
-import org.branch.annotation.audio.model.dao.QIndexSamples;
+import org.branch.annotation.audio.model.dao.QSummary;
+import org.branch.annotation.audio.model.dao.Summary;
 import org.junit.Before;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -17,10 +16,10 @@ import java.util.Vector;
 
 import static org.junit.Assert.*;
 
-public class IndexSummaryRepositoryTest extends AbstractSpringTest
+public class SummaryRepositoryTest extends AbstractSpringTest
 {
     @Autowired
-    IndexSummaryRepository indexSummaryRepository;
+    SummaryRepository indexSummaryRepository;
 
     @Autowired
     EntityManager entityManager;
@@ -40,7 +39,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
         final String expected_comment0 = "test comment one";
         final String expected_comment1 = "test comment two";
 
-        final IndexSamples local = new IndexSamples();
+        final Summary local = new Summary();
         local.setName(expected_name);
 
         // create some nested objects - in the case, org.branch.annotation.audio.model.jpa.Comment
@@ -54,7 +53,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         assertNotNull(uuid);
 
-        final IndexSamples persisted = getPersisted();
+        final Summary persisted = getPersisted();
 
         assertNotNull(persisted);
         assertNotNull(persisted.getName());
@@ -81,11 +80,11 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
     {
         save();
 
-        final IndexSamples persisted = getPersisted();
+        final Summary persisted = getPersisted();
 
         indexSummaryRepository.delete(persisted);
 
-        final IndexSummary expected = indexSummaryRepository.findOne(uuid);
+        final Summary expected = indexSummaryRepository.findOne(uuid);
 
         assertNull("IndexSamples should have been deleted", expected);
     }
@@ -98,7 +97,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         final String expected_name = "modified";
 
-        final IndexSummary persisted = indexSummaryRepository.findOne(uuid);
+        final Summary persisted = indexSummaryRepository.findOne(uuid);
 
         assertNotNull(persisted);
 
@@ -106,19 +105,19 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         indexSummaryRepository.save(persisted);
 
-        final IndexSamples modified = getPersisted();
+        final Summary modified = getPersisted();
 
         assertEquals(expected_name, modified.getName());
     }
 
-    public IndexSamples getPersisted()
+    public Summary getPersisted()
     {
         // use a query to bypass the jpa repository
-        final QIndexSamples indexSamples = QIndexSamples.indexSamples;
+        final QSummary summary = QSummary.summary;
         final JPAQuery query = new JPAQuery(entityManager);
-        final IndexSamples persisted = query.from(indexSamples)
-                                            .where(indexSamples.uuid.eq(uuid))
-                                            .uniqueResult(indexSamples);
+        final Summary persisted = query.from(summary)
+                                       .where(summary.uuid.eq(uuid))
+                                       .uniqueResult(summary);
 
         assertNotNull(persisted);
 

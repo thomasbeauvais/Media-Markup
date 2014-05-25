@@ -4,27 +4,31 @@ import org.branch.annotation.audio.model.Sample;
 
 import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.Lob;
+import javax.persistence.OneToOne;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Vector;
 
 /**
- * Heavy weight representation of the {@link org.branch.annotation.audio.model.dao.IndexSummary} that also includes the {@link org.branch.annotation.audio.model.Sample samples}.
+ * Heavy weight representation of the {@link Summary} that also includes the {@link org.branch.annotation.audio.model.Sample samples}.
  */
 @Entity
-public class IndexSamples extends IndexAnnotations
+public class Samples extends UuidIdentifiable
 {
     @Lob
-    @ElementCollection(fetch = FetchType.LAZY)
+    @ElementCollection
     private List<Sample> samples = new Vector<Sample>();
 
     private short min;
     private short max;
+    private float time;
 
-    public IndexSamples()
+    @OneToOne
+    private Summary summary;
+
+    public Samples()
     {
 
     }
@@ -93,5 +97,25 @@ public class IndexSamples extends IndexAnnotations
         {
             updateBoundsForValue(sample);
         }
+    }
+
+    public void setTime(float time)
+    {
+        this.time = time;
+    }
+
+    public float getTime()
+    {
+        return time;
+    }
+
+    public Summary getSummary()
+    {
+        return summary;
+    }
+
+    public void setSummary(Summary summary)
+    {
+        this.summary = summary;
     }
 }

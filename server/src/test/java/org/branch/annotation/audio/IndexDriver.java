@@ -1,9 +1,9 @@
 package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
+import org.branch.annotation.audio.dao.SamplesRepository;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
-import org.branch.annotation.audio.dao.IndexSamplesRepository;
-import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.Samples;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -45,7 +45,7 @@ public class IndexDriver
             {
                 inputStream = new FileInputStream(audioFile);
 
-                final IndexSamples indexSamples = audioStreamIndexer.createIndex(inputStream);
+                final Samples indexSamples = audioStreamIndexer.createIndex(inputStream);
                 indexSamples.setId(uid);
 
 //                final List<Comment> comments = new Vector<Comment>();
@@ -58,7 +58,7 @@ public class IndexDriver
 
                 LOGGER.info("*** Attempting to save SampleList: " + uid);
 
-                applicationContext.getBean(IndexSamplesRepository.class).save(indexSamples);
+                applicationContext.getBean(SamplesRepository.class).save(indexSamples);
 
                 LOGGER.info("*** Creation of index file complete for: " + uid);
             }

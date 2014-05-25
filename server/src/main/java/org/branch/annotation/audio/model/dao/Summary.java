@@ -3,10 +3,9 @@ package org.branch.annotation.audio.model.dao;
 import org.branch.common.data.Identifiable;
 import org.jetbrains.annotations.NotNull;
 
-import javax.persistence.Entity;
-import javax.persistence.Inheritance;
-import javax.persistence.InheritanceType;
+import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,8 +15,8 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-@Inheritance(strategy = InheritanceType.JOINED)
-public class IndexSummary extends UuidIdentifiable implements Identifiable
+@Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
+public class Summary extends UuidIdentifiable implements Identifiable
 {
     private int numChannels;
     private float time;
@@ -27,12 +26,15 @@ public class IndexSummary extends UuidIdentifiable implements Identifiable
 
     private String audioFileUid;
 
-    public IndexSummary()
+    @OneToMany(cascade = CascadeType.ALL)
+    private List<Annotation> annotations;
+
+    public Summary()
     {
 
     }
 
-    public IndexSummary(String name)
+    public Summary(String name)
     {
         this.name = name;
     }
@@ -48,16 +50,6 @@ public class IndexSummary extends UuidIdentifiable implements Identifiable
     }
 
     public void setChannels(int numChannels)
-    {
-        this.numChannels = numChannels;
-    }
-
-    public int getNumChannels()
-    {
-        return numChannels;
-    }
-
-    public void setNumChannels(int numChannels)
     {
         this.numChannels = numChannels;
     }
@@ -105,5 +97,15 @@ public class IndexSummary extends UuidIdentifiable implements Identifiable
     public String getAudioFileUid()
     {
         return audioFileUid;
+    }
+
+    public void setAnnotations(List<Annotation> annotations)
+    {
+        this.annotations = annotations;
+    }
+
+    public List<Annotation> getAnnotations()
+    {
+        return annotations;
     }
 }

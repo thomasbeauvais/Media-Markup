@@ -1,6 +1,5 @@
 package org.branch.annotation.audio.dao;
 
-import org.branch.annotation.audio.model.dao.IndexSummary;
 import org.branch.annotation.audio.model.dao.Metadata;
 import org.springframework.data.jpa.repository.JpaRepository;
 

@@ -23,7 +23,7 @@ import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.dao.AnnotationRepository;
 import org.branch.annotation.audio.dao.IndexAnnotationsRepository;
-import org.branch.annotation.audio.dao.IndexSummaryRepository;
+import org.branch.annotation.audio.dao.SummaryRepository;
 import org.branch.annotation.audio.model.dao.Annotation;
 import org.branch.annotation.audio.model.dao.IndexAnnotations;
 import org.branch.common.UncheckedException;
@@ -49,7 +49,7 @@ public class AnnotationController extends DefaultSpringController
     private AnnotationRepository annotationRepository;
 
     @Autowired
-    private IndexSummaryRepository indexSummaryRepository;
+    private SummaryRepository indexSummaryRepository;
 
     @Autowired
     private IndexAnnotationsRepository indexAnnotationsRepository;

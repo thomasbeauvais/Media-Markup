@@ -6,7 +6,7 @@ import javazoom.jl.decoder.Header;
 import javazoom.jl.decoder.SampleBuffer;
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.model.Sample;
-import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.Samples;
 import org.branch.common.utils.HumanReadable;
 import org.jetbrains.annotations.NotNull;
 
@@ -19,7 +19,7 @@ public class DefaultAudioStreamIndexer implements AudioStreamIndexer
 {
     private static final Logger logger = Logger.getLogger(AudioStreamIndexer.class);
 
-    public IndexSamples createIndex(@NotNull InputStream input)
+    public Samples createIndex(@NotNull InputStream input)
     {
 
         final long start = System.currentTimeMillis();
@@ -28,7 +28,7 @@ public class DefaultAudioStreamIndexer implements AudioStreamIndexer
         {
             final Bitstream bitstream = new Bitstream(input);
             final Decoder decoder = new Decoder();
-            final IndexSamples index = new IndexSamples();
+            final Samples index = new Samples();
 
             float timeStamp = 0;
             long pos = 0;
@@ -50,7 +50,7 @@ public class DefaultAudioStreamIndexer implements AudioStreamIndexer
             }
 
             index.setTime(timeStamp);
-            index.setChannels(output.getChannelCount());
+//            index.setChannels(output.getChannelCount());
             index.updateBounds();
 
             final long end = System.currentTimeMillis();

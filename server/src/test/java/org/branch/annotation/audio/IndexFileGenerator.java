@@ -1,11 +1,12 @@
 package org.branch.annotation.audio;
 
 import org.apache.log4j.Logger;
+import org.branch.annotation.audio.dao.SamplesRepository;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
-import org.branch.annotation.audio.dao.IndexSamplesRepository;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.dao.Annotation;
-import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.Samples;
+import org.branch.annotation.audio.model.dao.Summary;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -50,9 +51,9 @@ public class IndexFileGenerator
     @Test
     public void retrieveAll()
     {
-        final IndexSamplesRepository indexEngine = applicationContext.getBean(IndexSamplesRepository.class);
-        final List<IndexSamples> indexSummaries = indexEngine.findAll();
-        final IndexSamples indexSamples = indexSummaries.get(0);
+        final SamplesRepository indexEngine = applicationContext.getBean(SamplesRepository.class);
+        final List<Samples> indexSummaries = indexEngine.findAll();
+        final Samples indexSamples = indexSummaries.get(0);
 
         for (Sample sample : indexSamples.getSamples())
         {
@@ -87,20 +88,21 @@ public class IndexFileGenerator
             {
                 inputStream = new FileInputStream(audioFile);
 
-                final IndexSamples indexSummary = audioStreamIndexer.createIndex(inputStream);
-                indexSummary.setId(uid);
+                final Summary summary = new Summary();
+                final Samples samples = audioStreamIndexer.createIndex(inputStream);
+                samples.setSummary(summary);
 
                 final List<Annotation> annotations = new Vector<Annotation>();
                 annotations.add(new Annotation("sample text one", 100, 1000));
                 annotations.add(new Annotation("sample text two", 100, 1000));
 
-                indexSummary.setAnnotations(annotations);
+                summary.setAnnotations(annotations);
 
                 logger.info("*** Created SampleList: " + uid);
 
                 logger.info("*** Attempting to save SampleList: " + uid);
 
-                applicationContext.getBean(IndexSamplesRepository.class).save(indexSummary);
+                applicationContext.getBean(SamplesRepository.class).save(samples);
 
                 logger.info("*** Creation of index file complete for: " + uid);
             }

@@ -1,7 +1,7 @@
 package org.branch.annotation.audio;
 
 import org.branch.annotation.audio.io.AudioStreamIndexer;
-import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.Samples;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -23,7 +23,7 @@ public class AudioIndexTest extends AbstractSpringTest
 
         assertTrue(file.exists());
 
-        final IndexSamples indexSamples = audioStreamIndexer.createIndex(new FileInputStream(file));
+        final Samples indexSamples = audioStreamIndexer.createIndex(new FileInputStream(file));
 
         assertNotNull(indexSamples);
         assertEquals(indexSamples.size(), 7993);
@@ -36,7 +36,7 @@ public class AudioIndexTest extends AbstractSpringTest
 
         assertTrue(file.exists());
 
-        final IndexSamples indexSamples = audioStreamIndexer.createIndex(new FileInputStream(file));
+        final Samples indexSamples = audioStreamIndexer.createIndex(new FileInputStream(file));
 
         assertNotNull(indexSamples);
         assertEquals(indexSamples.size(), 161703);

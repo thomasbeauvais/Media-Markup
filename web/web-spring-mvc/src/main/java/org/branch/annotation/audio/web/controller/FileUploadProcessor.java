@@ -2,11 +2,11 @@ package org.branch.annotation.audio.web.controller;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.dao.IndexSamplesRepository;
+import org.branch.annotation.audio.dao.SamplesRepository;
 import org.branch.annotation.audio.dao.MetadataRepository;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
 import org.branch.annotation.audio.io.FileStore;
-import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.Samples;
 import org.branch.annotation.audio.model.dao.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -34,7 +34,7 @@ public class FileUploadProcessor
     private FileStore fileStore;
 
     @Autowired
-    private IndexSamplesRepository indexSamplesRepository;
+    private SamplesRepository indexSamplesRepository;
 
     @Autowired
     private MetadataRepository metadataRepository;
@@ -55,7 +55,7 @@ public class FileUploadProcessor
 
             // TODO split so that each indexing and uploading is asynchronous
             final byte[] bytes = byteArrayOutputStream.toByteArray();
-            final IndexSamples indexSamples = audioStreamIndexer.createIndex(new ByteArrayInputStream(bytes));
+            final Samples indexSamples = audioStreamIndexer.createIndex(new ByteArrayInputStream(bytes));
 
             logger.info("*** Created AudioFile: " + originalFilename);
 

@@ -1,12 +1,13 @@
 package org.branch.annotation.audio.services;
 
-import org.branch.annotation.audio.dao.IndexSamplesRepository;
+import org.branch.annotation.audio.dao.AnnotationRepository;
+import org.branch.annotation.audio.dao.SamplesRepository;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.VisualData;
 import org.branch.annotation.audio.model.VisualParameters;
 import org.branch.annotation.audio.model.VisualRegion;
 import org.branch.annotation.audio.model.dao.Annotation;
-import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.Samples;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -17,11 +18,14 @@ import java.util.Vector;
 public class DefaultVisualDataService implements VisualDataService
 {
     @Autowired
-    private IndexSamplesRepository indexSamplesRepository;
+    private SamplesRepository samplesRepository;
+
+    @Autowired
+    private AnnotationRepository annotationRepository;
 
     public VisualData loadVisualData(String id, VisualParameters visualParameters)
     {
-        final IndexSamples indexSamples = indexSamplesRepository.findOne(id);
+        final Samples indexSamples = samplesRepository.findOne(id);
 
         final VisualData visualData = new VisualData();
 
@@ -65,7 +69,7 @@ public class DefaultVisualDataService implements VisualDataService
         }
 
         final List<VisualRegion> visualRegions = new Vector<VisualRegion>();
-        final List<Annotation> annotations = indexSamples.getAnnotations();
+        final List<Annotation> annotations = annotationRepository.findAllForSummary(indexSamples.getSummary().getId());
         for (Annotation annotation : annotations)
         {
             int startX = 0;

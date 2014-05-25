@@ -23,11 +23,10 @@ public class Annotation extends UuidIdentifiable implements Identifiable
     private Date date;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @ElementCollection
     private List<Annotation> children = new Vector<Annotation>();
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    private IndexSummary indexSummary;
+    private Summary summary;
 
     public Annotation()
     {
@@ -47,14 +46,14 @@ public class Annotation extends UuidIdentifiable implements Identifiable
         this.date = date;
     }
 
-    public IndexSummary getIndexSummary()
+    public Summary getSummary()
     {
-        return indexSummary;
+        return summary;
     }
 
-    public void setIndexSummary(IndexSummary indexSummary)
+    public void setSummary(Summary summary)
     {
-        this.indexSummary = indexSummary;
+        this.summary = summary;
     }
 
     public String getText()
