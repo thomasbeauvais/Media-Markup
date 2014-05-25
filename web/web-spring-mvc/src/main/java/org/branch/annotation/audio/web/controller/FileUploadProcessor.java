@@ -39,7 +39,7 @@ public class FileUploadProcessor
     @Autowired
     private MetadataRepository metadataRepository;
 
-    public void uploadFile(Map<String, Object> metadataMap, InputStream inputStream) throws IOException
+    public void uploadFile(Map<String, String> metadataMap, InputStream inputStream) throws IOException
     {
         final long start = System.currentTimeMillis();
 

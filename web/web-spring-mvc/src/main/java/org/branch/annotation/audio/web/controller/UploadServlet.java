@@ -89,7 +89,7 @@ public class UploadServlet extends DefaultSpringController
 
         final String originalFilename = request.getHeader("X-File-Name");
 
-        final Map<String, Object> metadata = new HashMap<String, Object>();
+        final Map<String, String> metadata = new HashMap<String, String>();
         metadata.put("originalFilename", originalFilename);
 
         fileUploadProcessor.uploadFile(metadata, inputStream);
