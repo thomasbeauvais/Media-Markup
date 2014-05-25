@@ -9,10 +9,10 @@ import javax.swing.border.LineBorder;
 import org.branch.annotation.audio.model.jpa.IndexSummary;
 import org.branch.annotation.audio.model.VisualData;
 import org.branch.annotation.audio.model.VisualParameters;
-import org.branch.annotation.audio.services.DefaultAudioAnnotationService;
+import org.branch.annotation.audio.services.DefaultAnnotationService;
 
 public class WaveFormPanel extends JLayeredPane {
-    private DefaultAudioAnnotationService annotationService;
+    private DefaultAnnotationService annotationService;
 
     private String indexName;
     private JPanel panel_wave;
@@ -26,7 +26,7 @@ public class WaveFormPanel extends JLayeredPane {
 //        this.sampleList = sampleList;
 //    }
 
-    public WaveFormPanel(DefaultAudioAnnotationService annotationService, String indexName) {
+    public WaveFormPanel(DefaultAnnotationService annotationService, String indexName) {
         this.annotationService  = annotationService;
         this.indexName          = indexName;
 

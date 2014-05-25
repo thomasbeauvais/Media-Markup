@@ -1,7 +1,7 @@
 package org.branch.annotation.audio.gui;
 
 import org.branch.annotation.audio.api.AudioStreamIndexer;
-import org.branch.annotation.audio.services.DefaultAudioAnnotationService;
+import org.branch.annotation.audio.services.DefaultAnnotationService;
 import org.apache.log4j.Logger;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
@@ -77,7 +77,7 @@ public class MainFrame extends JFrame {
 
                 final String indexName                  = indexFile.getName().substring( 0, indexFile.getName().length() - 6 );
 
-                final DefaultAudioAnnotationService annotationService = applicationContext.getBean( DefaultAudioAnnotationService.class );
+                final DefaultAnnotationService annotationService = applicationContext.getBean( DefaultAnnotationService.class );
 
                 LOGGER.info( "*** Loaded indexObject: " + indexName );
 

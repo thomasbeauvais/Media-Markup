@@ -2,7 +2,7 @@ package org.branch.annotation.audio;
 
 import com.mysema.query.jpa.impl.JPAQuery;
 import org.branch.annotation.audio.jpa.IndexSummaryRepository;
-import org.branch.annotation.audio.model.jpa.Comment;
+import org.branch.annotation.audio.model.jpa.Annotation;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.branch.annotation.audio.model.jpa.IndexSummary;
 import org.branch.annotation.audio.model.jpa.QIndexSamples;
@@ -51,11 +51,11 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
         local.setName(expected_name);
 
         // create some nested objects - in the case, org.branch.annotation.audio.model.jpa.Comment
-        final List<Comment> comments = new Vector<Comment>();
-        comments.add(new Comment(expected_comment0, 1, 100));
-        comments.add(new Comment(expected_comment1, 2, 200));
+        final List<Annotation> annotations = new Vector<Annotation>();
+        annotations.add(new Annotation(expected_comment0, 1, 100));
+        annotations.add(new Annotation(expected_comment1, 2, 200));
 
-        local.setComments(comments);
+        local.setAnnotations(annotations);
 
         uid = indexSummaryRepository.save(local).getUid();
 
@@ -67,20 +67,20 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
         assertNotNull(persisted.getName());
         assertEquals(expected_name, persisted.getName());
 
-        assertNotNull(persisted.getComments());
-        assertEquals(2, persisted.getComments().size());
+        assertNotNull(persisted.getAnnotations());
+        assertEquals(2, persisted.getAnnotations().size());
 
-        final Comment comment0 = persisted.getComments().get(0);
-        assertNotNull(comment0);
-        assertEquals(expected_comment0, comment0.getText());
-        assertEquals(1, comment0.getStartPos());
-        assertEquals(100, comment0.getEndPos());
+        final Annotation annotation0 = persisted.getAnnotations().get(0);
+        assertNotNull(annotation0);
+        assertEquals(expected_comment0, annotation0.getText());
+        assertEquals(1, annotation0.getStartPos());
+        assertEquals(100, annotation0.getEndPos());
 
-        final Comment comment1 = persisted.getComments().get(1);
-        assertNotNull(comment1);
-        assertEquals(expected_comment1, comment1.getText());
-        assertEquals(2, comment1.getStartPos());
-        assertEquals(200, comment1.getEndPos());
+        final Annotation annotation1 = persisted.getAnnotations().get(1);
+        assertNotNull(annotation1);
+        assertEquals(expected_comment1, annotation1.getText());
+        assertEquals(2, annotation1.getStartPos());
+        assertEquals(200, annotation1.getEndPos());
     }
 
     @Test

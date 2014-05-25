@@ -24,7 +24,7 @@ public class IndexSummary implements Identifiable
     private long dateUploaded;
     private String name;
     private String description;
-    private List<Comment> comments = new Vector<Comment>();
+    private List<Annotation> annotations = new Vector<Annotation>();
 
     private String uid;
 
@@ -114,14 +114,14 @@ public class IndexSummary implements Identifiable
     }
 
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    public List<Comment> getComments()
+    public List<Annotation> getAnnotations()
     {
-        return comments;
+        return annotations;
     }
 
-    public void setComments(List<Comment> comments)
+    public void setAnnotations(List<Annotation> annotations)
     {
-        this.comments = comments;
+        this.annotations = annotations;
     }
 
     @Override

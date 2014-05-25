@@ -16,14 +16,14 @@ import java.util.Vector;
  * To change this template use File | Settings | File Templates.
  */
 @Entity
-public class Comment implements Identifiable {
+public class Annotation implements Identifiable {
     private String text;
     private long startPos;
     private long endPos;
     private Date date;
 
     @OneToMany( cascade = CascadeType.ALL )
-    private List<Comment> childComments = new Vector<Comment>();
+    private List<Annotation> children = new Vector<Annotation>();
 
 
     @Id
@@ -35,15 +35,15 @@ public class Comment implements Identifiable {
 //    @JoinTable( name = "IndexSummary_Comment", joinColumns = {@JoinColumn( name = "indexSummary_uid", updatable = false, insertable = false)})
     private IndexSummary indexSummary;
 
-    public Comment() {
+    public Annotation() {
 
     }
 
-    public Comment(String text, int start, int end) {
+    public Annotation(String text, int start, int end) {
         this( text, start, end, new Date() );
     }
 
-    public Comment(String text, int start, int end, Date date) {
+    public Annotation(String text, int start, int end, Date date) {
         this.text = text;
         this.startPos = start;
         this.endPos = end;
@@ -82,12 +82,12 @@ public class Comment implements Identifiable {
         this.date = date;
     }
 
-    public List<Comment> getChildComments() {
-        return childComments;
+    public List<Annotation> getChildren() {
+        return children;
     }
 
-    public void setChildComments(List<Comment> childComments) {
-        this.childComments = childComments;
+    public void setChildren(List<Annotation> children) {
+        this.children = children;
     }
 
     public long getStartPos() {
@@ -111,11 +111,11 @@ public class Comment implements Identifiable {
     }
 
     public int size( boolean recursive ) {
-        int size = childComments.size();
+        int size = children.size();
 
         if ( recursive ) {
-            for ( Comment childComment : childComments) {
-                size += childComment.size( true );
+            for ( Annotation childAnnotation : children) {
+                size += childAnnotation.size( true );
             }
         }
 

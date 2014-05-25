@@ -19,28 +19,14 @@
  */
 package org.branch.annotation.audio.web.controller;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class HelloController {
-    @Autowired
-    private MessageSource messageSource;
-
+public class HeartBeatController
+{
     @ModelAttribute("ping")
     public String ping() {
         return "Pong!";
-    }
-
-    @RequestMapping({"/hello"})
-    public String hello( final String name ) {
-        System.out.println( " ***" );
-        System.out.println( " *** hello, " + name );
-        System.out.println( " ***" );
-
-        return "hello";
     }
 }

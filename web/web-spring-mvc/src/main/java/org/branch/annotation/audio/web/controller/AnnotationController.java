@@ -19,10 +19,11 @@
  */
 package org.branch.annotation.audio.web.controller;
 
-import org.branch.annotation.audio.model.jpa.Comment;
-import org.branch.annotation.audio.model.jpa.IndexSummary;
-import org.branch.annotation.audio.services.AudioAnnotationService;
 import org.apache.log4j.Logger;
+import org.branch.annotation.audio.model.jpa.Annotation;
+import org.branch.annotation.audio.model.jpa.IndexSummary;
+import org.branch.annotation.audio.services.AnnotationService;
+import org.branch.annotation.audio.services.IndexService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
@@ -30,25 +31,31 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @Controller
-public class AudioIndexController extends DefaultSpringController {
+public class AnnotationController extends DefaultSpringController {
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
 
     @Autowired
-    private AudioAnnotationService audioAnnotationService;
+    private IndexService indexService;
+
+    @Autowired
+    private AnnotationService annotationService;
 
     @ModelAttribute("indexFiles")
     public List<IndexSummary> allIndexFiles() {
-        return Arrays.asList(this.audioAnnotationService.loadAll());
+        return Arrays.asList(indexService.loadAll());
     }
 
     @RequestMapping( value = "annotations", method = RequestMethod.GET )
     @Transactional
     public ModelAndView getAnnotations( @RequestParam String idIndexSummary ) {
-        final IndexSummary indexSummary = audioAnnotationService.loadIndexSummary( idIndexSummary );
-        final List<Comment> comments    = indexSummary.getComments();
+        final IndexSummary indexSummary = indexService.loadIndexSummary( idIndexSummary );
+        final List<Annotation> annotations = indexSummary.getAnnotations();
 
         //TODO:  Fix lazy loading so that this works..
         // Sort based on how many comments are in a thread
@@ -63,19 +70,19 @@ public class AudioIndexController extends DefaultSpringController {
 //        });
 
         Map modelMap = new HashMap();
-        modelMap.put( "annotations", comments );
+        modelMap.put( "annotations", annotations);
 
         return new ModelAndView( "annotations", modelMap );
-    }
-
-    @RequestMapping( value = "indexlist", method = RequestMethod.GET )
-    public ModelAndView indexFiles() {
-        return new ModelAndView( "indexlist" );
     }
 
     @RequestMapping( value = "/", method = RequestMethod.GET )
     public ModelAndView showIndexFiles( ) {
         return new ModelAndView( "main" );
+    }
+
+    @RequestMapping( value = "indexList", method = RequestMethod.GET )
+    public ModelAndView indexFiles() {
+        return new ModelAndView( "indexList" );
     }
 
     @RequestMapping( value = "annotations/remove", method = RequestMethod.POST )
@@ -85,15 +92,13 @@ public class AudioIndexController extends DefaultSpringController {
 
         logger.info("**** removing comment for file=" + idAnnotation);
 
-        final Comment audioComment      = audioAnnotationService.loadAnnotation(idAnnotation);
+        final Annotation audioAnnotation = annotationService.loadAnnotation(idAnnotation);
 
-        final String idIndexSummary     = audioComment.getIndexSummary().getUid();
-        final IndexSummary indexSummary = audioAnnotationService.loadIndexSummary( idIndexSummary );
-        indexSummary.getComments().remove( audioComment );
+        final String idIndexSummary     = audioAnnotation.getIndexSummary().getUid();
+        final IndexSummary indexSummary = indexService.loadIndexSummary(idIndexSummary);
+        indexSummary.getAnnotations().remove(audioAnnotation);
 
-        audioAnnotationService.save( indexSummary );
-
-//        audioAnnotationService.deleteAnnotation( idAnnotation );
+        indexService.save(indexSummary);
     }
 
     @RequestMapping( value = "annotations/add", method = RequestMethod.POST )
@@ -106,9 +111,9 @@ public class AudioIndexController extends DefaultSpringController {
 
         logger.info("**** adding comment for file=" + idIndexFile + " region(" + startX + "," + endX + ") with text=" + text);
 
-        final IndexSummary indexSummary = audioAnnotationService.loadIndexSummary( idIndexFile );
-        indexSummary.getComments().add( new Comment( text, Math.min( startX, endX ), Math.max( startX, endX ) ) );
+        final IndexSummary indexSummary = indexService.loadIndexSummary( idIndexFile );
+        indexSummary.getAnnotations().add(new Annotation(text, Math.min(startX, endX), Math.max(startX, endX)));
 
-        audioAnnotationService.save( indexSummary );
+        indexService.save(indexSummary);
     }
 }

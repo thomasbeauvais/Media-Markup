@@ -15,14 +15,14 @@ public class VisualRegion {
     public int g;
     public int b;
 
-    private String parentUid;
+    private String uid;
 
     public VisualRegion() {
 
     }
 
-    public VisualRegion( String parentUid, int startX, int endX, int r, int g, int b) {
-        this.parentUid = parentUid;
+    public VisualRegion( String uid, int startX, int endX, int r, int g, int b) {
+        this.uid = uid;
         this.startX = startX;
         this.endX = endX;
         this.r = r;
@@ -34,7 +34,7 @@ public class VisualRegion {
         return startX;
     }
 
-    public void setStartX(int startX) {
+    public void setStartY(int startX) {
         this.startX = startX;
     }
 
@@ -42,7 +42,7 @@ public class VisualRegion {
         return endX;
     }
 
-    public void setEndX(int endX) {
+    public void setEndY(int endX) {
         this.endX = endX;
     }
 
@@ -70,8 +70,8 @@ public class VisualRegion {
         this.b = b;
     }
 
-    public String getParentUid() {
-        return this.parentUid;
+    public String getUid() {
+        return this.uid;
     }
 }
 

@@ -4,7 +4,7 @@ import org.apache.log4j.Logger;
 import org.branch.annotation.audio.api.PersistenceEngine;
 import org.branch.annotation.audio.api.AudioStreamIndexer;
 import org.branch.annotation.audio.model.Sample;
-import org.branch.annotation.audio.model.jpa.Comment;
+import org.branch.annotation.audio.model.jpa.Annotation;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
 import org.junit.BeforeClass;
 import org.junit.Ignore;
@@ -90,11 +90,11 @@ public class IndexFileGenerator
                 final IndexSamples indexSummary = audioStreamIndexer.createIndex(inputStream);
                 indexSummary.setUid(uid);
 
-                final List<Comment> comments = new Vector<Comment>();
-                comments.add(new Comment("sample text one", 100, 1000));
-                comments.add(new Comment("sample text two", 100, 1000));
+                final List<Annotation> annotations = new Vector<Annotation>();
+                annotations.add(new Annotation("sample text one", 100, 1000));
+                annotations.add(new Annotation("sample text two", 100, 1000));
 
-                indexSummary.setComments(comments);
+                indexSummary.setAnnotations(annotations);
 
                 LOGGER.info("*** Created SampleList: " + uid);
 
