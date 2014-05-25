@@ -6,7 +6,6 @@ import org.branch.common.UncheckedException;
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.Map;
 import java.util.UUID;
 
 public class LocalFileStore implements FileStore
@@ -14,7 +13,7 @@ public class LocalFileStore implements FileStore
     private File storeDirectory;
 
     @Override
-    public String persist(Map<String, Object> metadata, byte[] bytes)
+    public String persist(byte[] bytes)
     {
         final String fileId = String.valueOf(UUID.randomUUID());
 

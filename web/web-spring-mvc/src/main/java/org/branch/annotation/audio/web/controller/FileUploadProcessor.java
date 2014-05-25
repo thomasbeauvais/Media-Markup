@@ -2,11 +2,12 @@ package org.branch.annotation.audio.web.controller;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
+import org.branch.annotation.audio.dao.IndexSamplesRepository;
+import org.branch.annotation.audio.dao.MetadataRepository;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
 import org.branch.annotation.audio.io.FileStore;
-import org.branch.annotation.audio.dao.IndexSamplesRepository;
-import org.branch.annotation.audio.model.dao.AudioFile;
 import org.branch.annotation.audio.model.dao.IndexSamples;
+import org.branch.annotation.audio.model.dao.Metadata;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.ByteArrayInputStream;
@@ -35,11 +36,14 @@ public class FileUploadProcessor
     @Autowired
     private IndexSamplesRepository indexSamplesRepository;
 
-    public void uploadFile(Map<String, Object> metadata, InputStream inputStream) throws IOException
+    @Autowired
+    private MetadataRepository metadataRepository;
+
+    public void uploadFile(Map<String, Object> metadataMap, InputStream inputStream) throws IOException
     {
         final long start = System.currentTimeMillis();
 
-        final String originalFilename = (String) metadata.get("originalFilename");
+        final String originalFilename = (String) metadataMap.get("originalFilename");
 
         try
         {
@@ -53,22 +57,21 @@ public class FileUploadProcessor
             final byte[] bytes = byteArrayOutputStream.toByteArray();
             final IndexSamples indexSamples = audioStreamIndexer.createIndex(new ByteArrayInputStream(bytes));
 
-            final AudioFile audioFile = new AudioFile();
-            audioFile.setBytes(bytes);
-
             logger.info("*** Created AudioFile: " + originalFilename);
 
             logger.info("*** Attempting to save AudioFile: " + originalFilename);
 
-            final String fileId = fileStore.persist(metadata, bytes);
+            final String fileId = fileStore.persist(bytes);
 
-            // TODO:  Add this
-//                indexSamples.setOriginalFilename( fileName );
             indexSamples.setAudioFileUid(fileId);
 
             logger.info("*** Attempting to save IndexSamples: " + originalFilename);
 
             indexSamplesRepository.save(indexSamples);
+
+            final Metadata metadata = new Metadata(indexSamples.getUid(), metadataMap);
+
+            metadataRepository.save(metadata);
 
             logger.info("*** Creation of IndexSamples complete: " + originalFilename);
         }

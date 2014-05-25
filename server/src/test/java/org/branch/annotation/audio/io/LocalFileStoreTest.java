@@ -30,7 +30,7 @@ public class LocalFileStoreTest extends AbstractSpringTest
     {
         final File input = new File("data/audio/test-file-small.mp3");
         
-        fileId = fileStore.persist(null, FileUtils.readFileToByteArray(input));
+        fileId = fileStore.persist(FileUtils.readFileToByteArray(input));
         
         // the LocalFileStore puts the files directory to the store directory with the fileId as the filename
 
