@@ -26,6 +26,8 @@ public class IndexSummary extends UuidIdentifiable implements Identifiable
     private long dateUploaded;
     private String name;
     private String description;
+
+    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Annotation> annotations = new Vector<Annotation>();
 
     private String audioFileUid;
@@ -101,7 +103,6 @@ public class IndexSummary extends UuidIdentifiable implements Identifiable
         this.description = description;
     }
 
-    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     public List<Annotation> getAnnotations()
     {
         return annotations;
