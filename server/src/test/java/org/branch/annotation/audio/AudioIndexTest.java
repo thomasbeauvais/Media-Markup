@@ -11,14 +11,6 @@ import java.io.FileNotFoundException;
 
 import static org.junit.Assert.*;
 
-/**
- * Tests to make sure that whichever {@link org.branch.annotation.audio.io.AudioStreamIndexer} in the context, can properly index a number of audio streams.
- *
- * TODO Parametrize these tests
- *
- * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
- * @since 24.05.14
- */
 public class AudioIndexTest extends AbstractSpringTest
 {
     @Autowired

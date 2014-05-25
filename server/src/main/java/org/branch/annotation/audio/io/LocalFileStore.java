@@ -1,0 +1,102 @@
+package org.branch.annotation.audio.io;
+
+import org.apache.commons.io.FileUtils;
+import org.branch.common.UncheckedException;
+
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Map;
+import java.util.UUID;
+
+public class LocalFileStore implements FileStore
+{
+    private File storeDirectory;
+
+    @Override
+    public String persist(Map<String, Object> metadata, byte[] bytes)
+    {
+        final String fileId = String.valueOf(UUID.randomUUID());
+
+        final File file = new File(storeDirectory, fileId);
+
+        try
+        {
+            FileUtils.writeByteArrayToFile(file, bytes);
+        }
+        catch (IOException e)
+        {
+            throw new UncheckedException(e);
+        }
+
+        return fileId;
+    }
+
+    @Override
+    public void delete(String fileId)
+    {
+        final File file = getFileFromId(fileId);
+
+        if (file.exists())
+        {
+            try
+            {
+                FileUtils.forceDelete(file);
+            }
+            catch (IOException e)
+            {
+                throw new UncheckedException(e);
+            }
+        }
+    }
+
+    @Override
+    public byte[] getBytes(String fileId)
+    {
+        try
+        {
+            return FileUtils.readFileToByteArray(getFileFromId(fileId));
+        }
+        catch (IOException e)
+        {
+            throw new UncheckedException(e);
+        }
+    }
+
+    @Override
+    public InputStream getInputStream(String fileId)
+    {
+        try
+        {
+            return FileUtils.openInputStream(getFileFromId(fileId));
+        }
+        catch (IOException e)
+        {
+            throw new UncheckedException(e);
+        }
+    }
+
+    private File getFileFromId(String fileId)
+    {
+        return new File(storeDirectory, fileId);
+    }
+
+    public File getStoreDirectory()
+    {
+        return storeDirectory;
+    }
+
+    public void setStoreDirectory(File storeDirectory)
+    {
+        this.storeDirectory = storeDirectory;
+
+        try
+        {
+            FileUtils.forceMkdir(storeDirectory);
+        }
+        catch (IOException e)
+        {
+            throw new UncheckedException(e);
+        }
+    }
+}

@@ -13,12 +13,6 @@ import java.io.FileNotFoundException;
 
 import static org.junit.Assert.*;
 
-/**
- * Integration test to test real audio data upon indexing and persistence.
- *
- * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
- * @since 25.05.14
- */
 public class IndexSummaryIntegrationTest extends AbstractSpringTest
 {
     @Autowired

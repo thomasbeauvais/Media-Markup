@@ -3,13 +3,6 @@ package org.branch.annotation.audio.io;
 import java.io.InputStream;
 import java.util.Map;
 
-/**
- * TODO:  Please document properly all classes and methods using the Silbury JavaDoc Guidelines
- * TODO:    provided on the Silbury Confluence under Silbury JavaDoc Standards Guidelines.
- *
- * @author Silbury Solutions, Deutschland - Thomas Beauvais (thomas.beauvais@silbury.de)
- * @since 25.05.14
- */
 public interface FileStore
 {
     /**
@@ -20,6 +13,8 @@ public interface FileStore
      * @return
      */
     String persist(Map<String, Object> metadata, byte[] bytes);
+
+    void delete(String id);
 
     byte[] getBytes(String fileId);
 
