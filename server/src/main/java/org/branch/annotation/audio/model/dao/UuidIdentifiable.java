@@ -16,11 +16,11 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class UuidIdentifiable
 {
-    private String uuid;
-
     @Id
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String uuid;
+
     public String getId()
     {
         return this.uuid;

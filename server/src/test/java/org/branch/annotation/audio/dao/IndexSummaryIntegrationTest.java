@@ -1,7 +1,7 @@
-package org.branch.annotation.audio;
+package org.branch.annotation.audio.dao;
 
+import org.branch.annotation.audio.AbstractSpringTest;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
-import org.branch.annotation.audio.dao.IndexSummaryRepository;
 import org.branch.annotation.audio.model.dao.IndexSamples;
 import org.junit.Ignore;
 import org.junit.Test;

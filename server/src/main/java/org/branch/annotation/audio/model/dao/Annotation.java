@@ -26,7 +26,6 @@ public class Annotation extends UuidIdentifiable implements Identifiable
     private List<Annotation> children = new Vector<Annotation>();
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-//    @JoinTable( name = "IndexSummary_Comment", joinColumns = {@JoinColumn( name = "indexSummary_uid", updatable = false, insertable = false)})
     private IndexSummary indexSummary;
 
     public Annotation()

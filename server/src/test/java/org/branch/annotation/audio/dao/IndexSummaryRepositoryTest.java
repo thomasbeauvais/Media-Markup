@@ -1,7 +1,7 @@
-package org.branch.annotation.audio;
+package org.branch.annotation.audio.dao;
 
 import com.mysema.query.jpa.impl.JPAQuery;
-import org.branch.annotation.audio.dao.IndexSummaryRepository;
+import org.branch.annotation.audio.AbstractSpringTest;
 import org.branch.annotation.audio.model.dao.Annotation;
 import org.branch.annotation.audio.model.dao.IndexSamples;
 import org.branch.annotation.audio.model.dao.IndexSummary;
@@ -25,7 +25,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
     @Autowired
     EntityManager entityManager;
 
-    private String uid;
+    private String uuid;
 
     @Before
     public void preConditions()
@@ -50,9 +50,9 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         local.setAnnotations(annotations);
 
-        uid = indexSummaryRepository.save(local).getId();
+        uuid = indexSummaryRepository.save(local).getId();
 
-        assertNotNull(uid);
+        assertNotNull(uuid);
 
         final IndexSamples persisted = getPersisted();
 
@@ -85,7 +85,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         indexSummaryRepository.delete(persisted);
 
-        final IndexSummary expected = indexSummaryRepository.findOne(uid);
+        final IndexSummary expected = indexSummaryRepository.findOne(uuid);
 
         assertNull("IndexSamples should have been deleted", expected);
     }
@@ -98,7 +98,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
 
         final String expected_name = "modified";
 
-        final IndexSummary persisted = indexSummaryRepository.findOne(uid);
+        final IndexSummary persisted = indexSummaryRepository.findOne(uuid);
 
         assertNotNull(persisted);
 
@@ -117,7 +117,7 @@ public class IndexSummaryRepositoryTest extends AbstractSpringTest
         final QIndexSamples indexSamples = QIndexSamples.indexSamples;
         final JPAQuery query = new JPAQuery(entityManager);
         final IndexSamples persisted = query.from(indexSamples)
-                                            .where(indexSamples.id.eq(uid))
+                                            .where(indexSamples.uuid.eq(uuid))
                                             .uniqueResult(indexSamples);
 
         assertNotNull(persisted);
