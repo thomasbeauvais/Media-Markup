@@ -19,7 +19,7 @@
 //import java.io.*;
 //import java.net.BindException;
 //
-//import static org.branch.annotation.audio.util.StringUtils.getTimeStringFromSeconds;
+//import static org.branch.annotation.audio.util.StringUtils.convertMillis;
 //
 ///**
 // * This controller will be used to upload the MP3 files to the database and index them.
@@ -118,7 +118,7 @@
 //
 //                logger.info("*** Creation of index file complete for: " + name);
 //            } finally {
-//                logger.info("Time to upload " + name + " was " + getTimeStringFromSeconds(start - System.currentTimeMillis()));
+//                logger.info("Time to upload " + name + " was " + convertMillis(start - System.currentTimeMillis()));
 //
 //                try {
 //                    inputStream.close();

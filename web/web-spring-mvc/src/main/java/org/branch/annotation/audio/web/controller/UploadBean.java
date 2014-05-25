@@ -12,7 +12,7 @@ import javax.annotation.PostConstruct;
 import java.io.*;
 import java.util.List;
 
-import static org.branch.annotation.audio.util.StringUtils.*;
+import static org.branch.common.utils.HumanReadable.*;
 
 /**
  * This controller will be used to upload the MP3 files to the database and index them.
@@ -111,7 +111,7 @@ public class UploadBean {
                 inputStream.close();
             }
 
-            logger.info("Time to upload " + name + " was " + getTimeStringFromSeconds(start - System.currentTimeMillis()));
+            logger.info("Time to upload " + name + " was " + convertMillis(start - System.currentTimeMillis()));
         }
     }
 }

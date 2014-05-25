@@ -11,9 +11,7 @@ import org.branch.annotation.audio.model.jpa.IndexSummary;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Vector;
 
 /**
@@ -26,9 +24,6 @@ import java.util.Vector;
 @Service
 public class EverythingService implements AnnotationService, IndexService, VisualService
 {
-
-    private Map<String, IndexSamples> cache = new HashMap<String, IndexSamples>();
-
     public EverythingService()
     {
     }

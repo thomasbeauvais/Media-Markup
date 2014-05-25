@@ -8,7 +8,7 @@ import org.apache.log4j.Logger;
 import org.branch.annotation.audio.api.AudioStreamIndexer;
 import org.branch.annotation.audio.model.Sample;
 import org.branch.annotation.audio.model.jpa.IndexSamples;
-import org.branch.common.utils.FileUtils;
+import org.branch.common.utils.HumanReadable;
 import org.jetbrains.annotations.NotNull;
 
 import java.io.InputStream;
@@ -56,7 +56,7 @@ public class DefaultAudioStreamIndexer implements AudioStreamIndexer
 
             final long end = System.currentTimeMillis();
 
-            logger.info("Audio stream of size(" + FileUtils.humanReadableBytes(pos) + ") indexed in " + (end - start) / 1000. + " seconds.");
+            logger.info("Audio stream of size(" + HumanReadable.convertBytes(pos) + ") indexed in " + (end - start) / 1000. + " seconds.");
 
             return index;
         }
