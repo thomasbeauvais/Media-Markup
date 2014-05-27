@@ -8,7 +8,6 @@
             Persistence Unit for the Postgres SQL implementation of Audio Annotation
         </description>
 
-
         <!--
         <provider>org.hibernate.ejb.HibernatePersistence</provider>
 

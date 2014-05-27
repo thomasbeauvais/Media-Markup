@@ -44,7 +44,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
@@ -66,7 +65,6 @@ import java.util.Map;
 @RequestMapping("/upload")
 public class UploadServlet extends DefaultSpringController
 {
-
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
 
     @Autowired
@@ -81,7 +79,7 @@ public class UploadServlet extends DefaultSpringController
      * @throws IOException      if an I/O error occurs
      */
     @RequestMapping(method = RequestMethod.POST)
-    protected void post(@RequestParam(defaultValue = "") String qqfile, HttpServletRequest request, HttpServletResponse response) throws Exception
+    protected void post(HttpServletRequest request, HttpServletResponse response) throws Exception
     {
         final PrintWriter writer = response.getWriter();
 

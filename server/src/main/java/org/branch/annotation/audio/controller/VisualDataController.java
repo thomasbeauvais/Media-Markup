@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
-@RequestMapping("/visualData")
+@RequestMapping("visual")
 public class VisualDataController
 {
     @Autowired
@@ -24,7 +24,7 @@ public class VisualDataController
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
 
     /**
-     * @param uid
+     * @param index
      * @param width
      * @param height
      * @return
@@ -33,28 +33,28 @@ public class VisualDataController
      */
     @RequestMapping
     @ResponseBody
-    @Transactional
-    public String visual_data_json(@RequestParam String uid, @RequestParam Integer width, @RequestParam Integer height) throws Exception
+    @Transactional(readOnly = true)
+    public String visual_data_json(@RequestParam String index, @RequestParam Integer width, @RequestParam Integer height) throws Exception
     {
-        logger.debug(" **** Loading visual data for: " + uid);
+        logger.debug(" **** Loading visual data for: " + index);
         logger.debug(" **** Parameters: width=" + width + ", height=" + height);
 
         final VisualParameters visualParameters = new VisualParameters();
         visualParameters.setHeight(height);
         visualParameters.setWidth(width);
 
-        final VisualData visualData = visualDataService.loadVisualData(uid, visualParameters);
+        final VisualData visualData = visualDataService.loadVisualData(index, visualParameters);
 
         // in this instance we want to create a custom more explicit json object
         final JSONObject jsonObject = new JSONObject();
         final JSONArray jsonSamples = new JSONArray();
         final JSONArray jsonPositions = new JSONArray();
 
-        final int[] visualSamples = visualData.getVisualSamples();
+        final double[] visualSamples = visualData.getVisualSamples();
         final long[] visualPositions = visualData.getVisualPositions();
         for (int i = 0, visualSamplesLength = visualSamples.length; i < visualSamplesLength; i++)
         {
-            final int value = visualSamples[i];
+            final double value = visualSamples[i];
             final long position = visualPositions[i];
 
             jsonSamples.add(value);

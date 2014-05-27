@@ -6,9 +6,9 @@
 <link rel="stylesheet" type="text/css" href="css/audio.css">
 
 
-<script src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script src="http://code.jquery.com/jquery.js"></script>
 <script src="javaScript/jQuery/jquery.mousewheel.js"></script>
-<script src="javaScript/waveform/waveForm.js"></script>
+<script src="javaScript/waveform/waveform.js"></script>
 <script src="javaScript/waveform/selectionOverlay.js"></script>
 <script src="javaScript/soundmanager/soundmanager2-nodebug-jsmin.js"></script>
 <script>

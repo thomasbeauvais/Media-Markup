@@ -24,7 +24,7 @@ public class LocalFileStore implements FileStore
 
         try
         {
-            logger.info("*** persisting file to: " + FileUtils.getCanonicalPath(file));
+            logger.info("*** Persisting file to: " + FileUtils.getCanonicalPath(file));
 
             FileUtils.writeByteArrayToFile(file, bytes);
         }
@@ -94,7 +94,7 @@ public class LocalFileStore implements FileStore
     {
         this.storeDirectory = storeDirectory;
 
-        logger.info("*** setting storeDirectory to: " + FileUtils.getCanonicalPath(storeDirectory));
+        logger.info("*** Setting storeDirectory to: " + FileUtils.getCanonicalPath(storeDirectory));
 
         try
         {

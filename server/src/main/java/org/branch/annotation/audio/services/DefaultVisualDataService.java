@@ -10,6 +10,7 @@ import org.branch.annotation.audio.model.dao.Annotation;
 import org.branch.annotation.audio.model.dao.Samples;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Vector;
@@ -23,49 +24,57 @@ public class DefaultVisualDataService implements VisualDataService
     @Autowired
     private AnnotationRepository annotationRepository;
 
-    public VisualData loadVisualData(String id, VisualParameters visualParameters)
+    @Transactional
+    public VisualData loadVisualData(String summaryId, VisualParameters visualParameters)
     {
-        final Samples indexSamples = samplesRepository.findOne(id);
+        final Samples indexSamples = samplesRepository.findSamplesForSummary(summaryId);
+        if (indexSamples == null)
+        {
+            throw new RuntimeException("Couldn't find samples entity for summary: " + summaryId);
+        }
+
+        if (indexSamples.getSamples() == null)
+        {
+            throw new RuntimeException("Found samples entity but it had no sample data: " + indexSamples.getId());
+        }
 
         final VisualData visualData = new VisualData();
 
         final int width = visualParameters.getWidth();
-        final int[] visualSamples = new int[width];
+        final double[] visualSamples = new double[width];
         final long[] samplePositions = new long[width];
 
         visualData.setVisualSamples(visualSamples);
         visualData.setVisualPositions(samplePositions);
 
-        if (indexSamples != null && indexSamples.getSamples() != null)
+        Sample[] sampleArray = indexSamples.getSamples();
+
+        int step = sampleArray.length / width;
+//        double scale = indexSamples.getMax() / visualParameters.getHeight();
+
+        for (int i = 0, pixelX = 0; pixelX < width && i < sampleArray.length; pixelX++)
         {
-            Sample[] sampleArray = indexSamples.getSamples();
+            int max = 0;
+            int min = 0;
 
-            int step = sampleArray.length / width;
-            double scale = indexSamples.getMax() / visualParameters.getHeight();
+            samplePositions[pixelX] = sampleArray[i].getPosition();
 
-            for (int i = 0, pixelX = 0; pixelX < width && i < sampleArray.length; pixelX++)
+            for (int s = 0; s < step && i < sampleArray.length; s++, i++)
             {
-                int max = 0;
-                int min = 0;
-
-                samplePositions[pixelX] = sampleArray[i].getPosition();
-
-                for (int s = 0; s < step && i < sampleArray.length; s++, i++)
-                {
-                    max = Math.max(max, sampleArray[i].getValue());
-                    min = Math.min(min, sampleArray[i].getValue());
-                }
-
-                if (i >= sampleArray.length)
-                {
-                    System.out.print("");
-                }
-
-                int value = (int) ((max + (min * -1)) / scale);
-                int y = value / 2;
-
-                visualSamples[pixelX] = y;
+                max = Math.max(max, sampleArray[i].getValue());
+                min = Math.min(min, sampleArray[i].getValue());
             }
+
+            if (i >= sampleArray.length)
+            {
+                System.out.print("");
+            }
+
+//            int value = (int) ((max + (min * -1)) / scale);
+//            int y = value / 2;
+//
+//            visualSamples[pixelX] = y;
+            visualSamples[pixelX] = ((double)(max + (min * -1))) / indexSamples.getMax();
         }
 
         final List<VisualRegion> visualRegions = new Vector<VisualRegion>();

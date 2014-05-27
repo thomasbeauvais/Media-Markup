@@ -9,18 +9,18 @@ package org.branch.annotation.audio.model;
  */
 public class VisualData {
 
-    private int[] visualSamples;
+    private double[] visualSamples;
     private long[] visualPositions;
     private VisualRegion[] visualRegions;
 
     public VisualData() {
     }
 
-    public int[] getVisualSamples() {
+    public double[] getVisualSamples() {
         return visualSamples;
     }
 
-    public void setVisualSamples(int[] visualSamples) {
+    public void setVisualSamples(double[] visualSamples) {
         this.visualSamples = visualSamples;
     }
 

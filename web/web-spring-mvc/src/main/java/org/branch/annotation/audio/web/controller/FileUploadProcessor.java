@@ -2,12 +2,12 @@ package org.branch.annotation.audio.web.controller;
 
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
-import org.branch.annotation.audio.dao.SamplesRepository;
 import org.branch.annotation.audio.dao.MetadataRepository;
+import org.branch.annotation.audio.dao.SamplesRepository;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
 import org.branch.annotation.audio.io.FileStore;
-import org.branch.annotation.audio.model.dao.Samples;
 import org.branch.annotation.audio.model.dao.Metadata;
+import org.branch.annotation.audio.model.dao.Samples;
 import org.branch.annotation.audio.model.dao.Summary;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -64,9 +64,7 @@ public class FileUploadProcessor
 
             logger.info("*** Attempting to save AudioFile: " + originalFilename);
 
-            final String fileId = fileStore.persist(bytes);
-
-            summary.setAudioFileUid(fileId);
+            summary.setAudioFileUid(fileStore.persist(bytes));
 
             logger.info("*** Attempting to save IndexSamples: " + originalFilename);
 

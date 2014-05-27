@@ -20,10 +20,10 @@
     <script src="resources/javascript/audioControls.js"></script>
     <script src="resources/javascript/regionOverlay.js"></script>
     <script src="resources/javascript/selectionOverlay.js"></script>
-    <script src="resources/javascript/waveForm.js"  type="text/javascript"></script>
+    <script src="resources/javascript/waveform.js"  type="text/javascript"></script>
     <script src="soundmanager/soundmanager2-nodebug-jsmin.js"></script>
     <script src="resources/javascript/jquery-latest.min.js"></script>
-    <!--<script src="http://code.jquery.com/jquery-latest.min.js"></script>-->
+    <!--<script src="http://code.jquery.com/jquery.js"></script>-->
 </head>
 
 <script type="text/javascript" charset="utf-8">

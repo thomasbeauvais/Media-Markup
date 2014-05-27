@@ -51,7 +51,7 @@ function AudioAnnotation( parent ) {
 
         this.regionOverlay.clear();
         this.selectionOverlay.clear();
-        this.waveformCanvas.resetCanvas();
+        this.waveformCanvas.refresh();
 
         this.idIndexFile        = idIndexFile;
 
