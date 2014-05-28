@@ -74,7 +74,7 @@ public class DefaultVisualDataService implements VisualDataService
 //            int y = value / 2;
 //
 //            visualSamples[pixelX] = y;
-            visualSamples[pixelX] = ((double)(max + (min * -1))) / indexSamples.getMax();
+            visualSamples[pixelX] = ((double)(max + (min * -1))) / Short.MAX_VALUE;
         }
 
         final List<VisualRegion> visualRegions = new Vector<VisualRegion>();

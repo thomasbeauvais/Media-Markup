@@ -3,7 +3,7 @@ package org.branch.annotation.audio.web.controller;
 import org.apache.commons.io.IOUtils;
 import org.apache.log4j.Logger;
 import org.branch.annotation.audio.dao.MetadataRepository;
-import org.branch.annotation.audio.dao.SummaryRepository;
+import org.branch.annotation.audio.dao.SamplesRepository;
 import org.branch.annotation.audio.io.AudioStreamIndexer;
 import org.branch.annotation.audio.io.FileStore;
 import org.branch.annotation.audio.model.dao.Metadata;
@@ -35,8 +35,7 @@ public class FileUploadProcessor
     private FileStore fileStore;
 
     @Autowired
-    private SummaryRepository summaryRepository;
-//    private SamplesRepository indexSamplesRepository;
+    private SamplesRepository samplesRepository;
 
     @Autowired
     private MetadataRepository metadataRepository;
@@ -62,21 +61,23 @@ public class FileUploadProcessor
             final Samples samples = audioStreamIndexer.createIndex(new ByteArrayInputStream(bytes));
 
             final Summary summary = new Summary();
-            summary.setSamples(samples);
 
             // TODO figure out how to do proper inheritance so that we don't have to duplicate this info
             summary.setTime(samples.getTime());
             summary.setSize(samples.getSize());
             summary.setDateUploaded(System.currentTimeMillis());
 
-            logger.info("*** Attempting to save file: " + originalFilename);
+            logger.info("*** Saving file: " + originalFilename);
 
             summary.setAudioFileUid(fileStore.persist(bytes));
 
-            logger.info("*** Attempting to save samples: " + originalFilename);
+            logger.info("*** Saving samples: " + originalFilename);
 
-            summaryRepository.save(summary);
-//            samplesRepository.save(samples);
+            samples.setSummary(summary);
+
+            samplesRepository.save(samples);
+
+            logger.info("*** Saving metadata: " + originalFilename);
 
             final Metadata metadata = new Metadata(samples.getId(), metadataMap);
 

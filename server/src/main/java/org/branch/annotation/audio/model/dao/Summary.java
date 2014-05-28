@@ -29,8 +29,6 @@ public class Summary extends UuidIdentifiable implements Identifiable
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Annotation> annotations;
-    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Samples samples;
 
     public Summary()
     {
@@ -105,16 +103,6 @@ public class Summary extends UuidIdentifiable implements Identifiable
     public List<Annotation> getAnnotations()
     {
         return annotations;
-    }
-
-    public void setSamples(Samples samples)
-    {
-        this.samples = samples;
-    }
-
-    public Samples getSamples()
-    {
-        return samples;
     }
 
     public void setSize(long size)
