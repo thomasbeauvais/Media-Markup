@@ -90,9 +90,9 @@ public class LocalFileStore implements FileStore
         return storeDirectory;
     }
 
-    public void setStoreDirectory(File storeDirectory)
+    public void setStoreDirectory(String path)
     {
-        this.storeDirectory = storeDirectory;
+        this.storeDirectory = new File(path);
 
         logger.info("*** Setting storeDirectory to: " + FileUtils.getCanonicalPath(storeDirectory));
 

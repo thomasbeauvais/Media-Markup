@@ -18,16 +18,19 @@ import java.util.List;
 @Inheritance(strategy = InheritanceType.TABLE_PER_CLASS)
 public class Summary extends UuidIdentifiable implements Identifiable
 {
-    private int numChannels;
     private float time;
     private long dateUploaded;
     private String name;
     private String description;
 
+    private long size;
+
     private String audioFileUid;
 
     @OneToMany(cascade = CascadeType.ALL)
     private List<Annotation> annotations;
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    private Samples samples;
 
     public Summary()
     {
@@ -47,11 +50,6 @@ public class Summary extends UuidIdentifiable implements Identifiable
     public void setName(String name)
     {
         this.name = name;
-    }
-
-    public void setChannels(int numChannels)
-    {
-        this.numChannels = numChannels;
     }
 
     public float getTime()
@@ -107,5 +105,25 @@ public class Summary extends UuidIdentifiable implements Identifiable
     public List<Annotation> getAnnotations()
     {
         return annotations;
+    }
+
+    public void setSamples(Samples samples)
+    {
+        this.samples = samples;
+    }
+
+    public Samples getSamples()
+    {
+        return samples;
+    }
+
+    public void setSize(long size)
+    {
+        this.size = size;
+    }
+
+    public long getSize()
+    {
+        return size;
     }
 }

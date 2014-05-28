@@ -14,7 +14,7 @@ public class LocalFileStoreTest extends AbstractSpringTest
 {
     LocalFileStore fileStore;
 
-    final File storeDirectory = new File("target/test-data/LocalFileStoreTest-" + System.currentTimeMillis());
+    final String storeDirectory = new File("target/test-data/LocalFileStoreTest-" + System.currentTimeMillis()).getAbsolutePath();
 
     private String fileId;
 

@@ -1,6 +1,8 @@
 package org.branch.common.utils;
 
-import java.util.concurrent.TimeUnit;
+import org.joda.time.Period;
+import org.joda.time.format.PeriodFormatter;
+import org.joda.time.format.PeriodFormatterBuilder;
 
 /**
  *
@@ -18,22 +20,26 @@ public class HumanReadable
 
     public static String convertBytes(long bytes, boolean si)
     {
-        final int unit = si ? 1000 : 1024;
-        if (bytes < unit)
-        {
-            return bytes + " B";
-        }
-
-        final int exp = (int) (Math.log(bytes) / Math.log(unit));
-        final String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (si ? "" : "i");
-        return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
+        return FileUtils.byteCountToDisplaySize(bytes);
+//        final int unit = si ? 1000 : 1024;
+//        if (bytes < unit)
+//        {
+//            return bytes + " B";
+//        }
+//
+//        final int exp = (int) (Math.log(bytes) / Math.log(unit));
+//        final String pre = (si ? "kMGTPE" : "KMGTPE").charAt(exp - 1) + (si ? "" : "i");
+//        return String.format("%.1f %sB", bytes / Math.pow(unit, exp), pre);
     }
+
+    private static final PeriodFormatter dateFormat = new PeriodFormatterBuilder().appendMinutes()
+                                                                                  .appendSuffix(":")
+                                                                                  .appendSeconds()
+                                                                                  .appendSuffix(":")
+                                                                                  .appendMillis().toFormatter();
 
     public static String convertMillis(long millis)
     {
-        return String.format("%d:%d",
-             TimeUnit.MILLISECONDS.toMinutes(millis),
-             TimeUnit.MILLISECONDS.toSeconds(millis) - TimeUnit.MINUTES.toSeconds(TimeUnit.MILLISECONDS.toMinutes(millis))
-        );
+        return new Period(millis).toString(dateFormat);
     }
 }

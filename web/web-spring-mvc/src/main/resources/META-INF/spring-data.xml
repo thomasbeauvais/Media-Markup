@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:jpa="http://www.springframework.org/schema/data/jpa"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd
+                           http://www.springframework.org/schema/data/jpa
+                           http://www.springframework.org/schema/data/jpa/spring-jpa.xsd
+                           http://www.springframework.org/schema/tx
+                           http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <jpa:repositories base-package="org.branch.annotation.audio.dao"/>
+
+    <!-- FOR TESTING ONLY: in-memory JPA configuration via H2 -->
+    <bean id="entityManager" factory-bean="entityManagerFactory" factory-method="createEntityManager"/>
+
+    <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+        <property name="dataSource" ref="dataSource"/>
+        <property name="jpaVendorAdapter">
+            <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+                <property name="generateDdl" value="true"/>
+                <property name="database" value="H2"/>
+            </bean>
+        </property>
+        <property name="persistenceUnitName" value="org.branch.annotation.audio"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+        <property name="entityManagerFactory" ref="entityManagerFactory"/>
+    </bean>
+
+    <bean id="dataSource" class="org.h2.jdbcx.JdbcConnectionPool">
+        <constructor-arg>
+            <bean class="org.h2.jdbcx.JdbcDataSource">
+                <property name="URL" value="jdbc:h2:../AudioAnnotation/Database/H2"/>
+                <property name="user" value="sa"/>
+                <property name="password" value=""/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <!-- Uncomment to allow caching -->
+    <!--
+    <bean id="ehCacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean" p:configLocation="classpath:META-INF/ehcache.xml" p:shared="false"/>
+
+    <bean id="cacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager" p:cacheManager-ref="ehCacheManager"/>
+
+    <cache:annotation-driven cache-manager="cacheManager"/>
+    -->
+
+</beans>
+
+

@@ -32,7 +32,8 @@
             var waveform = new Waveform(
                     {
                         container: document.getElementById("waveform"),
-                        data: data.samples
+                        data: data.samples,
+                        interpolate: true
                     });
 
         }

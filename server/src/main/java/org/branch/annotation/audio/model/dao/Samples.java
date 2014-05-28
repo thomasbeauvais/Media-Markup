@@ -21,8 +21,9 @@ public class Samples extends UuidIdentifiable
     private short min;
     private short max;
     private float time;
+    private long size;
 
-    @OneToOne(cascade = CascadeType.PERSIST)
+    @OneToOne(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Summary summary;
 
     public Samples()
@@ -114,5 +115,15 @@ public class Samples extends UuidIdentifiable
     public void setSummary(Summary summary)
     {
         this.summary = summary;
+    }
+
+    public long getSize()
+    {
+        return size;
+    }
+
+    public void setSize(long size)
+    {
+        this.size = size;
     }
 }

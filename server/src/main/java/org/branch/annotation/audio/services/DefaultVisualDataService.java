@@ -27,7 +27,7 @@ public class DefaultVisualDataService implements VisualDataService
     @Transactional
     public VisualData loadVisualData(String summaryId, VisualParameters visualParameters)
     {
-        final Samples indexSamples = samplesRepository.findSamplesForSummary(summaryId);
+        final Samples indexSamples = samplesRepository.findBySummaryId(summaryId);
         if (indexSamples == null)
         {
             throw new RuntimeException("Couldn't find samples entity for summary: " + summaryId);

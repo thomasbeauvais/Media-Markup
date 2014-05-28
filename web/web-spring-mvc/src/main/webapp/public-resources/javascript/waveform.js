@@ -22,11 +22,7 @@
             this.data = options.data || [];
             this.outerColor = options.outerColor || "transparent";
             this.innerColor = options.innerColor || "#000000";
-            this.interpolate = true;
-            if (options.interpolate === false)
-            {
-                this.interpolate = false;
-            }
+            this.interpolate = options.interpolate !== false;
             if (this.canvas == null)
             {
                 if (this.container)
@@ -35,14 +31,15 @@
                 }
                 else
                 {
-                    throw "Either canvas or container option must be passed";
+                    throw "Can't create waveform!  Either canvas or container option must be passed";
                 }
             }
+
             this.patchCanvasForIE(this.canvas);
             this.context = this.canvas.getContext("2d");
-            this.width = parseInt(this.context.canvas.width, 10);
-            this.height = parseInt(this.context.canvas.height, 10);
-            if (options.data)
+            this.width = parseInt(this.context.canvas.width);
+            this.height = parseInt(this.context.canvas.height);
+            if (this.data)
             {
                 this.update(options);
             }

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                           http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <import resource="classpath:META-INF/spring-web.xml"/>
+
+    <import resource="classpath:META-INF/spring-data.xml"/>
+
+    <bean id="fileStore" class="org.branch.annotation.audio.io.LocalFileStore">
+        <property name="storeDirectory" value="target/test-data/AudioAnnotation/LocalFileStore"/>
+    </bean>
+
+    <bean id="dataSource" class="org.h2.jdbcx.JdbcConnectionPool">
+        <constructor-arg>
+            <bean class="org.h2.jdbcx.JdbcDataSource">
+                <property name="URL" value="jdbc:h2:./target/test-data/Database/H2"/>
+                <property name="user" value="sa"/>
+                <property name="password" value=""/>
+            </bean>
+        </constructor-arg>
+    </bean>
+</beans>
+
+
