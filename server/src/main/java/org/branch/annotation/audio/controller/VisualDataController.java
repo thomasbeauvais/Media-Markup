@@ -26,7 +26,7 @@ public class VisualDataController
     /**
      * @param index
      * @param width
-     * @param height
+     * @param zoom
      * @return
      *
      * @throws Exception
@@ -49,20 +49,43 @@ public class VisualDataController
 
         final VisualData visualData = visualDataService.loadVisualData(index, visualParameters);
 
+        return toJSON(visualData);
+    }
+
+    /**
+     * @param index
+     * @return
+     *
+     * @throws Exception
+     */
+    @RequestMapping("/all")
+    @ResponseBody
+    @Transactional(readOnly = true)
+    public String visual_all_data_json(@RequestParam String index) throws Exception
+    {
+        logger.debug(" **** Loading visual data for: " + index);
+
+        final VisualData visualData = visualDataService.loadAllVisualData(index);
+
+        return toJSON(visualData);
+    }
+
+    private String toJSON(VisualData visualData)
+    {
         // in this instance we want to create a custom more explicit json object
         final JSONObject jsonObject = new JSONObject();
         final JSONArray jsonSamples = new JSONArray();
-        final JSONArray jsonPositions = new JSONArray();
+//        final JSONArray jsonPositions = new JSONArray();
 
-        final double[] visualSamples = visualData.getVisualSamples();
-        final long[] visualPositions = visualData.getVisualPositions();
+        final float[] visualSamples = visualData.getVisualSamples();
+//        final long[] visualPositions = visualData.getVisualPositions();
         for (int i = 0, visualSamplesLength = visualSamples.length; i < visualSamplesLength; i++)
         {
             final double value = visualSamples[i];
-            final long position = visualPositions[i];
+//            final long position = visualPositions[i];
 
             jsonSamples.add(value);
-            jsonPositions.add(position);
+//            jsonPositions.add(position);
         }
 
         final JSONArray jsonRegions = new JSONArray();
@@ -77,9 +100,10 @@ public class VisualDataController
         }
 
         jsonObject.put("samples", jsonSamples);
-        jsonObject.put("positions", jsonPositions);
+//        jsonObject.put("positions", jsonPositions);
         jsonObject.put("regions", jsonRegions);
 
         return jsonObject.toJSONString();
     }
+
 }

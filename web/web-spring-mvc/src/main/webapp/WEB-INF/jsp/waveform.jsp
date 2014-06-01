@@ -4,7 +4,7 @@
     <title>Document</title>
     <script type="application/javascript" src="/resources/javascript/jquery.js"></script>
     <script type="application/javascript" src="/resources/javascript/jquery.mousewheel.js"></script>
-    <script type="application/javascript" src="/resources/javascript/jquery.scraggable.js"></script>
+    <script type="application/javascript" src="/resources/javascript/jquery.slimscroll.js"></script>
     <script type="application/javascript" src="/resources/javascript/waveform.js"></script>
     <script type="application/javascript">
         var index = "<%= request.getParameter("index") %>";
@@ -40,8 +40,7 @@
         $(document).ready(function ()
         {
             var $waveform = $("#waveform");
-            waveform = new Waveform(
-            {
+            waveform = new Waveform({
                 container: document.getElementById("waveform")
             });
 
@@ -50,22 +49,36 @@
                 loadSamples();
             }
 
-            $waveform.on('mousewheel', function(event) {
+            $waveform.on('mousewheel', function (event)
+            {
                 zoom = Math.max(1, zoom + event.deltaY);
                 zoom = Math.min(10, zoom);
 
                 loadSamples();
 
                 event.preventDefault();
-            })
+            });
+
+            //build slider
+            $waveform.slider({
+                slide: function( event, ui ) {
+                    if ( scrollContent.width() > scrollPane.width() ) {
+                        scrollContent.css( "margin-left", Math.round(
+                                        ui.value / 100 * ( scrollPane.width() - scrollContent.width() )
+                        ) + "px" );
+                    } else {
+                        scrollContent.css( "margin-left", 0 );
+                    }
+                }
+            });
         });
 
     </script>
 </head>
 <body>
 
-<div id="waveform" style="height: 360">
-</div>
+<div id="waveform" style="height: 360;"></div>
+<div id="scrollbar" style="width: 100%;"></div>
 
 </body>
 </html>

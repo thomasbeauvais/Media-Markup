@@ -24,6 +24,46 @@ public class DefaultVisualDataService implements VisualDataService
     @Autowired
     private AnnotationRepository annotationRepository;
 
+    @Override
+    @Transactional
+    public VisualData loadAllVisualData(String summaryId)
+    {
+        final Samples indexSamples = samplesRepository.findBySummaryId(summaryId);
+        if (indexSamples == null)
+        {
+            throw new RuntimeException("Couldn't find samples entity for summary: " + summaryId);
+        }
+
+        if (indexSamples.getSamples() == null)
+        {
+            throw new RuntimeException("Found samples entity but it had no sample data: " + indexSamples.getId());
+        }
+
+        final VisualData visualData = new VisualData();
+
+        final Sample[] samples = indexSamples.getSamples();
+
+        final long[] visualPositions = new long[samples.length];
+        final float[] visualSamples = new float[samples.length];
+
+        for (int i = 0; i < samples.length; i++)
+        {
+            final Sample sample = samples[i];
+
+            visualPositions[i] = samples[i].getPosition();
+            visualSamples[i] = ((float) sample.getValue() / Short.MAX_VALUE);
+        }
+
+        visualData.setVisualPositions(visualPositions);
+        visualData.setVisualSamples(visualSamples);
+
+        final List<VisualRegion> visualRegions = new Vector<VisualRegion>();
+        visualData.setVisualRegions(visualRegions.toArray(new VisualRegion[visualRegions.size()]));
+
+        return visualData;
+    }
+
+    @Override
     @Transactional
     public VisualData loadVisualData(String summaryId, VisualParameters visualParameters)
     {
@@ -43,11 +83,8 @@ public class DefaultVisualDataService implements VisualDataService
         final int width = visualParameters.getWidth();
         final int zoom = visualParameters.getZoom();
 
-        final double[] visualSamples = new double[width];
-        final long[] samplePositions = new long[width];
-
-        visualData.setVisualSamples(visualSamples);
-        visualData.setVisualPositions(samplePositions);
+        final long[] visualPositions = new long[width];
+        final float[] visualSamples = new float[width];
 
         final Sample[] samples = indexSamples.getSamples();
 
@@ -65,7 +102,7 @@ public class DefaultVisualDataService implements VisualDataService
             int max = 0;
             int min = 0;
 
-            samplePositions[x] = samples[i].getPosition();
+            visualPositions[x] = samples[i].getPosition();
 
             for (int s = 0; s < step && i < samples.length; s++, i++)
             {
@@ -73,8 +110,9 @@ public class DefaultVisualDataService implements VisualDataService
                 min = Math.min(min, samples[i].getValue());
             }
 
-            visualSamples[x] = ((double) (max + (min * -1))) / Short.MAX_VALUE;
-//            visualSamples[x] = ((double)(max + (min * -1))) / max;
+            visualPositions[x] = samples[i].getPosition();
+            visualSamples[x] = ((float) (max + (min * -1))) / Short.MAX_VALUE;
+//            visualSamples[x] = ((float)(max + (min * -1))) / max;
         }
 
         final List<VisualRegion> visualRegions = new Vector<VisualRegion>();
@@ -83,9 +121,9 @@ public class DefaultVisualDataService implements VisualDataService
         {
             int startX = 0;
             int endX = 0;
-            for (int i = 0, samplePositionsLength = samplePositions.length; i < samplePositionsLength; i++)
+            for (int i = 0, samplePositionsLength = visualPositions.length; i < samplePositionsLength; i++)
             {
-                long samplePosition = samplePositions[i];
+                long samplePosition = visualPositions[i];
                 if (startX == 0 && annotation.getStartPos() < samplePosition)
                 {
                     startX = i;
@@ -105,6 +143,9 @@ public class DefaultVisualDataService implements VisualDataService
             visualRegions.add(new VisualRegion(annotation.getId(), startX, endX, 0, 0, 0));
         }
 
+
+        visualData.setVisualSamples(visualSamples);
+        visualData.setVisualPositions(visualPositions);
         visualData.setVisualRegions(visualRegions.toArray(new VisualRegion[visualRegions.size()]));
 
         return visualData;
