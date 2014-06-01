@@ -9,21 +9,32 @@ package org.branch.annotation.audio.model;
  */
 public class VisualParameters {
     private int width;
-    private int height;
+    private int zoom;
+    private int center;
 
     public int getWidth() {
         return width;
     }
 
-    public int getHeight() {
-        return height;
+    public int getZoom() {
+        return zoom;
     }
 
     public void setWidth(int width) {
         this.width = width;
     }
 
-    public void setHeight(int height) {
-        this.height = height;
+    public void setZoom(int height) {
+        this.zoom = height;
+    }
+
+    public void setCenter(int center)
+    {
+        this.center = center;
+    }
+
+    public int getCenter()
+    {
+        return center;
     }
 }

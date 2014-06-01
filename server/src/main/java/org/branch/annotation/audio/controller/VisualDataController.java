@@ -34,14 +34,18 @@ public class VisualDataController
     @RequestMapping
     @ResponseBody
     @Transactional(readOnly = true)
-    public String visual_data_json(@RequestParam String index, @RequestParam Integer width, @RequestParam Integer height) throws Exception
+    public String visual_data_json(@RequestParam String index,
+                                   @RequestParam int width,
+                                   @RequestParam(defaultValue = "1") int zoom,
+                                   @RequestParam(defaultValue = "0") int start) throws Exception
     {
         logger.debug(" **** Loading visual data for: " + index);
-        logger.debug(" **** Parameters: width=" + width + ", height=" + height);
+        logger.debug(" **** Parameters: width=" + width + ", zoom=" + zoom);
 
         final VisualParameters visualParameters = new VisualParameters();
-        visualParameters.setHeight(height);
+        visualParameters.setZoom(zoom);
         visualParameters.setWidth(width);
+        visualParameters.setCenter(start);
 
         final VisualData visualData = visualDataService.loadVisualData(index, visualParameters);
 

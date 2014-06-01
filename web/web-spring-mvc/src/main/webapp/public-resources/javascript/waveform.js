@@ -68,11 +68,11 @@
             }
             if (this.interpolate === false)
             {
-                this.setDataCropped(options.data);
+                this.setDataCropped(this.data);
             }
             else
             {
-                this.setDataInterpolated(options.data);
+                this.setDataInterpolated(this.data);
             }
             return this.redraw();
         };

@@ -41,40 +41,40 @@ public class DefaultVisualDataService implements VisualDataService
         final VisualData visualData = new VisualData();
 
         final int width = visualParameters.getWidth();
+        final int zoom = visualParameters.getZoom();
+
         final double[] visualSamples = new double[width];
         final long[] samplePositions = new long[width];
 
         visualData.setVisualSamples(visualSamples);
         visualData.setVisualPositions(samplePositions);
 
-        Sample[] sampleArray = indexSamples.getSamples();
+        final Sample[] samples = indexSamples.getSamples();
 
-        int step = sampleArray.length / width;
-//        double scale = indexSamples.getMax() / visualParameters.getHeight();
+        // the zoom and start position determine the samples that need to be loaded
+        final double scale = 1d / zoom;
+        final int set = Math.max(width, (int) (samples.length * scale));
 
-        for (int i = 0, pixelX = 0; pixelX < width && i < sampleArray.length; pixelX++)
+        final int center = set / 2;
+        final int start = set / 2 - center;
+
+        final int step = set / width;
+
+        for (int i = start, x = 0; x < width && i < samples.length; x++)
         {
             int max = 0;
             int min = 0;
 
-            samplePositions[pixelX] = sampleArray[i].getPosition();
+            samplePositions[x] = samples[i].getPosition();
 
-            for (int s = 0; s < step && i < sampleArray.length; s++, i++)
+            for (int s = 0; s < step && i < samples.length; s++, i++)
             {
-                max = Math.max(max, sampleArray[i].getValue());
-                min = Math.min(min, sampleArray[i].getValue());
+                max = Math.max(max, samples[i].getValue());
+                min = Math.min(min, samples[i].getValue());
             }
 
-            if (i >= sampleArray.length)
-            {
-                System.out.print("");
-            }
-
-//            int value = (int) ((max + (min * -1)) / scale);
-//            int y = value / 2;
-//
-//            visualSamples[pixelX] = y;
-            visualSamples[pixelX] = ((double)(max + (min * -1))) / Short.MAX_VALUE;
+            visualSamples[x] = ((double) (max + (min * -1))) / Short.MAX_VALUE;
+//            visualSamples[x] = ((double)(max + (min * -1))) / max;
         }
 
         final List<VisualRegion> visualRegions = new Vector<VisualRegion>();
