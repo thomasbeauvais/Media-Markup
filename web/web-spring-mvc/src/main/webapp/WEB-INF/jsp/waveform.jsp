@@ -2,9 +2,11 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
     <title>Document</title>
+
     <script type="application/javascript" src="/resources/javascript/jquery.js"></script>
-    <script type="application/javascript" src="/resources/javascript/jquery.mousewheel.js"></script>
-    <script type="application/javascript" src="/resources/javascript/waveform.js"></script>
+    <script type="application/javascript" src="/resources/javascript/jquery-ui.js"></script>
+    <%--<script type="application/javascript" src="/resources/javascript/waveform.js"></script>--%>
+    <script type="application/javascript" src="/resources/javascript/waveform-old.js"></script>
     <script type="application/javascript">
         var index = "<%= request.getParameter("index") %>";
         var zoom = 1;
@@ -15,11 +17,10 @@
         {
             var params = {
                 index: encodeURI(index),
-                width: $("#waveform").width(),
-                zoom: zoom
+                width: $("#waveform-canvas").width()
             };
 
-            $.getJSON("/visual/all", params)
+            $.getJSON("/visual", params)
                     .success(onSamplesReceived)
                     .fail(onError);
         }
@@ -31,40 +32,39 @@
 
         function onSamplesReceived(data)
         {
-            waveform.clear();
-            waveform.setData(data.samples);
-            waveform.redraw();
+            $("#waveform-canvas").data("waveform").drawWaveformSamples(data.samples);
+
+//            waveform = new Waveform({
+//                container: document.getElementById("waveform"),
+//                width: data.samples.length,
+//                data: data.samples
+//            });
         }
 
-        $(document).ready(function ()
+        $(function ()
         {
-            var $waveform = $("#waveform");
-            waveform = new Waveform({
-                container: document.getElementById("waveform")
-            });
+            $("#waveform-canvas").waveform();
 
             if (index)
             {
                 loadSamples();
             }
 
-            $waveform.on('mousewheel', function (event)
-            {
-                zoom = Math.max(1, zoom + event.deltaY);
-                zoom = Math.min(10, zoom);
 
-                loadSamples();
-
-                event.preventDefault();
-            });
+//            $('#waveform').mousewheel(function (event){
+//                if (event.deltaY > 0)
+//                {
+//                    zoomIn();
+//                }
+//            });
         });
 
     </script>
 </head>
 <body>
 
-<div id="waveform" style="height: 360;"></div>
-<div id="scrollbar" style="width: 100%;"></div>
-
+<div id="waveform" style="height: 360; overflow-x:scroll;">
+    <canvas id="waveform-canvas" style="width: 100%; height: 100%;"></canvas>
+</div>
 </body>
 </html>
