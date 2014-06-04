@@ -26,9 +26,12 @@
             cleanCanvas(element);
         };
 
-        this.mousein = function (event)
+        this.mousewheel = function(event)
         {
-            console.log("aching!");
+        };
+
+        this.mouseenter = function (event)
+        {
         };
 
         this.mouseout = function (event)

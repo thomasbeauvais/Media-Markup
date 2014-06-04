@@ -6,6 +6,7 @@
     <link rel="stylesheet" type="text/css" href="/resources/css/application.css"/>
 
     <script type="application/javascript" src="/resources/javascript/jquery.js"></script>
+    <script type="application/javascript" src="/resources/javascript/jquery.mousewheel.js"></script>
     <script type="application/javascript" src="/resources/javascript/application.js"></script>
     <script type="application/javascript" src="/resources/javascript/jquery-ui.js"></script>
     <script type="application/javascript" src="/resources/javascript/selection.js"></script>
@@ -46,22 +47,7 @@
 
             $("#waveform-select").selection();
 
-            var $mouser = $("#waveform-mouser");
-
-            var mouseFunction = function (event)
-            {
-                var selection = $("#waveform-select").selection();
-                if (selection)
-                {
-                    selection[ event.type ](event);
-                }
-            };
-
-            $mouser[0].addEventListener('mousedown', mouseFunction, false);
-            $mouser[0].addEventListener('mouseup', mouseFunction, false);
-            $mouser[0].addEventListener('mousemove', mouseFunction, false);
-            $mouser[0].addEventListener('click', mouseFunction, false);
-            $mouser[0].addEventListener('mouseout', mouseFunction, false);
+            $("#waveform-mouser").mouser($("#waveform-select").selection());
 
             $("#waveform").fit();
 
@@ -69,13 +55,6 @@
             {
                 loadSamples();
             }
-
-            //            $('#waveform').mousewheel(function (event){
-            //                if (event.deltaY > 0)
-            //                {
-            //                    zoomIn();
-            //                }
-            //            });
         });
 
     </script>
