@@ -1,5 +1,18 @@
 (function ($)
 {
+    $.fn.log = function (label)
+    {
+        var div = document.createElement("div");
+        div.textContent = label + ": ";
+
+        var log = document.createElement("span");
+        div.appendChild(log);
+
+        document.body.appendChild(div);
+
+        return log;
+    };
+
     $.fn.mouser = function ()
     {
         var objects = arguments;

@@ -27,6 +27,8 @@ public class Annotation extends UuidIdentifiable implements Identifiable
 
     @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private Summary summary;
+    private Date createDate;
+    private Date lastModified;
 
     public Annotation()
     {
@@ -124,5 +126,25 @@ public class Annotation extends UuidIdentifiable implements Identifiable
         }
 
         return size;
+    }
+
+    public void setCreateDate(Date createDate)
+    {
+        this.createDate = createDate;
+    }
+
+    public Date getCreateDate()
+    {
+        return createDate;
+    }
+
+    public void setLastModified(Date lastModified)
+    {
+        this.lastModified = lastModified;
+    }
+
+    public Date getLastModified()
+    {
+        return lastModified;
     }
 }

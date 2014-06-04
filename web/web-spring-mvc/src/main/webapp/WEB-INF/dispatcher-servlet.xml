@@ -10,9 +10,9 @@
 
     <import resource="classpath:META-INF/spring-mvc.xml"/>
 
-    <bean class="org.branch.annotation.audio.web.controller.bean.LoadAudioFileOnStartUpBean" init-method="load">
-        <property name="files" value="${test.auto.upload}"/>
-    </bean>
+    <!--<bean class="org.branch.annotation.audio.web.controller.bean.LoadAudioFileOnStartUpBean" init-method="load">-->
+        <!--<property name="files" value="${test.auto.upload}"/>-->
+    <!--</bean>-->
 
 </beans>
 

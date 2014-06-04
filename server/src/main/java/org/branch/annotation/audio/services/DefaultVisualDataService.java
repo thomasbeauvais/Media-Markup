@@ -115,6 +115,17 @@ public class DefaultVisualDataService implements VisualDataService
 //            visualSamples[x] = ((float)(max + (min * -1))) / max;
         }
 
+        final List<VisualRegion> visualRegions = getVisualRegions(indexSamples, width, visualPositions);
+
+        visualData.setVisualSamples(visualSamples);
+        visualData.setVisualPositions(visualPositions);
+        visualData.setVisualRegions(visualRegions.toArray(new VisualRegion[visualRegions.size()]));
+
+        return visualData;
+    }
+
+    private List<VisualRegion> getVisualRegions(Samples indexSamples, int width, long[] visualPositions)
+    {
         final List<VisualRegion> visualRegions = new Vector<VisualRegion>();
         final List<Annotation> annotations = annotationRepository.findAllForSummary(indexSamples.getSummary().getId());
         for (Annotation annotation : annotations)
@@ -142,12 +153,6 @@ public class DefaultVisualDataService implements VisualDataService
 
             visualRegions.add(new VisualRegion(annotation.getId(), startX, endX, 0, 0, 0));
         }
-
-
-        visualData.setVisualSamples(visualSamples);
-        visualData.setVisualPositions(visualPositions);
-        visualData.setVisualRegions(visualRegions.toArray(new VisualRegion[visualRegions.size()]));
-
-        return visualData;
+        return visualRegions;
     }
 }

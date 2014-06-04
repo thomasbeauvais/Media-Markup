@@ -75,17 +75,17 @@ public class VisualDataController
         // in this instance we want to create a custom more explicit json object
         final JSONObject jsonObject = new JSONObject();
         final JSONArray jsonSamples = new JSONArray();
-//        final JSONArray jsonPositions = new JSONArray();
+        final JSONArray jsonPositions = new JSONArray();
 
         final float[] visualSamples = visualData.getVisualSamples();
-//        final long[] visualPositions = visualData.getVisualPositions();
+        final long[] visualPositions = visualData.getVisualPositions();
         for (int i = 0, visualSamplesLength = visualSamples.length; i < visualSamplesLength; i++)
         {
             final double value = visualSamples[i];
-//            final long position = visualPositions[i];
+            final long position = visualPositions[i];
 
             jsonSamples.add(value);
-//            jsonPositions.add(position);
+            jsonPositions.add(position);
         }
 
         final JSONArray jsonRegions = new JSONArray();
@@ -100,7 +100,7 @@ public class VisualDataController
         }
 
         jsonObject.put("samples", jsonSamples);
-//        jsonObject.put("positions", jsonPositions);
+        jsonObject.put("positions", jsonPositions);
         jsonObject.put("regions", jsonRegions);
 
         return jsonObject.toJSONString();

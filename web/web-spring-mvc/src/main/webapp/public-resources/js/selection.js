@@ -11,6 +11,8 @@
             param: 'defaultValue'
         }, options || {});
 
+        var log = $(this).log(LABEL);
+
         this.selectionEnabled = function (isEnabled)
         {
             self.isSelectionEnabled = isEnabled;
@@ -18,8 +20,8 @@
 
         this.clear = function ()
         {
-            self.startX = -1;
-            self.endX = -1;
+            self.x1 = -1;
+            self.x2 = -1;
 
             self.isDragging = false;
 
@@ -42,11 +44,11 @@
             }
             else if (event.layerX < 0)
             {
-                self.paint(self.startX, 0);
+                self.paint(self.x1, 0);
             }
             else if (event.layerX > self.width)
             {
-                self.paint(self.startX, self.width);
+                self.paint(self.x1, self.width);
             }
 
             self.isDragging = false;
@@ -69,7 +71,7 @@
             }
 
             self.isDragging = true;
-            self.startX = event.layerX;
+            self.x1 = event.layerX;
         };
 
         this.mousemove = function (event)
@@ -79,7 +81,7 @@
                 return;
             }
 
-            self.paint(self.startX, event.layerX);
+            self.paint(self.x1, event.layerX);
         };
 
         this.paint = function (startX, endX)
@@ -87,17 +89,28 @@
             var canvas = element;
 
             // Sync these to make sure that anyone who asks from the selected region can retrieve it..
-            this.startX = startX;
-            this.endX = endX;
+            this.x1 = startX;
+            this.x2 = endX;
 
-            var x = Math.min(startX, endX);
-            var width = Math.max(startX, endX) - x;
+            var width = this.endX() - this.startX();
             var height = canvas.height;
 
             var context = canvas.getContext("2d");
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.fillStyle = "rgba(255, 0, 0, 0.2)";
-            context.fillRect(x, 0, width, height);
+            context.fillRect(this.startX(), 0, width, height);
+
+            $(log).html("startX: " + this.startX() + ", width:" + width);
+        };
+
+        this.startX = function()
+        {
+            return Math.min(this.x1, this.x2);
+        };
+
+        this.endX = function()
+        {
+            return Math.max(this.x1, this.x2);
         };
     };
 

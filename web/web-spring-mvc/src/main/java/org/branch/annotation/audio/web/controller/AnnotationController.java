@@ -36,10 +36,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
+import java.util.Date;
 import java.util.List;
 
 @Controller
-@RequestMapping(value = "annotations")
+@RequestMapping(value = "annotation")
 public class AnnotationController extends DefaultSpringController
 {
     private static Logger logger = Logger.getLogger("org.branch.annotation.audio");
@@ -48,7 +49,7 @@ public class AnnotationController extends DefaultSpringController
     private AnnotationRepository annotationRepository;
 
     @Autowired
-    private SummaryRepository indexSummaryRepository;
+    private SummaryRepository summaryRepository;
 
     @Transactional
     @RequestMapping
@@ -83,12 +84,12 @@ public class AnnotationController extends DefaultSpringController
         annotationRepository.delete(id);
     }
 
-    @RequestMapping(value = "save", method = RequestMethod.POST)
+    @RequestMapping(value = "save")
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
     @Transactional
     public void save(
             @RequestParam(required = false) String id,
-            @RequestParam(required = false) String indexId,
+            @RequestParam(required = false) String index,
             @RequestParam String text,
             @RequestParam int startX,
             @RequestParam int endX
@@ -101,10 +102,14 @@ public class AnnotationController extends DefaultSpringController
 
             annotation = annotationRepository.findOne(id);
         }
-        else if (!StringUtils.isEmpty(indexId))
+        else if (!StringUtils.isEmpty(index))
         {
             annotation = new Annotation();
-            annotation.setSummary(new Summary());
+
+            final Summary summary = summaryRepository.findOne(index);
+
+            annotation.setCreateDate(new Date());
+            annotation.setSummary(summary);
         }
         else
         {
@@ -114,6 +119,7 @@ public class AnnotationController extends DefaultSpringController
         annotation.setText(text);
         annotation.setStartPos(startX);
         annotation.setEndPos(endX);
+        annotation.setLastModified(new Date());
 
         annotationRepository.save(annotation);
     }
