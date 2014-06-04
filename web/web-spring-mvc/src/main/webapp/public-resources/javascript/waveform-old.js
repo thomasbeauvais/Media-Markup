@@ -23,8 +23,13 @@
             var height = canvas.height;
             var width = canvas.width;
 
-            context.strokeStyle = "rgb( 0, 0, 0 )";
-            context.fillStyle = "rgb( 0, 0, 0 )";
+            var gradient = context.createLinearGradient(width / 2, 0, width / 2, height);
+            gradient.addColorStop(0, "#000");
+            gradient.addColorStop(0.5, "#00F");
+            gradient.addColorStop(1, "#000");
+
+            context.fillStyle = gradient;
+            //            context.fillStyle = "rgb( 0, 0, 0 )";
 
             if (samples)
             {
@@ -32,19 +37,20 @@
 
                 context.moveTo(0, center);
 
+                // Drawing lines and using fill at the end of the loop allows for a
+                // smoother waveform and faster load time than using stroke
                 for (var x = 0; x < samples.length; x++)
                 {
                     var value = samples[x] * height;
                     var y = value / 2;
 
-                    context.lineTo(x, center - y);
-                    context.lineTo(x, center + y);
+                    context.lineTo(x, Math.floor(center - y));
+                    context.lineTo(x, Math.floor(center + y));
+                    context.moveTo(x, center);
                 }
 
-                context.lineTo(x - 1, center);
-
+                // Reset the line so that it doesn't draw a diagonal all of the way across the wave from
                 context.fill();
-//                context.stroke();
             }
         };
 

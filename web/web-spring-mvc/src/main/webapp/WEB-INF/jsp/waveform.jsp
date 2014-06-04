@@ -33,12 +33,6 @@
         function onSamplesReceived(data)
         {
             $("#waveform-canvas").data("waveform").drawWaveformSamples(data.samples);
-
-//            waveform = new Waveform({
-//                container: document.getElementById("waveform"),
-//                width: data.samples.length,
-//                data: data.samples
-//            });
         }
 
         $(function ()
@@ -49,7 +43,6 @@
             {
                 loadSamples();
             }
-
 
 //            $('#waveform').mousewheel(function (event){
 //                if (event.deltaY > 0)
