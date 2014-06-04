@@ -1,0 +1,13 @@
+#waveform-canvas {
+    z-index: 1;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
+
+#waveform-mouser {
+    z-index: 2;
+    position: absolute;
+    left: 0px;
+    top: 0px;
+}
