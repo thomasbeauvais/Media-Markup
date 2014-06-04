@@ -26,7 +26,7 @@
             cleanCanvas(element);
         };
 
-        this.mousewheel = function(event)
+        this.mousewheel = function (event)
         {
         };
 
@@ -63,7 +63,6 @@
 
         this.mousedown = function (event)
         {
-            // TODO:  When nothing is loaded don't allow selection
             if (!self.isSelectionEnabled)
             {
                 return;
@@ -86,6 +85,7 @@
         this.paint = function (startX, endX)
         {
             var canvas = element;
+
             // Sync these to make sure that anyone who asks from the selected region can retrieve it..
             this.startX = startX;
             this.endX = endX;
@@ -98,8 +98,6 @@
             context.clearRect(0, 0, canvas.width, canvas.height);
             context.fillStyle = "rgba(255, 0, 0, 0.2)";
             context.fillRect(x, 0, width, height);
-
-            //console.log( "height=" + height + ", endX=" + endX + ", x=" + x + ", width=" + width + ",canvas.width=" + this.overlayCanvas.width );
         };
     };
 

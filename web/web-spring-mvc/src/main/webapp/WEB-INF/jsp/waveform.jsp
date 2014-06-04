@@ -4,18 +4,18 @@
     <title>Document</title>
 
     <link rel="stylesheet" type="text/css" href="/resources/css/application.css"/>
+    <link rel="stylesheet" type="text/css" href="/resources/css/bootstrap.css"/>
 
-    <script type="application/javascript" src="/resources/javascript/jquery.js"></script>
-    <script type="application/javascript" src="/resources/javascript/jquery.mousewheel.js"></script>
-    <script type="application/javascript" src="/resources/javascript/application.js"></script>
-    <script type="application/javascript" src="/resources/javascript/jquery-ui.js"></script>
-    <script type="application/javascript" src="/resources/javascript/selection.js"></script>
-    <script type="application/javascript" src="/resources/javascript/waveform.js"></script>
+    <script type="application/javascript" src="/resources/js/jquery.js"></script>
+    <script type="application/javascript" src="/resources/js/jquery.mousewheel.js"></script>
+    <script type="application/javascript" src="/resources/js/application.js"></script>
+    <script type="application/javascript" src="/resources/js/jquery-ui.js"></script>
+    <script type="application/javascript" src="/resources/js/selection.js"></script>
+    <script type="application/javascript" src="/resources/js/waveform.js"></script>
+
+    <script type="application/javascript" src="/resources/js/bootstrap.js"></script>
     <script type="application/javascript">
         var index = "<%= request.getParameter("index") %>";
-        var zoom = 1;
-        var waveform;
-        var data;
 
         function loadSamples()
         {
