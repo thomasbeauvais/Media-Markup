@@ -97,7 +97,18 @@
 
             var context = canvas.getContext("2d");
             context.clearRect(0, 0, canvas.width, canvas.height);
-            context.fillStyle = "rgba(255, 0, 0, 0.2)";
+
+            if (isNaN(this.x1) || isNaN(this.x2))
+            {
+                return;
+            }
+
+            var gradient = context.createLinearGradient(width / 2, 0, width / 2, height);
+            gradient.addColorStop(0, "rgba(255, 0, 0, 0.5)");
+            gradient.addColorStop(0.5, "transparent");
+            gradient.addColorStop(1, "rgba(255, 0, 0, 0.5)");
+
+            context.fillStyle = gradient;
             context.fillRect(this.startX(), 0, width, height);
 
             $(log).html("startX: " + this.startX() + ", width:" + width);
