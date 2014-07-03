@@ -1,5 +1,5 @@
 Todo List
-o   Switch from Log4J to Apache Commons Logging
+o   Switch from Log4J to Simple Logging Facade
 
 Feature Requests:
 o   Does it make sense to have 'child' comments be able to select a different region than the parent?
@@ -17,3 +17,64 @@ o   It would be better to have good buffering.  Get a hold of the peoples at Sou
 Known Issues:
 o   The slideUp() and slideDown() functions cause a jitter in the layout of the page.  This is probably do to
     incorrect styling and absolute positioning.
+
+Technologies:
+
+Spring: MVC, JPA, Data, Data Rest, Core (Dependnecy Injections)
+Tomcat: the preferred servlet container
+H2: in-memory and file based SQL database (see Spring (in spring-data.xml) configuration)
+JPA: Java Persistence API as the ORM
+Maven: Build and deploy the WAR and Java projects (might move to Graddle)
+Javascript: jQuery and Bootstrap
+
+NOTES:
+
+Use your favorite web application server to deploy such as Apache Tomcat
+
+To view a list of summaries (files uploaded) go to: http://localhost:8080/summary
+
+{
+  "_links" : {
+    "self" : {
+      "href" : "http://localhost:8080/summary{?page,size,sort}",
+      "templated" : true
+    }
+  },
+  "_embedded" : {
+    "summaries" : [ {
+      "time" : 208.80104,
+      "dateUploaded" : 1404322902899,
+      "name" : null,
+      "description" : null,
+      "size" : 0,
+      "audioFileUid" : "9bad582a-2a7a-4617-8ebe-e4cf6ed6ae86",
+      "_links" : {
+        "self" : {
+          "href" : "http://localhost:8080/summary/b1aa10ab-043b-430a-b187-c394ebf38dee"
+        },
+        "annotations" : {
+          "href" : "http://localhost:8080/summary/b1aa10ab-043b-430a-b187-c394ebf38dee/annotations"
+        }
+      }
+    } ]
+  },
+  "page" : {
+    "size" : 20,
+    "totalElements" : 1,
+    "totalPages" : 1,
+    "number" : 0
+  }
+}
+
+Take an ID from the list in the "self" selection and pass it to the controllers that require an index.
+
+For example, to update visual data visit:
+
+http://localhost:8080/visual?index=b1aa10ab-043b-430a-b187-c394ebf38dee&width=1000
+
+To load the working waveform visualization visit:
+
+http://localhost:8080/view/waveform?index=b1aa10ab-043b-430a-b187-c394ebf38dee
+
+Notice that /view is a "passthru" controller meaning that it bypasses the Spring MVC Front Controller
+allow it to simple load a JSP file with the Spring Beans loaded.
